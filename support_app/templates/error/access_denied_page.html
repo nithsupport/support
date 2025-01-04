@@ -1,0 +1,49 @@
+{% extends 'login_users/custom-base.html' %}
+{% load static %}
+
+{% block styles %}
+
+        <!-- Main Theme Js -->
+        <script src="{% static 'assets/js/authentication-main.js'%}"></script>
+
+{% endblock %}
+
+{% block body %}
+    <body>
+{% endblock %}
+
+{% block content %}
+
+        <div class="page error-bg" id="particles-js">
+            <!-- Start::error-page -->
+            <div class="error-page">
+                <div class="container">
+                    <div class="text-center p-5 my-auto">
+                        <div class="row align-items-center justify-content-center h-100">
+                            <div class="col-xl-7">
+                                <p class="error-text mb-sm-0 mb-2">Access Denied</p>
+                                <p class="fs-18 fw-semibold mb-3">You don't have permission to access this page.</p>
+                                <div class="row justify-content-center mb-5">
+                                    <div class="col-xl-6">
+                                        {% comment %} <p class="mb-0 op-7">We are sorry for the inconvenience,The page you are trying to access has been removed or never been existed.</p> {% endcomment %}
+                                    </div>
+                                </div>
+                                <a href="{% url 'index' %}" class="btn btn-primary"><i class="ri-arrow-left-line align-middle me-1 d-inline-block"></i>BACK TO HOME</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{% endblock %}
+
+{% block scripts %}
+
+        <!-- Particles JS -->
+        <script src="{% static 'assets/libs/particles.js/particles.js'%}"></script>
+
+        <!-- Error JS -->
+        <script src="{% static 'assets/js/error.js'%}"></script>
+
+{% endblock %}

@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr" {% if request.user.is_authenticated %}data-nav-layout="vertical"{% else %}data-nav-layout="horizontal"{% endif %} data-theme-mode="light" data-header-styles="light" loader="enable" data-menu-styles="dark" data-toggled="close">
+
+    <head>
+
+        <!-- Meta Data -->
+        <meta charset="UTF-8">
+        <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=no'>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title> Support - PES University </title>
+        <meta name="Description" content="Support - PES University">
+        <meta name="Author" content="Support - PES University">
+        <meta name="keywords" content="Support - PES University">
+        
+        <!-- Favicon -->
+        <link rel="icon" href="{% static 'assets/images/pesu/pes-favicon/favicon.ico'%}" type="image/x-icon">
+        <link rel="shortcut icon" href="{% static 'assets/images/pesu/pes-favicon/favicon-16x16.png' %}">
+        
+        <!-- Start::styles -->
+        {% include 'main/styles.html' %}
+        
+        {% block styles %}{% endblock %}
+        <!-- End::styles -->  
+
+	</head>
+
+	<body class="">
+
+        <!-- Start::main-switcher -->
+        {% include 'main/switcher.html' %}
+        <!-- End::main-switcher -->
+
+        <!-- Loader -->
+        <div id="loader" >
+            <img src="{% static 'assets/images/media/loader.svg'%}" alt="">
+        </div>
+        <!-- Loader -->
+
+        <div class="page">
+
+            <!-- Start::main-header -->
+            {% include 'main/main-header.html' %}
+            <!-- End::main-header -->
+
+            <!-- Start::main-sidebar -->
+            {% include 'main/main-sidebar.html' %}
+            <!-- End::main-sidebar -->
+            
+            <!-- Start::app-content -->
+            <div class="main-content app-content">
+
+                {% block content %}{% endblock %}
+
+            </div>
+            <!-- End::app-content -->
+            
+            <!-- Start::main-footer -->
+            <!-- Start:: Footer -->
+            {% block footer %}
+            {% endblock %}
+           <!-- End:: Footer -->
+            <!-- End::main-footer -->        
+            
+
+            <!-- Start::main-modal -->
+            {% include 'main/modal.html' %}
+            <!-- End::main-modal --> 
+            
+		</div>
+        <!-- END PAGE-->
+
+        <!-- Start::scripts -->
+		{% include 'main/scripts.html' %}
+        {% block scripts %}{% endblock %}
+        <!-- End::scripts --> 
+
+        <!-- Sticky JS -->
+        <script src="{% static 'assets/js/sticky.js'%}"></script>
+        
+        <!-- Defaultmenu JS -->
+        <script src="{% static 'assets/js/defaultmenu.min.js'%}"></script>
+
+        <!-- Custom-Switcher JS -->
+        <script src="{% static 'assets/js/custom-switcher.min.js'%}"></script>
+
+        <!-- Custom JS -->
+        <script src="{% static 'assets/js/custom.js'%}"></script>
+        
+        <script src="{% static 'assets/custom/js/full-screen.js'%}"></script>
+        {% comment %} <script src="{% static 'custom/js/full-screen.js'%}"></script> {% endcomment %}
+          
+	</body>
+</html>

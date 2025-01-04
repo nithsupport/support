@@ -1,0 +1,101 @@
+{% load static %}
+{% load custom_tags %}
+			<!-- app-header -->
+			<header class="app-header">
+
+				<!-- Start::main-header-container -->
+				<div class="main-header-container container-fluid">
+
+					<!-- Start::header-content-left -->
+					<div class="header-content-left">
+
+						<!-- Start::header-element -->
+						<div class="header-element">
+							<div class="horizontal-logo">
+								<a href="{% url 'index' %}" class="header-logo">
+									<img src="{% static 'assets/images/pesu/logo/pes_support_logo.png'%}" alt="logo" class="desktop-logo">
+									<img src="{% static 'assets/images/pesu/logo/pes_support_logo.png'%}" alt="logo" class="toggle-logo">
+									<img src="{% static 'assets/images/pesu/logo/PESU_Dark_Logo.png'%}" alt="logo" class="desktop-dark">
+									<img src="{% static 'assets/images/pesu/logo/PESU_Dark_Logo.png'%}" alt="logo" class="toggle-dark">
+									<img src="{% static 'assets/images/pesu/logo/pes_support_logo.png'%}" alt="logo" class="desktop-white">
+									<img src="{% static 'assets/images/pesu/logo/PESU_Dark_Logo.png'%}" alt="logo" class="toggle-white">
+								</a>
+							</div>
+						</div>
+						<!-- End::header-element -->
+
+						<!-- Start::header-element -->
+						<div class="header-element">
+							<!-- Start::header-link -->
+							<a aria-label="Hide Sidebar" class="sidemenu-toggle header-link animated-arrow hor-toggle horizontal-navtoggle" data-bs-toggle="sidebar" href="javascript:void(0);"><span></span></a>
+							<!-- End::header-link -->
+						</div>
+						<!-- End::header-element -->
+
+					</div>
+					<!-- End::header-content-left -->
+
+					<!-- Start::header-content-right -->
+					<div class="header-content-right">
+
+						<!-- Start::header-element -->
+						<div class="header-element header-search">
+							<!-- Start::header-link -->
+							<a href="javascript:void(0);" class="header-link" data-bs-toggle="modal" data-bs-target="#searchModal">
+								<i class="bx bx-search-alt-2 header-link-icon"></i>
+							</a>
+							<!-- End::header-link -->
+						</div>
+						<!-- End::header-element -->
+
+
+						{% if request.user.is_authenticated %}
+						<!-- Start::header-element -->
+						<div class="header-element">
+							<!-- Start::header-link|dropdown-toggle -->
+							<a href="javascript:void(0);" class="header-link dropdown-toggle" id="mainHeaderProfile" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+								<div class="d-flex align-items-center">
+									<div class="me-sm-2 me-0 border border-warning border-1 rounded-circle">
+										{% if request.user.pic %}
+										<img src="{{user.pic.url}}" alt="img" width="32" height="32" class="rounded-circle">
+										{% else %}
+										<img src="{% static 'assets/images/pesu/img/member.jpg'%}" alt="img" width="32" height="32" class="rounded-circle">
+										{% endif %}
+									</div>
+									<div class="d-sm-block d-none">
+										<p class="fw-semibold mb-0 lh-1">{{ user.name }}</p>
+										<span class="op-7 fw-normal d-block fs-11">{{ user.username }}</span>
+									</div>
+								</div>
+							</a>
+							<!-- End::header-link|dropdown-toggle -->
+							<ul class="main-header-dropdown dropdown-menu pt-0 overflow-hidden header-profile-dropdown dropdown-menu-end" aria-labelledby="mainHeaderProfile">
+								<li><a class="dropdown-item d-flex" href="{% url 'user-profile' request.user.username %}"><i class="ti ti-user-circle fs-18 me-2 op-7"></i>Profile</a></li>
+								{% if request.user|check_requested_permissions:'add_dailyreport' %}
+								<li><a class="dropdown-item d-flex" href="{% url 'add-daily-report' %}"><i class="ti ti-inbox fs-18 me-2 op-7"></i>Daily Report 
+									{% comment %} <span class="badge bg-success-transparent ms-auto">25</span> {% endcomment %}
+								</a></li>
+								{% endif %}
+								{% comment %} {% if request.user|check_requested_permissions:'view_dailyreport' %}
+								<li><a class="dropdown-item d-flex border-block-end" href="{% url 'daily-report-list' request.user.username %}"><i class="ti ti-clipboard-check fs-18 me-2 op-7"></i>View Daily Report</a></li>
+								{% endif %} {% endcomment %}
+								<li><a class="dropdown-item d-flex" href="{% url 'change-password-form' %}"><i class="bx bx-key fs-18 me-2 op-7"></i>Change Password</a></li>
+								<li><a class="dropdown-item d-flex" href="{% url 'dashboard' %}"><i class="ti ti-adjustments-horizontal fs-18 me-2 op-7"></i>Dashboard</a></li>
+								<li><a class="dropdown-item d-flex" href="mailto:media@pes.edu"><i class="ti ti-headset fs-18 me-2 op-7"></i>Support<br>media@pes.edu</a></li>
+								<li><a class="dropdown-item d-flex" href="{% url 'logout-page' %}"><i class="ti ti-logout fs-18 me-2 op-7"></i>Log Out</a></li>
+							</ul>
+						</div>  
+						<!-- End::header-element -->
+						{% endif %}
+
+					
+
+					</div>
+					<!-- End::header-content-right -->
+					 
+
+				</div>
+				<!-- End::main-header-container -->
+
+			</header>
+			<!-- /app-header -->

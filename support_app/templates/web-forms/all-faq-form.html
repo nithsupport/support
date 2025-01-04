@@ -1,0 +1,269 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load custom_tags %}
+{% block styles %}
+<!-- Sweetalerts CSS -->
+<link rel="stylesheet" href="{% static 'assets/libs/sweetalert2/sweetalert2.min.css'%}">
+
+        
+{% endblock %}
+
+{% block content %}
+                    <div class="container-lg my-5">
+                        <!-- Page Header -->
+                        <div class="d-md-flex d-block align-items-center justify-content-between my-4 page-header-breadcrumb">
+                            <h1 class="page-title fw-semibold fs-18 mb-0">{{title}} FAQs</h1>
+                            <div class="ms-md-1 ms-0">
+                                <nav>
+                                    <ol class="breadcrumb mb-0">
+                                        <li class="breadcrumb-item"><a href="#">Form</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">{{title}} FAQs</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                        <!-- Page Header Close -->
+
+
+                        <!-- Start::row-1 -->
+                        <div class="row">
+
+                            <div class="col-xl-4">
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="card custom-card">
+                                            <div class="card-header">
+                                                <div class="card-title">
+                                                    Category
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <ul class="list-group">
+                                                    {% for category in category_list %}
+                                                    <li class="list-group-item">
+                                                        <a href="{% url 'selected-faq-list' model_name %}">
+                                                            <div class="d-flex align-items-center justify-content-between">
+                                                                <div class="d-flex align-items-center">
+                                                                    <div>
+                                                                        <span class="avatar avatar-xs bg-warning avatar-rounded">
+                                                                            <i class="bx bx-user-voice side-menu__icon"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div>
+                                                                        <span class="fw-semibold ms-2">{{category}} FAQs</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div>
+                                                                    <span class="badge bg-light text-default rounded-pill">{{model_name|total_category_count:category}}</span>
+                                                                </div>
+                                                            </div>    
+                                                        </a>       
+                                                    </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-8">
+                                <!-- Start:: row-1 -->
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="card custom-card">
+                                            <div class="card-header justify-content-between">
+                                                <div class="card-title">
+                                                    {% if form.instance.pk %}Edit FAQ {% else %}Add FAQ{% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <form method="post" action="" class="row g-3 mt-0">
+                                                    {% csrf_token %}
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-md-8 my-2">
+                                                                <label class="form-label">Question<span class="text-danger">*</span></label>
+                                                                {{form.question}}
+                                                            </div>
+                                                            {% if form.question.errors %}
+                                                                <div class="text-danger">{{ form.question.errors|join:", " }}</div>
+                                                            {% endif %}
+                                                            <div class="col-md-4 my-2">
+                                                                <label for="inputPassword4" class="form-label">Priority<span class="text-danger">*</span></label>
+                                                                {{form.priority}}
+                                                            </div>
+                                                            {% if form.priority.errors %}
+                                                                <div class="text-danger">{{ form.priority.errors|join:", " }}</div>
+                                                            {% endif %}
+                                                            <div class="col-md-12 my-2">
+                                                                <label for="inputEmail4" class="form-label">Answer<span class="text-danger">*</span></label>
+                                                                {{form.answer}}
+                                                            </div>
+                                                            {% if form.answer.errors %}
+                                                                <div class="text-danger">{{ form.answer.errors|join:", " }}</div>
+                                                            {% endif %}
+                                                            <div class="col-md-12 my-2">
+                                                                <label for="inputPassword4" class="form-label">Category<span class="text-danger">*</span></label>
+                                                                <div class="form-check-md d-flex align-items-center">
+                                                                    {% for choice_value, choice_label in form.category.field.choices %}
+                                                                        {% comment %} <div class="form-check form-check-md d-flex align-items-center"> {% endcomment %}
+                                                                            <input class="form-check-input" type="checkbox" value="{{ choice_value }}" name="{{ form.category.name }}" id="checkebox-{{ forloop.counter }}" 
+                                                                                {% if choice_value in form.category.value %}checked{% endif %}>
+                                                                            <label class="form-check-label ms-1 me-2" for="checkebox-{{ forloop.counter }}">
+                                                                                {{ choice_label }}
+                                                                            </label>
+                                                                        {% comment %} </div> {% endcomment %}
+                                                                    {% endfor %}
+                                                                    {% if form.category.errors %}
+                                                                        <div class="text-danger">{{ form.category.errors|join:", " }}</div>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="d-grid gap-2 col-4">
+                                                        <button class="btn btn-primary-light btn-wave">Publish</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End:: row-1 -->
+                                
+                            </div>
+                            <!--faq -->
+                            <div class="col-12">
+                                <div class="row">
+                                    {% if faq_list %}
+                                    <div class="card custom-card">
+                                        <div class="card-header d-flex align-items-center justify-content-between flex-wrap gap-3">
+                                            <div class="card-title">
+                                                Latest {{model_name}} FAQs<span class="badge bg-light text-default rounded ms-1 fs-12 align-middle"></span>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table text-nowrap">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">#</th>
+                                                            <th scope="col">Question</th>
+                                                            {% if request.user.is_authenticated %}
+                                                            <th scope="col">Action</th>
+                                                            {% endif %}
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% if faq_list %}
+                                                            {% for faq in faq_list %}
+                                                            <tr class="crm-contact">
+                                                                <td>{{ forloop.counter }}</td>
+                                                                <td>{{ faq.question }}</td>
+                                                                {% if request.user.is_authenticated %}
+                                                                    <td>
+                                                                        <div class="hstack gap-2 fs-15">
+                                                                            {% if request.user.is_authenticated and request.user|check_requested_permissions:'change_faq' %}
+                                                                            <a href="{% url 'edit-selected-faq' model_name faq.pk %}"
+                                                                                class="btn btn-icon btn-sm btn-primary-transparent "><i
+                                                                                    class="ri-edit-line"></i></a>
+                                                                            {% endif %}
+                                                                            {% if request.user.is_authenticated and request.user|check_requested_permissions:'delete_faq' %}
+                                                                                    <button class="btn btn-sm btn-danger-light btn-icon contact-delete alert-parameter" id="alert-parameter{{ faq.pk }}" data-delete-url="{% url 'delete-selected-faq' model_name faq.pk %}"><i class="ri-delete-bin-line"></i></button>
+                                                                            {% endif %}
+                                                                        </div>
+                                                                    </td>
+                                                                {% endif %}
+                                                            </tr>
+                                                            {% endfor %}
+                                                        {% else %}
+                                                            <tr>
+                                                                <td>No data available.</td>
+                                                            </tr>
+                                                        {% endif %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="card-footer border-top-0">
+                                            <div class="d-flex align-items-center">
+                                                <a href="{% url 'selected-faq-list' model_name %}">
+                                                    View all FAQs<i class="bi bi-arrow-right ms-2 fw-semibold"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function () {
+                                            const buttons = document.querySelectorAll('.alert-parameter');
+                                            buttons.forEach(button => {
+                                                button.addEventListener('click', function () {
+                                                    const deleteUrl = button.getAttribute('data-delete-url');
+                                        
+                                                    const swalWithBootstrapButtons = Swal.mixin({
+                                                        customClass: {
+                                                            confirmButton: 'btn btn-success ms-2',
+                                                            cancelButton: 'btn btn-danger'
+                                                        },
+                                                        buttonsStyling: false
+                                                    });
+                                        
+                                                    swalWithBootstrapButtons.fire({
+                                                        title: 'Are you sure?',
+                                                        text: "You won't be able to revert this!",
+                                                        icon: 'warning',
+                                                        showCancelButton: true,
+                                                        confirmButtonText: 'Yes, delete it!',
+                                                        cancelButtonText: 'No, cancel!',
+                                                        reverseButtons: true
+                                                    }).then((result) => {
+                                                        if (result.isConfirmed) {
+                                                            window.location.href = deleteUrl;
+                                                        } else if (result.dismiss === Swal.DismissReason.cancel) {
+                                                            swalWithBootstrapButtons.fire(
+                                                                'Cancelled',
+                                                                'Your data is safe',
+                                                                'error'
+                                                            );
+                                                        }
+                                                    });
+                                                });
+                                            });
+                                        });
+                                    </script>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <!--end faq -->
+                        </div>
+                        <!--End::row-1 -->
+                    </div>    
+
+{% endblock %}
+{% block footer %}
+    {% include 'main/main-footer.html' %}
+{% endblock %}
+{% block scripts %}
+<!-- Sweetalerts JS -->
+<script src="{% static 'assets/libs/sweetalert2/sweetalert2.min.js'%}"></script>
+<script src="{% static 'assets/js/sweet-alerts.js'%}"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        {% if messages %}
+            {% for message in messages %}
+                Swal.fire({
+                    icon: '{{ message.tags }}',
+                    title: '{{ message }}',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            {% endfor %}
+        {% endif %}
+    });
+</script>
+{% endblock %}

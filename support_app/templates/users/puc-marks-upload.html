@@ -1,0 +1,320 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load custom_tags %}
+{% block styles %}
+<!-- Sweetalerts CSS -->
+<link rel="stylesheet" href="{% static 'assets/libs/sweetalert2/sweetalert2.min.css'%}">
+<!-- GLightbox CSS -->
+<link rel="stylesheet" href="{% static 'assets/libs/glightbox/css/glightbox.min.css'%}">
+        
+{% endblock %}
+
+{% block content %}
+
+                    <div class="container-fluid">
+                            
+                        <!-- Page Header -->
+                        <div class="d-md-flex d-block align-items-center justify-content-between my-4 page-header-breadcrumb">
+                            <h1 class="page-title fw-semibold fs-18 mb-0">Class 12 Marks</h1>
+                            <div class="ms-md-1 ms-0">
+                                <nav>
+                                    <ol class="breadcrumb mb-0">
+                                        <li class="breadcrumb-item"><a href="#">Data</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Class 12 MarksU</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                        <!-- Page Header Close -->
+
+                        <!-- Start:: row-1 -->
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="card custom-card">
+                                    <div class="card-body p-3">
+                                        <form id="filter-download-form" method="get">
+                                            <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+                                                <div class="avatar-list-stacked">
+                                                    <input type="date" id="start_date" name="start_date" value="{{ start_date }}" required class="btn btn-success-light btn-sm"> Start Date</input>
+                                                    <input type="date" id="end_date" name="end_date" value="{{ end_date }}" required class="btn btn-success-light btn-sm"> End Date</input>
+                                                    <button type="button" class="btn btn-success btn-sm" onclick="submitForm('filter')">Filter</button>
+                                                    </div>
+                                                    <div class="d-flex" role="search">
+                                                    <button type="button" class="btn btn-success btn-sm" onclick="submitForm('download')">Download as Excel</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <script>
+                                            function submitForm(actionType) {
+                                                var form = document.getElementById('filter-download-form');
+                                                if (actionType === 'filter') {
+                                                    form.action = "{% url 'puc-marks-upload-list' %}";
+                                                } else if (actionType === 'download') {
+                                                    form.action = "{% url 'download-puc-marks-upload' %}";
+                                                }
+                                                form.submit();
+                                            }
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End:: row-1 -->
+
+                        <!-- Start::row-1 -->
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="card custom-card">
+                                    <div class="card-header d-flex align-items-center justify-content-between flex-wrap gap-3">
+                                        <div class="card-title">
+                                            Submissions<span class="badge bg-light text-default rounded ms-1 fs-12 align-middle">{{ puc_marks_upload_list.paginator.count }}</span>
+                                        </div>
+                                        {% if puc_marks_upload_list.object_list %}
+                                        <div class="d-flex flex-wrap gap-2">
+                                            <a href="{% url 'download-all-images' 'pucupoloadmarks' %}">
+                                                <button class="btn btn-primary btn-sm"><i class="ri-download-2-line"></i> Download All Images</button>
+                                            </a>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table text-nowrap">
+                                                <thead>
+                                                    <tr>
+                                                        {% comment %} <th scope="col"><input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="..."></th> {% endcomment %}
+                                                        <th scope="col">ID</th>
+                                                        <th scope="col">Created At</th>
+                                                        <th scope="col">Name</th>
+                                                        <th scope="col">Email</th>
+                                                        <th scope="col">Phone</th>
+                                                        <th scope="col">Application No.</th>
+                                                        <th scope="col">Specialization</th>
+                                                        <th scope="col">Campus</th>
+                                                        <th scope="col">Board</th>
+                                                        <th scope="col">Intermediate Candidates</th>
+                                                        <th scope="col">Physics</th>
+                                                        <th scope="col">Chemistry</th>
+                                                        <th scope="col">Mathematics A</th>
+                                                        <th scope="col">Mathematics B</th>
+                                                        <th scope="col">Electronics</th>
+                                                        <th scope="col">Computer Science</th>
+                                                        <th scope="col">Biotechnology </th>
+                                                        <th scope="col">Percentage</th>
+                                                        <th scope="col">Comment</th>
+                                                        <th scope="col">Marks Sheet</th>
+                                                        {% if request.user|check_requested_permissions:'delete_pucupoloadmarks' %}
+                                                        <th scope="col">Actions</th>
+                                                        {% endif %}
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% if puc_marks_upload_list.object_list %}
+                                                        {% for puc_marks_upload in puc_marks_upload_list.object_list %}
+                                                        <tr class="crm-contact">
+                                                            <td>
+                                                                {{ puc_marks_upload.pk }}
+                                                            </td>
+                                                            <td>
+                                                                {{ puc_marks_upload.created_at }}
+                                                            </td>
+                                                            <td>
+                                                                <div class="d-flex align-items-center gap-2">
+                                                                    <div>
+                                                                        <span class="d-block fw-semibold">{{ puc_marks_upload.name }}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div>
+                                                                    <span class="d-block mb-1"><i class="ri-mail-line me-2 align-middle fs-14 text-muted d-inline-block"></i>{{ puc_marks_upload.email }}</span>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div>
+                                                                    <span class="d-block"><i class="ri-phone-line me-2 align-middle fs-14 text-muted"></i>{{ puc_marks_upload.phone_number }}</span>
+                                                                </div>
+                                                            </td>
+                                                            
+                                                            <td>
+                                                                {{ puc_marks_upload.registration_number }}
+                                                            </td>
+                                                            <td>
+                                                                {{ puc_marks_upload.specialization }}
+                                                            </td>
+                                                            <td>
+                                                                {{ puc_marks_upload.campus }}
+                                                            </td>
+                                                            <td>
+                                                                {{ puc_marks_upload.board }}
+                                                            </td>
+                                                            <td>
+                                                                {{ puc_marks_upload.intermediate_candidates|yesno:"Yes,No" }}
+                                                            </td>
+                                                            <td>
+                                                                {{ puc_marks_upload.physics }}
+                                                            </td>
+                                                            <td>
+                                                                {{ puc_marks_upload.chemistry }}
+                                                            </td>
+                                                            <td>
+                                                                {{ puc_marks_upload.mathematics_a }}
+                                                            </td>
+                                                            <td>
+                                                                {{ puc_marks_upload.mathematics_b|default:"-" }}
+                                                            </td>
+                                                            <td>
+                                                                {{ puc_marks_upload.electronics|default:"-" }}
+                                                            </td>
+                                                            <td>
+                                                                {{ puc_marks_upload.computer_science|default:"-" }}
+                                                            </td>
+                                                            <td>
+                                                                {{ puc_marks_upload.biotechnology|default:"-" }}
+                                                            </td>
+                                                            <td>
+                                                                {{ puc_marks_upload.aggregate_percentage }}
+                                                            </td>
+                                                            <td>
+                                                                {{ puc_marks_upload.comment|default:"-" }}
+                                                            </td>
+                                                            <td>
+                                                                {% if puc_marks_upload.upload_marks %}
+                                                                <a href="{{ puc_marks_upload.upload_marks.url }}" class="glightbox btn btn-icon btn-sm btn-info-transparent rounded-pill" data-gallery="gallery1" target="_blank">
+                                                                    <i class="ri-eye-line"></i>
+                                                                </a>
+                                                                <a href="{% url 'download-class12marks-image' puc_marks_upload.pk 'pucupoloadmarks' %}" class="btn btn-icon btn-sm btn-success-transparent rounded-pill">
+                                                                    <i class="ri-download-2-line"></i>
+                                                                </a>
+                                                                {% else %}
+                                                                -
+                                                                {% endif %}
+                                                            </td>
+                                                            {% if request.user|check_requested_permissions:'delete_pucupoloadmarks' %}
+                                                            <td>
+                                                                <div class="btn-list">
+                                                                    <button class="btn btn-sm btn-danger-light btn-icon contact-delete alert-parameter rounded-pill" id="alert-parameter{{ puc_marks_upload.pk }}" data-delete-url="{% url 'delete-puc-marks-upload' puc_marks_upload.pk %}"><i class="ri-delete-bin-line"></i></button>
+                                                                </div>
+                                                            </td>
+                                                            {% endif %}
+                                                        </tr>
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        <tr>
+                                                            <td>No data available.</td>
+                                                        </tr>
+                                                    {% endif %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="card-footer border-top-0">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                Showing {{puc_marks_upload_list.object_list.count}} Entries <i class="bi bi-arrow-right ms-2 fw-semibold"></i>
+                                            </div>
+                                            <div class="ms-auto">
+                                                <nav aria-label="Page navigation" class="pagination-style-1">
+                                                    <ul class="pagination mb-0">
+                                                        {%if puc_marks_upload_list.has_previous %}
+                                                        <li class="page-item">
+                                                            <a class="page-link" href="?page={{puc_marks_upload_list.previous_page_number}}">
+                                                                <i class="ri-arrow-left-s-line align-middle"></i>
+                                                            </a>
+                                                        </li>
+                                                        {% endif %} 
+                                                        {% for n in puc_marks_upload_list.paginator.page_range %}
+                                                            {% if puc_marks_upload_list.number == n %}
+                                                                <li class="page-item active"><a class="page-link">{{ n }}</a></li>
+                                                            {% elif n > puc_marks_upload_list.number|add:'-2' and n < puc_marks_upload_list.number|add:'2' %}
+                                                                <li class="page-item"><a class="page-link" href="?page={{ n }}">{{ n }}</a></li>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        {% if puc_marks_upload_list.has_next %}
+                                                        <li class="page-item">
+                                                            <a class="page-link">
+                                                                <i class="bi bi-three-dots"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li class="page-item"><a class="page-link" href="?page={{ puc_marks_upload_list.paginator.num_pages }}">{{ puc_marks_upload_list.paginator.num_pages }}</a></li>
+                                                        {% endif %} 
+                                                        {%if puc_marks_upload_list.has_next %}
+                                                        <li class="page-item">
+                                                            <a class="page-link" href="?page={{puc_marks_upload_list.next_page_number}}">
+                                                                <i class="ri-arrow-right-s-line align-middle"></i>
+                                                            </a>
+                                                        </li>
+                                                        {% endif %}
+                                                    </ul>
+                                                </nav>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--End::row-1 -->
+
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                const buttons = document.querySelectorAll('.alert-parameter');
+                                buttons.forEach(button => {
+                                    button.addEventListener('click', function () {
+                                        const deleteUrl = button.getAttribute('data-delete-url');
+                            
+                                        const swalWithBootstrapButtons = Swal.mixin({
+                                            customClass: {
+                                                confirmButton: 'btn btn-success ms-2',
+                                                cancelButton: 'btn btn-danger'
+                                            },
+                                            buttonsStyling: false
+                                        });
+                            
+                                        swalWithBootstrapButtons.fire({
+                                            title: 'Are you sure?',
+                                            text: "You won't be able to revert this!",
+                                            icon: 'warning',
+                                            showCancelButton: true,
+                                            confirmButtonText: 'Yes, delete it!',
+                                            cancelButtonText: 'No, cancel!',
+                                            reverseButtons: true
+                                        }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                window.location.href = deleteUrl;
+                                            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                                                swalWithBootstrapButtons.fire(
+                                                    'Cancelled',
+                                                    'Your data is safe',
+                                                    'error'
+                                                );
+                                            }
+                                        });
+                                    });
+                                });
+                            });
+                        </script>
+                        
+                        
+                    </div>
+
+{% endblock %}
+{% block footer %}
+             {% include 'main/copyright-footer.html' %}
+{% endblock %}
+{% block scripts %}
+        <!-- Sweetalerts JS -->
+        <script src="{% static 'assets/libs/sweetalert2/sweetalert2.min.js'%}"></script>
+        <script src="{% static 'assets/js/sweet-alerts.js'%}"></script>
+
+        <!-- Flat Picker JS -->
+        <script src="{% static 'assets/libs/flatpickr/flatpickr.min.js'%}"></script>
+
+        <!-- CRM Contacts JS -->
+        <script src="{% static 'assets/js/crm-leads.js'%}"></script>
+        
+        <!-- Gallery JS -->
+        <script src="{% static 'assets/libs/glightbox/js/glightbox.min.js'%}"></script>
+        <script src="{% static 'assets/js/gallery.js'%}"></script>
+{% endblock %}
+

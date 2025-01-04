@@ -1,0 +1,157 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load form_filters %}
+
+{% block styles %}
+
+<!-- Sweetalerts CSS -->
+<link rel="stylesheet" href="{% static 'assets/libs/sweetalert2/sweetalert2.min.css'%}">
+        
+        
+{% endblock %}
+
+{% block content %}
+                    <div class="container-lg my-5">
+                        <!-- Page Header -->
+                        <div class="d-md-flex d-block align-items-center justify-content-between my-4 page-header-breadcrumb">
+                            <h1 class="page-title fw-semibold fs-18 mb-0">The Amaatra Academy</h1>
+                            <div class="ms-md-1 ms-0">
+                                <nav>
+                                    <ol class="breadcrumb mb-0">
+                                        <li class="breadcrumb-item"><a href="#">Form</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">The Amaatra Academy</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                        <!-- Page Header Close -->
+                        <!-- Start::row-1 -->
+                        <div class="row">
+                            <!--category -->
+                            <div class="col-xl-4">
+                                <div class="card custom-card text-center team-card ">
+                                    <div class="card-body p-5">
+                                        <span class="avatar avatar-xxl mb-3 team-avatar">
+                                            <img src="{% static 'assets/images/pesu/logo/amaatra.png'%}" alt="">
+                                        </span>
+                                        <p class="fw-semibold fs-17 mb-0 text-default">The Amaatra Academy</p>
+                                        <span class="text-muted fs-14 text-primary fw-semibold">contact@amaatra.pes.edu</span>
+                                        <p class="text-muted mt-2 fs-13"> +91-99018 12003 | +91-96067 38555</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end category -->
+                            
+                            <div class="col-xl-8">
+                                <!-- Start:: row-1 -->
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="card custom-card">
+                                            <div class="card-header justify-content-between">
+                                                <div class="card-title">
+                                                   Amaatra
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <form method="post" action="">
+                                                    {% csrf_token %}
+                                                    <div class="col-xl-12">
+                                                        <div class="row gy-3">
+                                                            <div class="col-xl-12">
+                                                                <div class="row">
+                                                                    <div class="col-xl-12 mb-3">
+                                                                        <label for="contact-address-name" class="form-label ">Full Name<span class="text-danger">*</span></label>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-user"></i></span>
+                                                                            {{ form.name }}
+                                                                        </div>
+                                                                        {% if form.name.errors %}
+                                                                            <div class="text-danger">{{ form.name.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-6 mb-3">
+                                                                        <label for="contact-address-phone" class="form-label ">Phone No<span class="text-danger">*</span></label>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-phone"></i></span>
+                                                                            {{ form.phone_number}}
+                                                                        </div>
+                                                                        {% if form.phone_number.errors %}
+                                                                            <div class="text-danger">{{ form.phone_number.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <script>
+                                                                        const inputField = document.querySelector('input[name="phone_number"]');
+                                                                        inputField.addEventListener('input', () => {
+                                                                        if (inputField.value.length > 10) {
+                                                                            inputField.value = inputField.value.slice(0, 10);
+                                                                        }
+                                                                        });
+                                                                    </script>
+                                                                    <div class="col-xl-6 mb-3">
+                                                                        <label for="contact-address-phone" class="form-label ">Email<span class="text-danger">*</span></label>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-envelope"></i></span>
+                                                                            {{ form.email }}
+                                                                        </div>
+                                                                        {% if form.email.errors %}
+                                                                            <div class="text-danger">{{ form.email.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-12">
+                                                                <div class="col-xl-12 mb-3">
+                                                                    <label for="contact-address-phone" class="form-label ">Address<span class="text-danger">*</span></label>
+                                                                    <div class="input-group">
+                                                                        {{ form.address }}
+                                                                    </div>
+                                                                    {% if form.address.errors %}
+                                                                        <div class="text-danger">{{ form.address.errors|join:", " }}</div>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="d-grid gap-2 col-4">
+                                                                <button class="btn btn-primary-light btn-wave">Submit</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>                   
+                                                </from>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End:: row-1 -->
+                            </div>
+                            
+                            
+                        </div>
+                        <!--End::row-1 -->
+                    </div>    
+
+{% endblock %}
+{% block footer %}
+    {% include 'main/main-footer.html' %}
+{% endblock %}
+{% block scripts %}
+<!-- Sweetalerts JS -->
+<script src="{% static 'assets/libs/sweetalert2/sweetalert2.min.js'%}"></script>
+<script src="{% static 'assets/js/sweet-alerts.js'%}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        {% if messages %}
+            {% for message in messages %}
+                Swal.fire({
+                    icon: '{{ message.tags }}',
+                    title: '{{ message }}',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            {% endfor %}
+        {% endif %}
+    });
+</script>
+
+{% endblock %}
+

@@ -1,0 +1,118 @@
+{% load static %}
+{% load custom_tags %}
+<div class="col-xl-4">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card custom-card">
+                <div class="card-header">
+                    <div class="card-title">
+                        Category
+                    </div>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% if request.resolver_match.url_name == 'category' %}
+                        <li class="list-group-item">
+                            <a href="{% url 'category' 'general' %}">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center">
+                                        <div>
+                                            <span class="avatar avatar-xs bg-warning avatar-rounded">
+                                                <i class="bx bx-user-voice side-menu__icon"></i>
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span class="fw-semibold ms-2">General FAQs</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <span class="badge bg-light text-default rounded-pill">{{'general'|total_categoy}}</span>
+                                    </div>
+                                </div>    
+                            </a>       
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'category' 'placement' %}">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center">
+                                        <div>
+                                            <span class="avatar avatar-xs bg-danger avatar-rounded">
+                                                <i class="bx bx-medal side-menu__icon"></i>
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span class="fw-semibold ms-2">Placement FAQs</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <span class="badge bg-light text-default rounded-pill">{{'placement'|total_categoy}}</span>
+                                    </div>
+                                </div>    
+                            </a>      
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'category' 'hostel' %}">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center">
+                                        <div>
+                                            <span class="avatar avatar-xs bg-primary avatar-rounded">
+                                                <i class="bx bx-buildings side-menu__icon"></i>
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span class="fw-semibold ms-2">Hostel FAQs</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <span class="badge bg-light text-default rounded-pill">{{'hostel'|total_categoy}}</span>
+                                    </div>
+                                </div>    
+                            </a>      
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'category' 'transportation' %}">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center">
+                                        <div>
+                                            <span class="avatar avatar-xs bg-secondary avatar-rounded">
+                                                <i class="bx bx-bus side-menu__icon"></i>
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span class="fw-semibold ms-2">Transportation FAQs</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <span class="badge bg-light text-default rounded-pill">{{'transportation'|total_categoy}}</span>
+                                    </div>
+                                </div>    
+                            </a>      
+                        </li>
+                        {% endif %}
+                        {% for category in category_list %}
+                        <li class="list-group-item">
+                            <a href="{% url 'selected_category' model_name category|lower %}">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center">
+                                        <div>
+                                            <span class="avatar avatar-xs bg-warning avatar-rounded">
+                                                <i class="bx bx-user-voice side-menu__icon"></i>
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span class="fw-semibold ms-2">{{category}} FAQs</span>
+                                        </div>
+                                    </div>
+                                    {% comment %} <div>
+                                        <span class="badge bg-light text-default rounded-pill">{{'general'|total_categoy}}</span>
+                                    </div> {% endcomment %}
+                                </div>    
+                            </a>       
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

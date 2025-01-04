@@ -1,0 +1,36 @@
+{% load static %}
+          <form method="get" name="registerform" action="{% url 'category-search' %}">
+            <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModal" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-body">
+                      <div class="input-group">
+                        <a href="javascript:void(0);" class="input-group-text" id="Search-Grid"><i class="fe fe-search header-link-icon fs-18"></i></a>
+                        <input type="search" class="form-control border-0 px-2" name="search" value="" placeholder="Search" aria-label="Username">
+                      </div>
+                      {% comment %} <div class="my-4">
+                        <p class="font-weight-semibold text-muted mb-2">Recent Search :</p>
+                        <div class="p-2 border br-5 d-flex align-items-center text-muted mb-2 alert">
+                          <a href="notifications"><span>Notifications</span></a>
+                          <a class="ms-auto lh-1" href="javascript:void(0);" data-bs-dismiss="alert" aria-label="Close"><i class="fe fe-x text-muted"></i></a>
+                        </div>
+                        <div class="p-2 border br-5 d-flex align-items-center text-muted mb-2 alert">
+                          <a href="alerts"><span>Alerts</span></a>
+                          <a class="ms-auto lh-1" href="javascript:void(0);" data-bs-dismiss="alert" aria-label="Close"><i class="fe fe-x text-muted"></i></a>
+                        </div>
+                        <div class="p-2 border br-5 d-flex align-items-center text-muted mb-0 alert">
+                          <a href="mail"><span>Mail</span></a>
+                          <a class="ms-auto lh-1" href="javascript:void(0);" data-bs-dismiss="alert" aria-label="Close"><i class="fe fe-x text-muted"></i></a>
+                        </div>
+                      </div>
+                    </div> {% endcomment %}
+                    <div class="modal-footer">
+                      <div class="btn-group ms-auto">
+                        <button class="btn btn-sm btn-primary-light" type="submit">Search</button>
+                        {% comment %} <button class="btn btn-sm btn-primary">Clear Recents</button> {% endcomment %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </form>

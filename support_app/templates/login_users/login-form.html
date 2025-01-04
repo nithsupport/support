@@ -1,0 +1,80 @@
+{% extends 'login_users/custom-base.html' %}
+{% load static %}
+{% block title %} Login | Admissions {% endblock %}
+{% block styles %}
+
+
+
+{% endblock %}
+
+{% block body %}
+    <body>
+{% endblock %}
+
+
+{% block content %}
+
+        <div class="container">
+            <div class="row justify-content-center align-items-center authentication authentication-basic h-100">
+                <div class="col-xxl-4 col-xl-5 col-lg-5 col-md-6 col-sm-8 col-12">
+                    <div class="my-3 d-flex justify-content-center">
+                        <a href="{% url 'index' %}">
+                            <img src="{% static 'assets/images/pesu/logo/pes_support_logo.png'%}" alt="logo" class="desktop-logo">
+                            <img src="{% static 'assets/images/pesu/logo/pes_support_logo.png'%}" alt="logo" class="desktop-dark">
+                        </a>
+                    </div>
+                    {% if messages %}
+                    <div class="py-3 d-block">
+                        <div class="alert alert-danger text-center" role="alert">
+                            {% for message in messages %}
+                                <span class="fw-semibold fs-14 text-danger ms-1">{{ message }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="card custom-card">
+                        <div class="card-body p-5">
+                            <p class="h5 fw-semibold mb-2 text-center">Sign In</p>
+                            <form method="post" action="{% url 'login-page' %}" >
+                                {% csrf_token %}
+                                <div class="row gy-3">
+                                    <div class="col-xl-12">
+                                        <label for="signin-username" class="form-label text-default">User Name</label>
+                                        <input type="text" name="username" class="form-control form-control-lg" id="signin-username" placeholder="Username" required>
+                                    </div>
+                                    <div class="col-xl-12 mb-2">
+                                        <label for="signin-password" class="form-label text-default d-block">Password
+                                        </label>
+                                        <div class="input-group">
+                                            <input type="password" name="password" class="form-control form-control-lg" id="signin-password" placeholder="password" required>
+                                            <button class="btn btn-light" type="button" onclick="createpassword('signin-password',this)" id="button-addon2"><i class="ri-eye-off-line align-middle"></i></button>
+                                        </div>
+                                        {% comment %} <div class="mt-2">
+                                            <div class="form-check">
+                                                <input class="form-check-input" name="remember_me" type="checkbox" value="on" id="defaultCheck1">
+                                                <label class="form-check-label text-muted fw-normal" for="defaultCheck1">
+                                                    Remember password ?
+                                                </label>
+                                            </div>
+                                        </div> {% endcomment %}
+                                    </div>
+                                    <div class="col-xl-12 d-grid mt-2">
+                                        <button type="submit" class="btn btn-lg btn-primary">Sign In</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{% endblock %}
+
+{% block scripts %}
+
+        <!-- Show Password JS -->
+        <script src="{% static 'assets/js/show-password.js'%}"></script>
+
+{% endblock %}

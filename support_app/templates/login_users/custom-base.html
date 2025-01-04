@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-nav-layout="vertical" data-vertical-style="overlay" data-theme-mode="light" data-header-styles="light" data-menu-styles="light" data-toggled="close" loader="disable">
+
+    <head>
+        
+        <!-- Meta Data -->
+        <meta charset="UTF-8">
+        <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=no'>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title> Support | PES University </title>
+        <meta name="Description" content="Support | PES University">
+        <meta name="Author" content="Support | PES University">
+        <meta name="keywords" content="Support | PES University">
+     
+        <!-- Favicon -->
+        <link rel="icon" href="{% static 'assets/images/pesu/pes-favicon/favicon-16x16.png'%}" type="image/x-icon">
+        
+        <!-- Start::styles -->
+        {% include 'login_users/styles.html' %}
+        {% block styles %}{% endblock %}
+        <!-- End::styles -->  
+
+	</head>
+
+	{% block body %}{% endblock %}
+
+        <!-- Start::main-switcher -->
+        {% comment %} {% include 'login_users/custom-switcher.html' %} {% endcomment %}
+        <!-- End::main-switcher -->
+
+        <!-- Loader -->
+        <div id="loader" >
+            <img src="{% static 'assets/images/media/loader.svg'%}" alt="">
+        </div>
+        <!-- Loader -->
+
+        <!-- Start::main-content -->
+        {% block content %}
+
+        {% endblock %}
+        <!-- End::main-content -->
+
+
+        <!-- Start::scripts -->
+		{% include 'login_users/custom-scripts.html' %}
+        {% block scripts %}{% endblock %}
+		<!-- End::scripts -->
+          
+	</body>
+</html>

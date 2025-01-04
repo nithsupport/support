@@ -1,0 +1,176 @@
+  {% extends 'main/base.html' %}
+  {% load static %}
+  
+  {% block styles %}
+  
+          <link rel="stylesheet" href="{% static 'assets/libs/jsvectormap/css/jsvectormap.min.css'%}">
+  
+          <link rel="stylesheet" href="{% static 'assets/libs/swiper/swiper-bundle.min.css'%}">
+          
+  {% endblock %}
+  
+  {% block content %}
+  
+                      <div class="container-fluid">
+                          
+                          <div class="my-4">
+                              
+                          </div>
+  
+                          <!-- End::page-header -->
+                          
+                          <div class="row">
+                            <div class="col-xl-8">
+                                <div class="card custom-card">
+                                    <div class="card-header justify-content-between">
+                                        <div class="card-title">
+                                            Group Permissions
+                                        </div>
+                                        <div class="d-flex flex-wrap gap-2">
+                                            <div class="dropdown">
+                                                <button class="btn btn-primary btn-sm btn-wave waves-effect waves-light add-room-item" type="button" id="select-all-btn"><i class="bx bx-list-plus"></i> Select All </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <form method="post" action="" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div class="card-body">
+                                            <div class="col-xl-6">
+                                                <label for="contact-address-name" class="form-label ">Group Name<span class="text-danger"><span class="text-danger">*</span></span></label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" id="basic-addon3"><i class="bx bx-user"></i></span>
+                                                    {{ form.name }}
+                                                </div>
+                                                {% if form.name.errors %}
+                                                    <div class="text-danger">{{ form.name.errors|join:", " }}</div>
+                                                {% endif %}
+                                            </div>
+
+                                            <div class="table-responsive">
+                                                <table class="table text-nowrap table-hover border table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            {% comment %} <th scope="row" class="ps-4"><input class="form-check-input" type="checkbox" id="checkboxNoLabel1" value="" aria-label="..."></th> {% endcomment %}
+                                                            <th scope="col">Models | Table | Permissions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for permission in form.permissions %}
+                                                        <tr>
+                                                            {% comment %} <th scope="row" class="ps-4"><input class="form-check-input" type="checkbox" id="checkboxNoLabel2" value="" aria-label="..."></th> {% endcomment %}
+                                                            <td>{{ permission }}</td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                                <script>
+                                                    document.addEventListener('DOMContentLoaded', function() {
+                                                    var selectAllBtn = document.getElementById('select-all-btn');
+                                                    var permissionsCheckboxes = document.querySelectorAll('input[name="permissions"]');
+                                                
+                                                    selectAllBtn.addEventListener('click', function() {
+                                                        var isChecked = permissionsCheckboxes[0].checked;
+                                                        permissionsCheckboxes.forEach(function(checkbox) {
+                                                        checkbox.checked = !isChecked;
+                                                        });
+                                                
+                                                        isChecked = !isChecked;
+                                                        selectAllBtn.textContent = isChecked ? 'Deselect All' : 'Select All';
+                                                    });
+                                                    });
+                                                </script>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer">
+                                            <div class="d-grid gap-2 col-4">
+                                                <button class="btn btn-primary-light btn-wave">Submit</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            {% if user_groups %}
+                            <!--users -->
+                            <div class="col-xl-4">
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="card custom-card">
+                                            <div class="card-header justify-content-between">
+                                                <div class="card-title">
+                                                    Groups
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <ul class="list-unstyled daily-task-card">
+                                                    
+                                                    {% for group in user_groups %}
+                                                    <li>
+                                                        <div class="card border border-primary border-opacity-25 shadow-none custom-card mb-0">
+                                                            <div class="card-body">
+                                                                <p class="fs-14 fw-semibold mb-2 lh-1 d-flex align-items-center gap-2 justify-content-between">{{group.name|upper}}
+                                                                    <a aria-label="anchor" href="{% url 'edit-group-permissions' group.pk %}"><i class="bx bx-edit-alt side-menu__icon float-end text-primary fs-18"></i></a>
+                                                                </p>
+                                                                <div class="d-flex flex-wrap gap-2 mb-4">
+                                                                    {% for user in group.user_set.all %}
+                                                                    {% empty %}
+                                                                    <span class="badge bg-primary-transparent">
+                                                                        No users in this group.
+                                                                    </span>
+                                                                    {% endfor %}
+                                                                </div>
+                                                                <div class="avatar-list-stacked">
+                                                                    {% for user in group.user_set.all %}
+                                                                        {% if user.pic %}
+                                                                        <span class="avatar avatar-lg avatar-rounded">
+                                                                            <a href="{% url 'user-profile' user.username %}">
+                                                                                <img src="{{user.pic.url}}" alt="img">
+                                                                            </a>
+                                                                        </span>
+                                                                        {% else %}
+                                                                        <span class="avatar avatar-lg avatar-rounded">
+                                                                            <a href="{% url 'user-profile' user.username %}">
+                                                                                <img src="{% static 'assets/images/pesu/img/member.jpg'%}" alt="img">
+                                                                            </a>
+                                                                        </span>
+                                                                        {% endif %}
+                                                                    {% endfor %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end users -->
+                            {% endif %}
+                        </div>
+  
+                      </div>
+  {% endblock %}
+  {% block footer %}
+             {% include 'main/copyright-footer.html' %}
+{% endblock %}
+  {% block scripts %}
+  
+          <!-- JSVector Maps JS -->
+          <script src="{% static 'assets/libs/jsvectormap/js/jsvectormap.min.js'%}"></script>
+  
+          <!-- JSVector Maps MapsJS -->
+          <script src="{% static 'assets/libs/jsvectormap/maps/world-merc.js'%}"></script>
+  
+          <!-- Apex Charts JS -->
+          <script src="{% static 'assets/libs/apexcharts/apexcharts.min.js'%}"></script>
+  
+          <!-- Chartjs Chart JS -->
+          <script src="{% static 'assets/libs/chart.js/chart.min.js'%}"></script>
+  
+          <!-- CRM-Dashboard -->
+          <script src="{% static 'assets/js/crm-dashboard.js'%}"></script>
+  
+  {% endblock %}
+  

@@ -1,0 +1,1127 @@
+
+
+{% extends 'main/base.html' %}
+{% load static %}
+{% load custom_tags %}
+{% block styles %}
+
+        <link rel="stylesheet" href="{% static 'assets/libs/jsvectormap/css/jsvectormap.min.css'%}">
+
+        <link rel="stylesheet" href="{% static 'assets/libs/swiper/swiper-bundle.min.css'%}">
+        
+{% endblock %}
+
+{% block content %}
+
+                    <div class="container-fluid">
+                        
+                        <div class="my-4"></div>
+
+                        <!-- End::page-header -->
+                         <!-- Start::row-1 -->
+                        <div class="row">
+                            <div class="col-xl-3 col-md-4">
+                                <div class="row">
+                                    <div class="col-xxl-12 col-xl-12">
+                                        <div class="row">
+                                            <div class="col-xxl-12 col-xl-12">
+                                                <div class="col-xxl-12 col-xl-4">
+                                                    <div class="card custom-card">
+                                                        <div class="card-body">
+                                                            <div class="d-flex align-items-top justify-content-between mb-4">
+                                                                <div>
+                                                                    <span class="d-block fs-15 fw-semibold">My Profile</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="text-center mb-4">
+                                                                <div class="mb-3">
+                                                                    <span class="avatar avatar-xxl avatar-rounded circle-progress p-1">
+                                                                        {% if request.user.pic %}
+                                                                        <img src="{{request.user.pic.url}}" alt="">
+                                                                        {% else %}
+                                                                        <img src="{% static 'assets/images/pesu/img/member.jpg'%}" alt="">
+                                                                        {% endif %}
+                                                                    </span>
+                                                                </div>
+                                                                <div>
+                                                                    <h5 class="fw-semibold mb-0">{{request.user.name}}</h5>
+                                                                    <span class="fs-13 text-muted">{{request.user.username}}</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="btn-list text-center">
+                                                                {% if request.user|check_requested_permissions:'change_user' %}
+                                                                <a href="{% url 'edit-admin-user' request.user.username %}" class="btn btn-primary-light btn-sm">
+                                                                    Edit Profile
+                                                                </a>
+                                                                
+                                                                <a href="{% url 'user-profile' request.user.username %}" class="btn btn-primary btn-sm">
+                                                                    View Profile
+                                                                </a>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% if request.user|check_requested_permissions:'add_dailyreport' %}
+                                            <div class="col-xl-12">
+                                                <a href="{% url 'daily-report-list' request.user.username %}">
+                                                    <div class="card custom-card card-bg-primary text-fixed-white">
+                                                        <div class="card-body p-0">
+                                                            <div class="d-flex align-items-top p-4 flex-wrap">
+                                                                <div class="me-3 lh-1"> <span class="avatar avatar-md avatar-rounded bg-white text-primary shadow-sm">
+                                                                        <i class="ti ti-file fs-18"></i> </span> </div>
+                                                                <div class="flex-fill">
+                                                                    <h5 class="fw-semibold mb-1 text-fixed-white">Your Daily report</h5>
+                                                                    <p class="op-7 mb-0 fs-12">Click here</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            {% endif %}
+
+                                            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                                <div class="card custom-card hrm-main-card primary">
+                                                    <div class="card-body">
+                                                        <div class="d-flex align-items-top">
+                                                            <div class="me-3">
+                                                                <span class="avatar bg-primary">
+                                                                    <i class="bx bx-key side-menu__icon fs-18"></i>
+                                                                </span>
+                                                            </div>
+                                                            <div class="flex-fill">
+                                                                <span class="fw-semibold text-muted d-block mb-2">Change Password</span>
+                                                                <p class="mb-0">
+                                                                    <a href="{% url 'change-password-form' %}"><span class="badge bg-primary-transparent">Click here</span></a>
+                                                                </p>
+                                                            </div>
+                                                            <div>
+                                                                <span class="fs-14 fw-semibold text-success"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% if request.user.is_superuser %}
+                                            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                                <div class="card custom-card hrm-main-card primary">
+                                                    <div class="card-body">
+                                                        <div class="d-flex align-items-top">
+                                                            <div class="me-3">
+                                                                <span class="avatar bg-primary">
+                                                                    <i class="bx bx-question-mark side-menu__icon fs-18"></i>
+                                                                </span>
+                                                            </div>
+                                                            <div class="flex-fill">
+                                                                <span class="fw-semibold text-muted d-block mb-2">FAQs</span>
+                                                                <p class="mb-0">
+                                                                    <a href="{% url 'add-faq' %}"><span class="badge bg-primary-transparent">Add FAQ</span></a>
+                                                                    <a href="{% url 'faq-list' %}"><span class="badge bg-primary-transparent">FAQ List</span></a>
+                                                                </p>
+                                                            </div>
+                                                            <div>
+                                                                <span class="fs-14 fw-semibold text-success">{{"pesu"|total_faqs_count}}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            {% if request.user|check_requested_permissions:'add_group' %}
+                                            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                                <div class="card custom-card hrm-main-card primary">
+                                                    <div class="card-body">
+                                                        <div class="d-flex align-items-top">
+                                                            <div class="me-3">
+                                                                <span class="avatar bg-primary">
+                                                                    <i class="ri-team-line fs-18"></i>
+                                                                </span>
+                                                            </div>
+                                                            <div class="flex-fill">
+                                                                <span class="fw-semibold text-muted d-block mb-2">Groups</span>
+                                                                <p class="mb-0">
+                                                                    <a href="{% url 'create-group-permissions' %}"><span class="badge bg-primary-transparent">Click here</span></a>
+                                                                </p>
+                                                            </div>
+                                                            <div>
+                                                                <span class="fs-14 fw-semibold text-success">{{ ""|total_groups }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            {% if request.user|check_requested_permissions:'add_user' %}
+                                            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                                <div class="card custom-card hrm-main-card primary">
+                                                    <div class="card-body">
+                                                        <div class="d-flex align-items-top">
+                                                            <div class="me-3">
+                                                                <span class="avatar bg-primary">
+                                                                    <i class="bx bx-user side-menu__icon fs-18"></i>
+                                                                </span>
+                                                            </div>
+                                                            <div class="flex-fill">
+                                                                <span class="fw-semibold text-muted d-block mb-2">Users</span>
+                                                                <p class="mb-0">
+                                                                    <a href="{% url 'create-admin-user' %}"><span class="badge bg-primary-transparent">Click here</span></a>
+                                                                </p>
+                                                            </div>
+                                                            <div>
+                                                                <span class="fs-14 fw-semibold text-success">{{ ""|total_users }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-9 col-md-8">
+                                <div class="row">
+                                    {% if request.user|check_requested_permissions:'view_amaatra' or request.user|check_requested_permissions:'view_ssm' %}
+                                    <div class="col-12">
+                                        <div class="card custom-card">
+                                            <div class="card-header justify-content-between">
+                                                <div class="card-title">
+                                                    Request Call Back
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table text-nowrap table-striped table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Institution</th>
+                                                                <th scope="col">Today</th>
+                                                                <th scope="col">This Month</th>
+                                                                <th scope="col">This Year</th>
+                                                                <th scope="col">Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% if request.user|check_requested_permissions:'view_amaatra' %}
+                                                            <tr>
+                                                                <th scope="row">The Amaatra Academy</th>
+                                                                <td><span class="text-success">{{ "amaatra"|total_requested_count:"day" }}</span></td>
+                                                                <td>{{ "amaatra"|total_requested_count:"month" }}</td>
+                                                                <td>{{ "amaatra"|total_requested_count:"year" }}</td>
+                                                                <td>
+                                                                    <div class="hstack gap-2 fs-15">
+                                                                        <a href="{% url 'amaatra-form' %}">
+                                                                            <button class="btn btn-sm btn-primary btn-wave">
+                                                                                <i class="bx bxs-file align-middle me-2 d-inline-block"></i>Form
+                                                                            </button>
+                                                                        </a>
+                                                                        <a href="{% url 'amaatra-list' %}">
+                                                                            <button class="btn btn-sm btn-success btn-wave">
+                                                                                <i class="bx bxs-data align-middle me-2 d-inline-block"></i>Data
+                                                                            </button>
+                                                                        </a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            {% endif %}
+                                                            {% if request.user|check_requested_permissions:'view_ssm' %}
+                                                            <tr>
+                                                                <th scope="row">SSM Public School</th>
+                                                                <td><span class="text-success">{{ "ssm"|total_requested_count:"day" }}</span></td>
+                                                                <td>{{ "ssm"|total_requested_count:"month" }}</td>
+                                                                <td>{{ "ssm"|total_requested_count:"year" }}</td>
+                                                                <td>
+                                                                    <div class="hstack gap-2 fs-15">
+                                                                        <a href="{% url 'ssm-form' %}">
+                                                                            <button class="btn btn-sm btn-primary btn-wave">
+                                                                                <i class="bx bxs-file align-middle me-2 d-inline-block"></i>Form
+                                                                            </button>
+                                                                        </a>
+                                                                        <a href="{% url 'ssm-list' %}">
+                                                                            <button class="btn btn-sm btn-success btn-wave">
+                                                                                <i class="bx bxs-data align-middle me-2 d-inline-block"></i>Data
+                                                                            </button>
+                                                                        </a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            {% endif %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    {% if request.user|check_requested_permissions:'view_grievance' or request.user|check_requested_permissions:'view_cetranking' or request.user|check_requested_permissions:'view_rrtransportation' or request.user|check_requested_permissions:'view_ectransportation' or request.user|check_requested_permissions:'view_pucupoloadmarks' or request.user|check_requested_permissions:'view_dailyreport' %}
+                                    <div class="col-12">
+                                        <div class="card custom-card">
+                                            <div class="card-header justify-content-between">
+                                                <div class="card-title">
+                                                    Web Forms
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table text-nowrap table-striped table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Form</th>
+                                                                <th scope="col">URL</th>
+                                                                <th scope="col">Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% if request.user|check_requested_permissions:'view_cetranking' %}
+                                                            <tr>
+                                                                <th scope="row">CET Ranking</th>
+                                                                <td>
+                                                                    {{ request.scheme }}://{{ request.get_host }}{% url 'cet-ranking-form' %}
+                                                                </td>
+                                                                <td>
+                                                                    <div class="hstack gap-2 fs-15">
+                                                                        <a href="{% url 'cet-ranking-form' %}">
+                                                                            <button class="btn btn-sm btn-primary btn-wave">
+                                                                                <i class="bx bxs-file align-middle me-2 d-inline-block"></i>Form
+                                                                            </button>
+                                                                        </a>
+                                                                        <a href="{% url 'cet-ranking-list' %}">
+                                                                            <button class="btn btn-sm btn-success btn-wave">
+                                                                                <i class="bx bxs-data align-middle me-2 d-inline-block"></i>Data
+                                                                            </button>
+                                                                        </a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            {% endif %}
+                                                            {% if request.user|check_requested_permissions:'view_comedk' %}
+                                                            <tr>
+                                                                <th scope="row">COMEDK Score</th>
+                                                                <td>{{ request.scheme }}://{{ request.get_host }}{% url 'comedk-ranking-form' %}</td>
+                                                                <td>
+                                                                    <div class="hstack gap-2 fs-15">
+                                                                        <a href="{% url 'comedk-ranking-form' %}">
+                                                                            <button class="btn btn-sm btn-primary btn-wave">
+                                                                                <i class="bx bxs-file align-middle me-2 d-inline-block"></i>Form
+                                                                            </button>
+                                                                        </a>
+                                                                        <a href="{% url 'comedk-ranking-list' %}">
+                                                                            <button class="btn btn-sm btn-success btn-wave">
+                                                                                <i class="bx bxs-data align-middle me-2 d-inline-block"></i>Data
+                                                                            </button>
+                                                                        </a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            {% endif %}
+                                                            {% if request.user|check_requested_permissions:'view_ectransportation' %}
+                                                            <tr>
+                                                                <th scope="row">EC Transportation</th>
+                                                                <td>{{ request.scheme }}://{{ request.get_host }}{% url 'ec-transportation-form' %}</td>
+                                                                <td>
+                                                                    <div class="hstack gap-2 fs-15">
+                                                                        <a href="{% url 'ec-transportation-form' %}">
+                                                                            <button class="btn btn-sm btn-primary btn-wave">
+                                                                                <i class="bx bxs-file align-middle me-2 d-inline-block"></i>Form
+                                                                            </button>
+                                                                        </a>
+                                                                        <a href="{% url 'ec-transportation-list' %}">
+                                                                            <button class="btn btn-sm btn-success btn-wave">
+                                                                                <i class="bx bxs-data align-middle me-2 d-inline-block"></i>Data
+                                                                            </button>
+                                                                        </a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            {% endif %}
+                                                            {% if request.user|check_requested_permissions:'view_grievance' %}
+                                                            <tr>
+                                                                <th scope="row">Grievance</th>
+                                                                <td>{{ request.scheme }}://{{ request.get_host }}{% url 'grievance-form' %}</td>
+                                                                <td>
+                                                                    <div class="hstack gap-2 fs-15">
+                                                                        <a href="{% url 'grievance-form' %}">
+                                                                            <button class="btn btn-sm btn-primary btn-wave">
+                                                                                <i class="bx bxs-file align-middle me-2 d-inline-block"></i>Form
+                                                                            </button>
+                                                                        </a>
+                                                                        <a href="{% url 'grievance-list' %}">
+                                                                            <button class="btn btn-sm btn-success btn-wave">
+                                                                                <i class="bx bxs-data align-middle me-2 d-inline-block"></i>Data
+                                                                            </button>
+                                                                        </a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            {% endif %}
+                                                            {% if request.user|check_requested_permissions:'view_jeemain1' %}
+                                                            <tr>
+                                                                <th scope="row">JEE Main 1 Score</th>
+                                                                <td>{{ request.scheme }}://{{ request.get_host }}{% url 'jee-main1-form' %}</td>
+                                                                <td>
+                                                                    <div class="hstack gap-2 fs-15">
+                                                                        <a href="{% url 'jee-main1-form' %}">
+                                                                            <button class="btn btn-sm btn-primary btn-wave">
+                                                                                <i class="bx bxs-file align-middle me-2 d-inline-block"></i>Form
+                                                                            </button>
+                                                                        </a>
+                                                                        <a href="{% url 'jee-main1-list' %}">
+                                                                            <button class="btn btn-sm btn-success btn-wave">
+                                                                                <i class="bx bxs-data align-middle me-2 d-inline-block"></i>Data
+                                                                            </button>
+                                                                        </a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            {% endif %}
+                                                            {% if request.user|check_requested_permissions:'view_jeemain2' %}
+                                                            <tr>
+                                                                <th scope="row">JEE Main 2 Score</th>
+                                                                <td>{{ request.scheme }}://{{ request.get_host }}{% url 'jee-main2-form' %}</td>
+                                                                <td>
+                                                                    <div class="hstack gap-2 fs-15">
+                                                                        <a href="{% url 'jee-main2-form' %}">
+                                                                            <button class="btn btn-sm btn-primary btn-wave">
+                                                                                <i class="bx bxs-file align-middle me-2 d-inline-block"></i>Form
+                                                                            </button>
+                                                                        </a>
+                                                                        <a href="{% url 'jee-main2-list' %}">
+                                                                            <button class="btn btn-sm btn-success btn-wave">
+                                                                                <i class="bx bxs-data align-middle me-2 d-inline-block"></i>Data
+                                                                            </button>
+                                                                        </a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            {% endif %}
+                                                            {% if request.user|check_requested_permissions:'view_pucupoloadmarks' %}
+                                                            <tr>
+                                                                <th scope="row">Class 12 Marks</th>
+                                                                <td>{{ request.scheme }}://{{ request.get_host }}{% url 'puc-marks-upload-form' %}</td>
+                                                                <td>
+                                                                    <div class="hstack gap-2 fs-15">
+                                                                        <a href="{% url 'puc-marks-upload-form' %}">
+                                                                            <button class="btn btn-sm btn-primary btn-wave">
+                                                                                <i class="bx bxs-file align-middle me-2 d-inline-block"></i>Form
+                                                                            </button>
+                                                                        </a>
+                                                                        <a href="{% url 'puc-marks-upload-list' %}">
+                                                                            <button class="btn btn-sm btn-success btn-wave">
+                                                                                <i class="bx bxs-data align-middle me-2 d-inline-block"></i>Data
+                                                                            </button>
+                                                                        </a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            {% endif %}
+                                                            {% if request.user|check_requested_permissions:'view_rrtransportation' %}
+                                                            <tr>
+                                                                <th scope="row">RR Transportation</th>
+                                                                <td>{{ request.scheme }}://{{ request.get_host }}{% url 'rr-transportation-form' %}</td>
+                                                                <td>
+                                                                    <div class="hstack gap-2 fs-15">
+                                                                        <a href="{% url 'rr-transportation-form' %}">
+                                                                            <button class="btn btn-sm btn-primary btn-wave">
+                                                                                <i class="bx bxs-file align-middle me-2 d-inline-block"></i>Form
+                                                                            </button>
+                                                                        </a>
+                                                                        <a href="{% url 'rr-transportation-list' %}">
+                                                                            <button class="btn btn-sm btn-success btn-wave">
+                                                                                <i class="bx bxs-data align-middle me-2 d-inline-block"></i>Data
+                                                                            </button>
+                                                                        </a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            {% endif %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    {% if request.user|check_requested_permissions:'view_amaatrafaq' or request.user|check_requested_permissions:'view_faq' or request.user|check_requested_permissions:'view_pesimsrfaq' or request.user|check_requested_permissions:'view_pesuimsrfaq' or request.user|check_requested_permissions:'view_peshospitalfaq' or request.user|check_requested_permissions:'view_pespublicschoolfaq' or request.user|check_requested_permissions:'view_ssmfaq' %}
+                                    <div class="col-12">
+                                        <div class="card custom-card">
+                                            <div class="card-header justify-content-between">
+                                                <div class="card-title">
+                                                    FAQs
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table text-nowrap table-striped table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Institution</th>
+                                                                <th scope="col">Total</th>
+                                                                <th scope="col">Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% if request.user|check_requested_permissions:'view_amaatrafaq' %}
+                                                            <tr>
+                                                                <th scope="row">The Amaatra Academy</th>
+                                                                <th scope="row">{{"amaatra"|total_faqs_count}}</th>
+                                                                <td>
+                                                                    <div class="hstack gap-2 fs-15">
+                                                                        <a href="{% url 'add-all-faq' 'amaatra' %}">
+                                                                            <button class="btn btn-sm btn-warning btn-wave">
+                                                                                <i class="bx bx-add-to-queue align-middle me-2 d-inline-block"></i>Add
+                                                                            </button>
+                                                                        </a>
+                                                                        <a href="{% url 'selected-faq-list' 'amaatra' %}">
+                                                                            <button class="btn btn-sm btn-info btn-wave">
+                                                                                <i class="bx bx-list-check align-middle me-2 d-inline-block"></i>FAQs
+                                                                            </button>
+                                                                        </a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            {% endif %}
+                                                            {% if request.user|check_requested_permissions:'view_faq' %}
+                                                            <tr>
+                                                                <th scope="row">PES University</th>
+                                                                <th scope="row">{{"pesu"|total_faqs_count}}</th>
+                                                                <td>
+                                                                    <div class="hstack gap-2 fs-15">
+                                                                        <a href="{% url 'add-faq' %}">
+                                                                            <button class="btn btn-sm btn-warning btn-wave">
+                                                                                <i class="bx bx-add-to-queue align-middle me-2 d-inline-block"></i>Add
+                                                                            </button>
+                                                                        </a>
+                                                                        <a href="{% url 'faq-list' %}">
+                                                                            <button class="btn btn-sm btn-info btn-wave">
+                                                                                <i class="bx bx-list-check align-middle me-2 d-inline-block"></i>FAQs
+                                                                            </button>
+                                                                        </a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            {% endif %}
+                                                            {% if request.user|check_requested_permissions:'view_pesimsrfaq' %}
+                                                            <tr>
+                                                                <th scope="row">PESIMSR</th>
+                                                                <th scope="row">{{"pesimsr"|total_faqs_count}}</th>
+                                                                <td>
+                                                                    <div class="hstack gap-2 fs-15">
+                                                                        <a href="{% url 'add-all-faq' 'pesimsr' %}">
+                                                                            <button class="btn btn-sm btn-warning btn-wave">
+                                                                                <i class="bx bx-add-to-queue align-middle me-2 d-inline-block"></i>Add
+                                                                            </button>
+                                                                        </a>
+                                                                        <a href="{% url 'selected-faq-list' 'pesimsr' %}">
+                                                                            <button class="btn btn-sm btn-info btn-wave">
+                                                                                <i class="bx bx-list-check align-middle me-2 d-inline-block"></i>FAQs
+                                                                            </button>
+                                                                        </a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            {% endif %}
+                                                            {% if request.user|check_requested_permissions:'view_pesuimsrfaq' %}
+                                                            <tr>
+                                                                <th scope="row">PESUIMSR</th>
+                                                                <th scope="row">{{"pesuimsr"|total_faqs_count}}</th>
+                                                                <td>
+                                                                    <div class="hstack gap-2 fs-15">
+                                                                        <a href="{% url 'add-all-faq' 'pesuimsr' %}">
+                                                                            <button class="btn btn-sm btn-warning btn-wave">
+                                                                                <i class="bx bx-add-to-queue align-middle me-2 d-inline-block"></i>Add
+                                                                            </button>
+                                                                        </a>
+                                                                        <a href="{% url 'selected-faq-list' 'pesuimsr' %}">
+                                                                            <button class="btn btn-sm btn-info btn-wave">
+                                                                                <i class="bx bx-list-check align-middle me-2 d-inline-block"></i>FAQs
+                                                                            </button>
+                                                                        </a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            {% endif %}
+                                                            {% if request.user|check_requested_permissions:'view_peshospitalfaq' %}
+                                                            <tr>
+                                                                <th scope="row">PES Hospital</th>
+                                                                <th scope="row">{{"peshospital"|total_faqs_count}}</th>
+                                                                <td>
+                                                                    <div class="hstack gap-2 fs-15">
+                                                                        <a href="{% url 'add-all-faq' 'peshospital' %}">
+                                                                            <button class="btn btn-sm btn-warning btn-wave">
+                                                                                <i class="bx bx-add-to-queue align-middle me-2 d-inline-block"></i>Add
+                                                                            </button>
+                                                                        </a>
+                                                                        <a href="{% url 'selected-faq-list' 'peshospital' %}">
+                                                                            <button class="btn btn-sm btn-info btn-wave">
+                                                                                <i class="bx bx-list-check align-middle me-2 d-inline-block"></i>FAQs
+                                                                            </button>
+                                                                        </a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            {% endif %}
+                                                            {% if request.user|check_requested_permissions:'view_pespublicschoolfaq' %}
+                                                            <tr>
+                                                                <th scope="row">PES Public School</th>
+                                                                <th scope="row">{{"pespublicschool"|total_faqs_count}}</th>
+                                                                <td>
+                                                                    <div class="hstack gap-2 fs-15">
+                                                                        <a href="{% url 'add-all-faq' 'pespublicschool' %}">
+                                                                            <button class="btn btn-sm btn-warning btn-wave">
+                                                                                <i class="bx bx-add-to-queue align-middle me-2 d-inline-block"></i>Add
+                                                                            </button>
+                                                                        </a>
+                                                                        <a href="{% url 'selected-faq-list' 'pespublicschool' %}">
+                                                                            <button class="btn btn-sm btn-info btn-wave">
+                                                                                <i class="bx bx-list-check align-middle me-2 d-inline-block"></i>FAQs
+                                                                            </button>
+                                                                        </a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            {% endif %}
+                                                            {% if request.user|check_requested_permissions:'view_ssmfaq' %}
+                                                            <tr>
+                                                                <th scope="row">SSM Public School</th>
+                                                                <th scope="row">{{"ssm"|total_faqs_count}}</th>
+                                                                <td>
+                                                                    <div class="hstack gap-2 fs-15">
+                                                                        <a href="{% url 'add-all-faq' 'ssm' %}">
+                                                                            <button class="btn btn-sm btn-warning btn-wave">
+                                                                                <i class="bx bx-add-to-queue align-middle me-2 d-inline-block"></i>Add
+                                                                            </button>
+                                                                        </a>
+                                                                        <a href="{% url 'selected-faq-list' 'ssm' %}">
+                                                                            <button class="btn btn-sm btn-info btn-wave">
+                                                                                <i class="bx bx-list-check align-middle me-2 d-inline-block"></i>FAQs
+                                                                            </button>
+                                                                        </a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            {% endif %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    {% endif %}
+
+
+                                    {% if request.user.is_superuser %}
+                                    {% if request.user|check_requested_permissions:'view_amaatra' or request.user|check_requested_permissions:'view_grievance' or request.user|check_requested_permissions:'view_ssm' or request.user|check_requested_permissions:'view_cetranking' or request.user|check_requested_permissions:'view_rrtransportation' or request.user|check_requested_permissions:'view_ectransportation' or request.user|check_requested_permissions:'view_pucupoloadmarks' or request.user|check_requested_permissions:'view_dailyreport' %}
+                                    <div class="col-xl-12">
+                                        <div class="card custom-card">
+                                            <div class="card-header justify-content-between">
+                                                <div class="card-title">
+                                                    Data
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row gy-xl-0 gy-3">
+                                                    {% if request.user|check_requested_permissions:'view_amaatra' %}
+                                                    <div class="col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
+                                                        <div>
+                                                            <a href="{% url 'amaatra-list' %}" class="category-link primary text-center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="category-svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M5 5h4v6H5zm10 8h4v6h-4zM5 17h4v2H5zM15 5h4v2h-4z" opacity=".3"></path><path d="M3 13h8V3H3v10zm2-8h4v6H5V5zm8 16h8V11h-8v10zm2-8h4v6h-4v-6zM13 3v6h8V3h-8zm6 4h-4V5h4v2zM3 21h8v-6H3v6zm2-4h4v2H5v-2z"></path></svg>
+                                                                <p class="fs-14 mb-1 text-default fw-semibold">The Amaatra Academy</p>
+                                                                <span class="fs-11 text-muted">Data</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if request.user|check_requested_permissions:'view_grievance' %}
+                                                    <div class="col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
+                                                        <div>
+                                                            <a href="{% url 'grievance-list' %}" class="category-link primary text-center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="category-svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M5 5h4v6H5zm10 8h4v6h-4zM5 17h4v2H5zM15 5h4v2h-4z" opacity=".3"></path><path d="M3 13h8V3H3v10zm2-8h4v6H5V5zm8 16h8V11h-8v10zm2-8h4v6h-4v-6zM13 3v6h8V3h-8zm6 4h-4V5h4v2zM3 21h8v-6H3v6zm2-4h4v2H5v-2z"></path></svg>
+                                                                <p class="fs-14 mb-1 text-default fw-semibold">Grievance</p>
+                                                                <span class="fs-11 text-muted">Data</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if request.user|check_requested_permissions:'view_ssm' %}
+                                                    <div class="col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
+                                                        <div>
+                                                            <a href="{% url 'ssm-list' %}" class="category-link primary text-center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="category-svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M5 5h4v6H5zm10 8h4v6h-4zM5 17h4v2H5zM15 5h4v2h-4z" opacity=".3"></path><path d="M3 13h8V3H3v10zm2-8h4v6H5V5zm8 16h8V11h-8v10zm2-8h4v6h-4v-6zM13 3v6h8V3h-8zm6 4h-4V5h4v2zM3 21h8v-6H3v6zm2-4h4v2H5v-2z"></path></svg>
+                                                                <p class="fs-14 mb-1 text-default fw-semibold">SSM</p>
+                                                                <span class="fs-11 text-muted">Data</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if request.user|check_requested_permissions:'view_cetranking' %}
+                                                    <div class="col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
+                                                        <div>
+                                                            <a href="{% url 'cet-ranking-list' %}" class="category-link primary text-center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="category-svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M5 5h4v6H5zm10 8h4v6h-4zM5 17h4v2H5zM15 5h4v2h-4z" opacity=".3"></path><path d="M3 13h8V3H3v10zm2-8h4v6H5V5zm8 16h8V11h-8v10zm2-8h4v6h-4v-6zM13 3v6h8V3h-8zm6 4h-4V5h4v2zM3 21h8v-6H3v6zm2-4h4v2H5v-2z"></path></svg>
+                                                                <p class="fs-14 mb-1 text-default fw-semibold">CET Ranking</p>
+                                                                <span class="fs-11 text-muted">Data</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if request.user|check_requested_permissions:'view_jeemain1' %}
+                                                    <div class="col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
+                                                        <div>
+                                                            <a href="{% url 'jee-main1-list' %}" class="category-link primary text-center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="category-svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M5 5h4v6H5zm10 8h4v6h-4zM5 17h4v2H5zM15 5h4v2h-4z" opacity=".3"></path><path d="M3 13h8V3H3v10zm2-8h4v6H5V5zm8 16h8V11h-8v10zm2-8h4v6h-4v-6zM13 3v6h8V3h-8zm6 4h-4V5h4v2zM3 21h8v-6H3v6zm2-4h4v2H5v-2z"></path></svg>
+                                                                <p class="fs-14 mb-1 text-default fw-semibold">JEE Main 1 Score</p>
+                                                                <span class="fs-11 text-muted">Data</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if request.user|check_requested_permissions:'view_jeemain1' %}
+                                                    <div class="col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
+                                                        <div>
+                                                            <a href="{% url 'jee-main2-list' %}" class="category-link primary text-center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="category-svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M5 5h4v6H5zm10 8h4v6h-4zM5 17h4v2H5zM15 5h4v2h-4z" opacity=".3"></path><path d="M3 13h8V3H3v10zm2-8h4v6H5V5zm8 16h8V11h-8v10zm2-8h4v6h-4v-6zM13 3v6h8V3h-8zm6 4h-4V5h4v2zM3 21h8v-6H3v6zm2-4h4v2H5v-2z"></path></svg>
+                                                                <p class="fs-14 mb-1 text-default fw-semibold">JEE Main 2 Score</p>
+                                                                <span class="fs-11 text-muted">Data</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if request.user|check_requested_permissions:'view_comedk' %}
+                                                    <div class="col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
+                                                        <div>
+                                                            <a href="{% url 'comedk-ranking-list' %}" class="category-link primary text-center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="category-svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M5 5h4v6H5zm10 8h4v6h-4zM5 17h4v2H5zM15 5h4v2h-4z" opacity=".3"></path><path d="M3 13h8V3H3v10zm2-8h4v6H5V5zm8 16h8V11h-8v10zm2-8h4v6h-4v-6zM13 3v6h8V3h-8zm6 4h-4V5h4v2zM3 21h8v-6H3v6zm2-4h4v2H5v-2z"></path></svg>
+                                                                <p class="fs-14 mb-1 text-default fw-semibold">COMEDK Score</p>
+                                                                <span class="fs-11 text-muted">Data</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if request.user|check_requested_permissions:'view_rrtransportation' %}
+                                                    <div class="col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
+                                                        <div>
+                                                            <a href="{% url 'rr-transportation-list' %}" class="category-link primary text-center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="category-svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M5 5h4v6H5zm10 8h4v6h-4zM5 17h4v2H5zM15 5h4v2h-4z" opacity=".3"></path><path d="M3 13h8V3H3v10zm2-8h4v6H5V5zm8 16h8V11h-8v10zm2-8h4v6h-4v-6zM13 3v6h8V3h-8zm6 4h-4V5h4v2zM3 21h8v-6H3v6zm2-4h4v2H5v-2z"></path></svg>
+                                                                <p class="fs-14 mb-1 text-default fw-semibold">RR Transportation</p>
+                                                                <span class="fs-11 text-muted">Data</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if request.user|check_requested_permissions:'view_ectransportation' %}
+                                                    <div class="col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
+                                                        <div>
+                                                            <a href="{% url 'ec-transportation-list' %}" class="category-link primary text-center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="category-svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M5 5h4v6H5zm10 8h4v6h-4zM5 17h4v2H5zM15 5h4v2h-4z" opacity=".3"></path><path d="M3 13h8V3H3v10zm2-8h4v6H5V5zm8 16h8V11h-8v10zm2-8h4v6h-4v-6zM13 3v6h8V3h-8zm6 4h-4V5h4v2zM3 21h8v-6H3v6zm2-4h4v2H5v-2z"></path></svg>
+                                                                <p class="fs-14 mb-1 text-default fw-semibold">EC Transportation</p>
+                                                                <span class="fs-11 text-muted">Data</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if request.user|check_requested_permissions:'view_pucupoloadmarks' %}
+                                                    <div class="col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
+                                                        <div>
+                                                            <a href="{% url 'puc-marks-upload-list' %}" class="category-link primary text-center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="category-svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M5 5h4v6H5zm10 8h4v6h-4zM5 17h4v2H5zM15 5h4v2h-4z" opacity=".3"></path><path d="M3 13h8V3H3v10zm2-8h4v6H5V5zm8 16h8V11h-8v10zm2-8h4v6h-4v-6zM13 3v6h8V3h-8zm6 4h-4V5h4v2zM3 21h8v-6H3v6zm2-4h4v2H5v-2z"></path></svg>
+                                                                <p class="fs-14 mb-1 text-default fw-semibold">Class 12 Marks</p>
+                                                                <span class="fs-11 text-muted">Data</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if request.user|check_requested_permissions:'view_dailyreport' %}
+                                                    <div class="col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
+                                                        <div>
+                                                            <a href="{% url 'all-daily-report-list' %}" class="category-link primary text-center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="category-svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M5 5h4v6H5zm10 8h4v6h-4zM5 17h4v2H5zM15 5h4v2h-4z" opacity=".3"></path><path d="M3 13h8V3H3v10zm2-8h4v6H5V5zm8 16h8V11h-8v10zm2-8h4v6h-4v-6zM13 3v6h8V3h-8zm6 4h-4V5h4v2zM3 21h8v-6H3v6zm2-4h4v2H5v-2z"></path></svg>
+                                                                <p class="fs-14 mb-1 text-default fw-semibold">Daily Report</p>
+                                                                <span class="fs-11 text-muted">Data</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    
+
+                                    <div class="col-xl-12">
+                                        <div class="card custom-card">
+                                            <div class="card-header">
+                                                <div class="card-title">Applicants Summary</div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row gy-md-0 gy-3">
+                                                    <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                                                        <div class="d-flex align-items-top">
+                                                            <div class="me-3">
+                                                                <span class="avatar avatar-rounded bg-light text-primary">
+                                                                    <i class="ti ti-files fs-18"></i>
+                                                                </span>
+                                                            </div>
+                                                            <div>
+                                                                <span class="d-block mb-1 text-muted">Total Form</span>
+                                                                <h6 class="fw-semibold mb-0">10</h6>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                                                        <div class="d-flex align-items-top">
+                                                            <div class="me-3">
+                                                                <span class="avatar avatar-rounded bg-light text-secondary">
+                                                                    <i class="ti ti-file-check fs-18"></i>
+                                                                </span>
+                                                            </div>
+                                                            <div>
+                                                                <span class="d-block mb-1 text-muted">Total Data</span>
+                                                                <h6 class="fw-semibold mb-0">{{""|total_database_count}}</h6>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                                                        <div class="d-flex align-items-top">
+                                                            <div class="me-3">
+                                                                <span class="avatar avatar-rounded bg-light text-warning">
+                                                                    <i class="ti ti-file-dislike fs-18"></i>
+                                                                </span>
+                                                            </div>
+                                                            <div>
+                                                                <span class="d-block mb-1 text-muted">FAQ</span>
+                                                                <h6 class="fw-semibold mb-0">{{"pesu"|total_faqs_count}}</h6>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {% if request.user|check_requested_permissions:'add_amaatra' or request.user|check_requested_permissions:'add_grievance' or request.user|check_requested_permissions:'add_ssm' or request.user|check_requested_permissions:'add_cetranking' or request.user|check_requested_permissions:'add_rrtransportation' or request.user|check_requested_permissions:'add_ectransportation' or request.user|check_requested_permissions:'add_pucupoloadmarks' or request.user|check_requested_permissions:'add_dailyreport' %}
+                                    <div class="col-xl-12">
+                                        <div class="card custom-card">
+                                            <div class="card-header justify-content-between">
+                                                <div class="card-title">
+                                                    Form
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row gy-xl-0 gy-3">
+                                                    {% if request.user|check_requested_permissions:'add_amaatra' %}
+                                                    <div class="col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
+                                                        <div>
+                                                            <a href="{% url 'amaatra-form' %}" class="category-link primary text-center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="category-svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M5 5h4v6H5zm10 8h4v6h-4zM5 17h4v2H5zM15 5h4v2h-4z" opacity=".3"></path><path d="M3 13h8V3H3v10zm2-8h4v6H5V5zm8 16h8V11h-8v10zm2-8h4v6h-4v-6zM13 3v6h8V3h-8zm6 4h-4V5h4v2zM3 21h8v-6H3v6zm2-4h4v2H5v-2z"></path></svg>
+                                                                <p class="fs-14 mb-1 text-default fw-semibold">The Amaatra Academy</p>
+                                                                <span class="fs-11 text-muted">Form</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if request.user|check_requested_permissions:'add_grievance' %}
+                                                    <div class="col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
+                                                        <div>
+                                                            <a href="{% url 'grievance-form' %}" class="category-link primary text-center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="category-svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M5 5h4v6H5zm10 8h4v6h-4zM5 17h4v2H5zM15 5h4v2h-4z" opacity=".3"></path><path d="M3 13h8V3H3v10zm2-8h4v6H5V5zm8 16h8V11h-8v10zm2-8h4v6h-4v-6zM13 3v6h8V3h-8zm6 4h-4V5h4v2zM3 21h8v-6H3v6zm2-4h4v2H5v-2z"></path></svg>
+                                                                <p class="fs-14 mb-1 text-default fw-semibold">Grievance</p>
+                                                                <span class="fs-11 text-muted">Form</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if request.user|check_requested_permissions:'add_ssm' %}
+                                                    <div class="col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
+                                                        <div>
+                                                            <a href="{% url 'ssm-form' %}" class="category-link primary text-center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="category-svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M5 5h4v6H5zm10 8h4v6h-4zM5 17h4v2H5zM15 5h4v2h-4z" opacity=".3"></path><path d="M3 13h8V3H3v10zm2-8h4v6H5V5zm8 16h8V11h-8v10zm2-8h4v6h-4v-6zM13 3v6h8V3h-8zm6 4h-4V5h4v2zM3 21h8v-6H3v6zm2-4h4v2H5v-2z"></path></svg>
+                                                                <p class="fs-14 mb-1 text-default fw-semibold">SSM</p>
+                                                                <span class="fs-11 text-muted">Form</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if request.user|check_requested_permissions:'add_cetranking' %}
+                                                    <div class="col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
+                                                        <div>
+                                                            <a href="{% url 'cet-ranking-form' %}" class="category-link primary text-center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="category-svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M5 5h4v6H5zm10 8h4v6h-4zM5 17h4v2H5zM15 5h4v2h-4z" opacity=".3"></path><path d="M3 13h8V3H3v10zm2-8h4v6H5V5zm8 16h8V11h-8v10zm2-8h4v6h-4v-6zM13 3v6h8V3h-8zm6 4h-4V5h4v2zM3 21h8v-6H3v6zm2-4h4v2H5v-2z"></path></svg>
+                                                                <p class="fs-14 mb-1 text-default fw-semibold">CET Ranking</p>
+                                                                <span class="fs-11 text-muted">Form</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if request.user|check_requested_permissions:'add_jeemain1' %}
+                                                    <div class="col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
+                                                        <div>
+                                                            <a href="{% url 'jee-main1-form' %}" class="category-link primary text-center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="category-svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M5 5h4v6H5zm10 8h4v6h-4zM5 17h4v2H5zM15 5h4v2h-4z" opacity=".3"></path><path d="M3 13h8V3H3v10zm2-8h4v6H5V5zm8 16h8V11h-8v10zm2-8h4v6h-4v-6zM13 3v6h8V3h-8zm6 4h-4V5h4v2zM3 21h8v-6H3v6zm2-4h4v2H5v-2z"></path></svg>
+                                                                <p class="fs-14 mb-1 text-default fw-semibold">JEE Main 1 Score</p>
+                                                                <span class="fs-11 text-muted">Form</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if request.user|check_requested_permissions:'add_jeemain2' %}
+                                                    <div class="col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
+                                                        <div>
+                                                            <a href="{% url 'jee-main2-form' %}" class="category-link primary text-center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="category-svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M5 5h4v6H5zm10 8h4v6h-4zM5 17h4v2H5zM15 5h4v2h-4z" opacity=".3"></path><path d="M3 13h8V3H3v10zm2-8h4v6H5V5zm8 16h8V11h-8v10zm2-8h4v6h-4v-6zM13 3v6h8V3h-8zm6 4h-4V5h4v2zM3 21h8v-6H3v6zm2-4h4v2H5v-2z"></path></svg>
+                                                                <p class="fs-14 mb-1 text-default fw-semibold">JEE Main 2 Score</p>
+                                                                <span class="fs-11 text-muted">Form</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if request.user|check_requested_permissions:'add_comedk' %}
+                                                    <div class="col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
+                                                        <div>
+                                                            <a href="{% url 'comedk-ranking-form' %}" class="category-link primary text-center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="category-svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M5 5h4v6H5zm10 8h4v6h-4zM5 17h4v2H5zM15 5h4v2h-4z" opacity=".3"></path><path d="M3 13h8V3H3v10zm2-8h4v6H5V5zm8 16h8V11h-8v10zm2-8h4v6h-4v-6zM13 3v6h8V3h-8zm6 4h-4V5h4v2zM3 21h8v-6H3v6zm2-4h4v2H5v-2z"></path></svg>
+                                                                <p class="fs-14 mb-1 text-default fw-semibold">COMEDK Score</p>
+                                                                <span class="fs-11 text-muted">Form</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if request.user|check_requested_permissions:'add_rrtransportation' %}
+                                                    <div class="col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
+                                                        <div>
+                                                            <a href="{% url 'rr-transportation-form' %}" class="category-link primary text-center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="category-svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M5 5h4v6H5zm10 8h4v6h-4zM5 17h4v2H5zM15 5h4v2h-4z" opacity=".3"></path><path d="M3 13h8V3H3v10zm2-8h4v6H5V5zm8 16h8V11h-8v10zm2-8h4v6h-4v-6zM13 3v6h8V3h-8zm6 4h-4V5h4v2zM3 21h8v-6H3v6zm2-4h4v2H5v-2z"></path></svg>
+                                                                <p class="fs-14 mb-1 text-default fw-semibold">RR Transportation</p>
+                                                                <span class="fs-11 text-muted">Form</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if request.user|check_requested_permissions:'add_ectransportation' %}
+                                                    <div class="col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
+                                                        <div>
+                                                            <a href="{% url 'ec-transportation-form' %}" class="category-link primary text-center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="category-svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M5 5h4v6H5zm10 8h4v6h-4zM5 17h4v2H5zM15 5h4v2h-4z" opacity=".3"></path><path d="M3 13h8V3H3v10zm2-8h4v6H5V5zm8 16h8V11h-8v10zm2-8h4v6h-4v-6zM13 3v6h8V3h-8zm6 4h-4V5h4v2zM3 21h8v-6H3v6zm2-4h4v2H5v-2z"></path></svg>
+                                                                <p class="fs-14 mb-1 text-default fw-semibold">EC Transportation</p>
+                                                                <span class="fs-11 text-muted">Form</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if request.user|check_requested_permissions:'add_pucupoloadmarks' %}
+                                                    <div class="col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
+                                                        <div>
+                                                            <a href="{% url 'puc-marks-upload-form' %}" class="category-link primary text-center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="category-svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M5 5h4v6H5zm10 8h4v6h-4zM5 17h4v2H5zM15 5h4v2h-4z" opacity=".3"></path><path d="M3 13h8V3H3v10zm2-8h4v6H5V5zm8 16h8V11h-8v10zm2-8h4v6h-4v-6zM13 3v6h8V3h-8zm6 4h-4V5h4v2zM3 21h8v-6H3v6zm2-4h4v2H5v-2z"></path></svg>
+                                                                <p class="fs-14 mb-1 text-default fw-semibold">Class 12 Marks</p>
+                                                                <span class="fs-11 text-muted">Form</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if request.user|check_requested_permissions:'add_dailyreport' %}
+                                                    <div class="col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
+                                                        <div>
+                                                            <a href="{% url 'add-daily-report' %}" class="category-link primary text-center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="category-svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M5 5h4v6H5zm10 8h4v6h-4zM5 17h4v2H5zM15 5h4v2h-4z" opacity=".3"></path><path d="M3 13h8V3H3v10zm2-8h4v6H5V5zm8 16h8V11h-8v10zm2-8h4v6h-4v-6zM13 3v6h8V3h-8zm6 4h-4V5h4v2zM3 21h8v-6H3v6zm2-4h4v2H5v-2z"></path></svg>
+                                                                <p class="fs-14 mb-1 text-default fw-semibold">Daily Report</p>
+                                                                <span class="fs-11 text-muted">Form</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    
+                                    <div class="col-xxl-12 col-xl-12">
+                                        <div class="row">
+                                            <div class="col-xxl-12 col-xl-6">
+                                                <div class="card custom-card">
+                                                    <div class="card-header justify-content-between">
+                                                        <div class="card-title">
+                                                            Data Status
+                                                        </div>
+                                                        {% comment %} <div class="dropdown">
+                                                            <a href="javascript:void(0);" class="p-2 fs-12 text-muted" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                View All<i class="ri-arrow-down-s-line align-middle ms-1 d-inline-block"></i>
+                                                            </a>
+                                                            <ul class="dropdown-menu" role="menu">
+                                                                <li><a class="dropdown-item" href="javascript:void(0);">Today</a></li>
+                                                                <li><a class="dropdown-item" href="javascript:void(0);">This Week</a></li>
+                                                                <li><a class="dropdown-item" href="javascript:void(0);">Last Week</a></li>
+                                                            </ul>
+                                                        </div> {% endcomment %}
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="d-flex align-items-center mb-3">
+                                                            <h4 class="fw-bold mb-0">Total Data Recived: {{""|total_database_count}}</h4>
+                                                        </div>
+                                                        {% get_progress_bars as progress_bars %}
+                                                        <div class="progress-stacked progress-animate progress-xs mb-4">
+                                                            <div class="progress-bar" role="progressbar" style="width: {{ progress_bars.amaatra }}%" aria-valuenow="{{ progress_bars.amaatra }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            <div class="progress-bar bg-warning" role="progressbar" style="width: {{ progress_bars.cet_ranking }}%" aria-valuenow="{{ progress_bars.cet_ranking }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            <div class="progress-bar bg-pink" role="progressbar" style="width: {{ progress_bars.jee_main1 }}%" aria-valuenow="{{ progress_bars.jee_main1 }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            <div class="progress-bar bg-pink" role="progressbar" style="width: {{ progress_bars.jee_main2 }}%" aria-valuenow="{{ progress_bars.jee_main2 }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            <div class="progress-bar bg-danger" role="progressbar" style="width: {{ progress_bars.comedk }}%" aria-valuenow="{{ progress_bars.comedk }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            <div class="progress-bar bg-steel-blue" role="progressbar" style="width: {{ progress_bars.daily_report }}%" aria-valuenow="{{ progress_bars.daily_report }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            <div class="progress-bar bg-cyan" role="progressbar" style="width: {{ progress_bars.ec_transportation }}%" aria-valuenow="{{ progress_bars.ec_transportation }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            <div class="progress-bar bg-purple" role="progressbar" style="width: {{ progress_bars.grievance }}%" aria-valuenow="{{ progress_bars.grievance }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            <div class="progress-bar bg-info" role="progressbar" style="width: {{ progress_bars.puc_upload_marks }}%" aria-valuenow="{{ progress_bars.puc_upload_marks }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            <div class="progress-bar bg-success" role="progressbar" style="width: {{ progress_bars.rr_transportation }}%" aria-valuenow="{{ progress_bars.rr_transportation }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            <div class="progress-bar bg-danger" role="progressbar" style="width: {{ progress_bars.ssm }}%" aria-valuenow="{{ progress_bars.ssm }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                        <ul class="list-unstyled mb-0 pt-2 crm-deals-status">
+                                                            <li class="primary">
+                                                                <div class="d-flex align-items-center justify-content-between">
+                                                                    <div>The Amaatra Academy</div>
+                                                                    <div class="fs-12 text-muted">{{""|total_amaatra}}</div>
+                                                                </div>
+                                                                <div class="progress progress-xl mb-3 progress-animate custom-progress-4" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
+                                                                    <div class="progress-bar bg-primary" style="width: {{ progress_bars.amaatra }}%"></div>
+                                                                    <div class="progress-bar-label">{{ progress_bars.amaatra|floatformat:1 }}%</div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="warning">
+                                                                <div class="d-flex align-items-center justify-content-between">
+                                                                    <div>CET Ranking</div>
+                                                                    <div class="fs-12 text-muted">{{""|total_cet_ranking}}</div>
+                                                                </div>
+                                                                <div class="progress progress-xl mb-3 progress-animate custom-progress-4" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
+                                                                    <div class="progress-bar bg-warning" style="width: {{ progress_bars.cet_ranking }}%"></div>
+                                                                    <div class="progress-bar-label">{{ progress_bars.cet_ranking|floatformat:1 }}%</div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="pink">
+                                                                <div class="d-flex align-items-center justify-content-between">
+                                                                    <div>JEE Main 1</div>
+                                                                    <div class="fs-12 text-muted">{{""|total_jee_main1}}</div>
+                                                                </div>
+                                                                <div class="progress progress-xl mb-3 progress-animate custom-progress-4" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
+                                                                    <div class="progress-bar bg-pink" style="width: {{ progress_bars.jee_main1 }}%"></div>
+                                                                    <div class="progress-bar-label">{{ progress_bars.jee_main1|floatformat:1 }}%</div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="pink">
+                                                                <div class="d-flex align-items-center justify-content-between">
+                                                                    <div>JEE Main 2</div>
+                                                                    <div class="fs-12 text-muted">{{""|total_jee_main2}}</div>
+                                                                </div>
+                                                                <div class="progress progress-xl mb-3 progress-animate custom-progress-4" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
+                                                                    <div class="progress-bar bg-pink" style="width: {{ progress_bars.jee_main2 }}%"></div>
+                                                                    <div class="progress-bar-label">{{ progress_bars.jee_main2|floatformat:1 }}%</div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="danger">
+                                                                <div class="d-flex align-items-center justify-content-between">
+                                                                    <div>COMEDK</div>
+                                                                    <div class="fs-12 text-muted">{{""|total_comedk}}</div>
+                                                                </div>
+                                                                <div class="progress progress-xl mb-3 progress-animate custom-progress-4" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
+                                                                    <div class="progress-bar bg-danger" style="width: {{ progress_bars.comedk }}%"></div>
+                                                                    <div class="progress-bar-label">{{ progress_bars.comedk|floatformat:1 }}%</div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="steel-blue">
+                                                                <div class="d-flex align-items-center justify-content-between">
+                                                                    <div>Daily Report</div>
+                                                                    <div class="fs-12 text-muted">{{""|total_daily_report}}</div>
+                                                                </div>
+                                                                <div class="progress progress-xl mb-3 progress-animate custom-progress-4" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
+                                                                    <div class="progress-bar bg-steel-blue" style="width: {{ progress_bars.daily_report }}%"></div>
+                                                                    <div class="progress-bar-label">{{ progress_bars.daily_report|floatformat:1 }}%</div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="cyan">
+                                                                <div class="d-flex align-items-center justify-content-between">
+                                                                    <div>EC Transportation</div>
+                                                                    <div class="fs-12 text-muted">{{""|total_ec_transportation}}</div>
+                                                                </div>
+                                                                <div class="progress progress-xl mb-3 progress-animate custom-progress-4" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
+                                                                    <div class="progress-bar bg-cyan" style="width: {{ progress_bars.ec_transportation }}%"></div>
+                                                                    <div class="progress-bar-label">{{ progress_bars.ec_transportation|floatformat:1 }}%</div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="purple">
+                                                                <div class="d-flex align-items-center justify-content-between">
+                                                                    <div>Grievance</div>
+                                                                    <div class="fs-12 text-muted">{{""|total_grievance}}</div>
+                                                                </div>
+                                                                <div class="progress progress-xl mb-3 progress-animate custom-progress-4" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
+                                                                    <div class="progress-bar bg-purple" style="width: {{ progress_bars.grievance }}%"></div>
+                                                                    <div class="progress-bar-label">{{ progress_bars.grievance|floatformat:1 }}%</div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="info">
+                                                                <div class="d-flex align-items-center justify-content-between">
+                                                                    <div>PUC Marks Upload</div>
+                                                                    <div class="fs-12 text-muted">{{""|total_puc_upload_marks}}</div>
+                                                                </div>
+                                                                <div class="progress progress-xl mb-3 progress-animate custom-progress-4" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
+                                                                    <div class="progress-bar bg-info" style="width: {{ progress_bars.puc_upload_marks }}%"></div>
+                                                                    <div class="progress-bar-label">{{ progress_bars.puc_upload_marks|floatformat:1 }}%</div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="success">
+                                                                <div class="d-flex align-items-center justify-content-between">
+                                                                    <div>RR Transportation</div>
+                                                                    <div class="fs-12 text-muted">{{""|total_rr_transportation}}</div>
+                                                                </div>
+                                                                <div class="progress progress-xl mb-3 progress-animate custom-progress-4" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
+                                                                    <div class="progress-bar bg-success" style="width: {{ progress_bars.rr_transportation }}%"></div>
+                                                                    <div class="progress-bar-label">{{ progress_bars.rr_transportation|floatformat:1 }}%</div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="danger">
+                                                                <div class="d-flex align-items-center justify-content-between">
+                                                                    <div>SSM</div>
+                                                                    <div class="fs-12 text-muted">{{""|total_ssm}}</div>
+                                                                </div>
+                                                                <div class="progress progress-xl mb-3 progress-animate custom-progress-4" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
+                                                                    <div class="progress-bar bg-danger" style="width: {{ progress_bars.ssm }}%"></div>
+                                                                    <div class="progress-bar-label">{{ progress_bars.ssm|floatformat:1 }}%</div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <!--End::row-1 -->
+                    </div>
+{% endblock %}
+{% block footer %}
+             {% include 'main/copyright-footer.html' %}
+{% endblock %}
+{% block scripts %}
+
+        <!-- JSVector Maps JS -->
+        <script src="{% static 'assets/libs/jsvectormap/js/jsvectormap.min.js'%}"></script>
+
+        <!-- JSVector Maps MapsJS -->
+        <script src="{% static 'assets/libs/jsvectormap/maps/world-merc.js'%}"></script>
+
+        <!-- Apex Charts JS -->
+        <script src="{% static 'assets/libs/apexcharts/apexcharts.min.js'%}"></script>
+
+        <!-- Chartjs Chart JS -->
+        <script src="{% static 'assets/libs/chart.js/chart.min.js'%}"></script>
+
+        <!-- CRM-Dashboard -->
+        <script src="{% static 'assets/js/crm-dashboard.js'%}"></script>
+
+{% endblock %}

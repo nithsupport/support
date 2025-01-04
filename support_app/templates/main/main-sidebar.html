@@ -1,0 +1,738 @@
+{% load static %}
+{% load custom_tags %}
+            <aside class="app-sidebar sticky" id="sidebar">
+
+                <!-- Start::main-sidebar-header -->
+                <div class="main-sidebar-header">
+                    <a href="{% url 'index' %}" class="header-logo">
+                        <img src="{% static 'assets/images/pesu/logo/pes_support_logo.png'%}" alt="logo" class="desktop-logo">
+                        <img src="{% static 'assets/images/pesu/logo/pes_support_logo.png'%}" alt="logo" class="toggle-logo">
+                        <img src="{% static 'assets/images/pesu/logo/PESU_Dark_Logo.png'%}" alt="logo" class="desktop-dark">
+                        <img src="{% static 'assets/images/pesu/logo/PESU_Dark_Logo.png'%}" alt="logo" class="toggle-dark">
+                        <img src="{% static 'assets/images/pesu/logo/pes_support_logo.png'%}" alt="logo" class="desktop-white">
+                        <img src="{% static 'assets/images/pesu/logo/PESU_Dark_Logo.png'%}" alt="logo" class="toggle-white">
+                    </a>
+                </div>
+                <!-- End::main-sidebar-header -->
+    
+                <!-- Start::main-sidebar -->
+                <div class="main-sidebar" id="sidebar-scroll">
+    
+                    <!-- Start::nav -->
+                    <nav class="main-menu-container nav nav-pills flex-column sub-open">
+                        <div class="slide-left" id="slide-left">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24"> <path d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"></path> </svg>
+                        </div>
+                        <ul class="main-menu">
+                           
+                            {% if request.user.is_authenticated %}
+                            <!-- Start::slide -->
+                            <li class="slide">
+                                <a href="{% url 'dashboard' %}" class="side-menu__item">
+                                    <i class="bx bx-grid-alt side-menu__icon"></i>
+                                    <span class="side-menu__label">Dashboard</span>
+                                </a>
+                            </li>
+                            <!-- End::slide -->
+                            {% if request.user|check_requested_permissions:'add_dailyreport' or request.user|check_requested_permissions:'view_dailyreport' %}
+                            <!-- Start::slide -->
+                            <li class="slide has-sub">
+                                <a href="#" class="side-menu__item">
+                                    <i class="bx bxs-report side-menu__icon"></i>
+                                    <span class="side-menu__label">Daily Report</span>
+                                    <i class="fe fe-chevron-right side-menu__angle"></i>
+                                </a>
+                                <ul class="slide-menu child1">
+                                    <li class="slide side-menu__label1">
+                                        <a href="#">Daily Report</a>
+                                    </li>
+                                    {% if request.user|check_requested_permissions:'add_dailyreport' %}
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'add-daily-report' %}" class="side-menu__item">
+                                            <i class="bx bxs-file-plus side-menu__icon"></i>
+                                            <span class="side-menu__label">Add Report</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'daily-report-list' request.user.username %}" class="side-menu__item">
+                                            <i class="bx bx-user side-menu__icon"></i>
+                                            <span class="side-menu__label">Your Daily Report</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    {% endif %}
+                                    {% if request.user|check_requested_permissions:'view_dailyreport' %}
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'all-daily-report-list'%}" class="side-menu__item">
+                                            <i class="bx bx-list-ul side-menu__icon"></i>
+                                            <span class="side-menu__label">View All Report</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    {% endif %}
+                                </ul>
+                            </li>
+                            {% endif %}
+                            {% endif %}
+                            
+                            {% if not request.user.is_authenticated %}
+                            <!-- Start::slide -->
+                            <li class="slide">
+                                <a href="{% url 'index' %}" class="side-menu__item">
+                                    <i class="bx bx-home side-menu__icon"></i>
+                                    <span class="side-menu__label">Home</span>
+                                </a>
+                            </li>
+                            <!-- End::slide -->
+                            <!-- Start::slide -->
+                            <li class="slide has-sub">
+                                <a href="#" class="side-menu__item">
+                                    <i class="bx bx-buildings side-menu__icon"></i>
+                                    <span class="side-menu__label">PES University</span>
+                                    <i class="fe fe-chevron-right side-menu__angle"></i>
+                                </a>
+                                <ul class="slide-menu child1">
+                                    <li class="slide side-menu__label1">
+                                        <a href="#">PES University</a>
+                                    </li>
+
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'category' 'general' %}" class="side-menu__item">
+                                            <i class="bx bx-user-voice side-menu__icon"></i>
+                                            <span class="side-menu__label">FAQs</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'request-a-call-back' %}" class="side-menu__item">
+                                            <i class="bx bx-phone side-menu__icon"></i>
+                                            <span class="side-menu__label">Request Call Back</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'grievance-form' %}" class="side-menu__item">
+                                            <i class="bx bx-file side-menu__icon"></i>
+                                            <span class="side-menu__label">Grievance Form</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="http://pes.edu/" class="side-menu__item" target="_blank">
+                                            <i class="bx bx-window-alt side-menu__icon"></i>
+                                            <span class="side-menu__label">Visit Website</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                </ul>
+                            </li>
+                            <!-- End::slide -->
+
+                            <!-- Start::slide -->
+                            <li class="slide has-sub">
+                                <a href="#" class="side-menu__item">
+                                    <i class="bx bx-buildings side-menu__icon"></i>
+                                    <span class="side-menu__label">Amaatra</span>
+                                    <i class="fe fe-chevron-right side-menu__angle"></i>
+                                </a>
+                                <ul class="slide-menu child1">
+                                    <li class="slide side-menu__label1">
+                                        <a href="#">Amaatra</a>
+                                    </li>
+
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'selected_category' 'amaatra' 'general' %}" class="side-menu__item">
+                                            <i class="bx bx-user-voice side-menu__icon"></i>
+                                            <span class="side-menu__label">FAQs</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'amaatra-form' %}" class="side-menu__item">
+                                            <i class="bx bx-phone side-menu__icon"></i>
+                                            <span class="side-menu__label">Request Call Back</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="https://amaatra.pes.edu/" class="side-menu__item" target="_blank">
+                                            <i class="bx bx-window-alt side-menu__icon"></i>
+                                            <span class="side-menu__label">Visit Website</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                </ul>
+                            </li>
+                            <!-- End::slide -->
+
+                            <!-- Start::slide -->
+                            <li class="slide has-sub">
+                                <a href="#" class="side-menu__item">
+                                    <i class="bx bx-buildings side-menu__icon"></i>
+                                    <span class="side-menu__label">SSM Public School</span>
+                                    <i class="fe fe-chevron-right side-menu__angle"></i>
+                                </a>
+                                <ul class="slide-menu child1">
+                                    <li class="slide side-menu__label1">
+                                        <a href="#">SSM Public School</a>
+                                    </li>
+
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'selected_category' 'ssm' 'general' %}" class="side-menu__item">
+                                            <i class="bx bx-user-voice side-menu__icon"></i>
+                                            <span class="side-menu__label">FAQs</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'ssm-form' %}" class="side-menu__item">
+                                            <i class="bx bx-phone side-menu__icon"></i>
+                                            <span class="side-menu__label">Request Call Back</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="https://ssm.school/" class="side-menu__item" target="_blank">
+                                            <i class="bx bx-window-alt side-menu__icon"></i>
+                                            <span class="side-menu__label">Visit Website</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                </ul>
+                            </li>
+                            <!-- End::slide -->
+
+                            <!-- Start::slide -->
+                            <li class="slide has-sub">
+                                <a href="#" class="side-menu__item">
+                                    <i class="bx bx-buildings side-menu__icon"></i>
+                                    <span class="side-menu__label">PESIMSR</span>
+                                    <i class="fe fe-chevron-right side-menu__angle"></i>
+                                </a>
+                                <ul class="slide-menu child1">
+                                    <li class="slide side-menu__label1">
+                                        <a href="#">PESIMSR</a>
+                                    </li>
+
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'selected_category' 'pesimsr' 'general' %}" class="side-menu__item">
+                                            <i class="bx bx-user-voice side-menu__icon"></i>
+                                            <span class="side-menu__label">FAQs</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="http://pesimsr.pes.edu/" class="side-menu__item" target="_blank">
+                                            <i class="bx bx-window-alt side-menu__icon"></i>
+                                            <span class="side-menu__label">Visit Website</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                </ul>
+                            </li>
+                            <!-- End::slide -->
+
+                            <!-- Start::slide -->
+                            <li class="slide has-sub">
+                                <a href="#" class="side-menu__item">
+                                    <i class="bx bx-buildings side-menu__icon"></i>
+                                    <span class="side-menu__label">PESUIMSR</span>
+                                    <i class="fe fe-chevron-right side-menu__angle"></i>
+                                </a>
+                                <ul class="slide-menu child1">
+                                    <li class="slide side-menu__label1">
+                                        <a href="#">PESUIMSR</a>
+                                    </li>
+
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'selected_category' 'pesuimsr' 'general' %}" class="side-menu__item">
+                                            <i class="bx bx-user-voice side-menu__icon"></i>
+                                            <span class="side-menu__label">FAQs</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="http://pesuimsr.pes.edu/" class="side-menu__item" target="_blank">
+                                            <i class="bx bx-window-alt side-menu__icon"></i>
+                                            <span class="side-menu__label">Visit Website</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                </ul>
+                            </li>
+                            <!-- End::slide -->
+                            <!-- Start::slide -->
+                            <li class="slide has-sub">
+                                <a href="#" class="side-menu__item">
+                                    <i class="bx bx-buildings side-menu__icon"></i>
+                                    <span class="side-menu__label">PES Hospital</span>
+                                    <i class="fe fe-chevron-right side-menu__angle"></i>
+                                </a>
+                                <ul class="slide-menu child1">
+                                    <li class="slide side-menu__label1">
+                                        <a href="#">PES Hospital</a>
+                                    </li>
+
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'selected_category' 'peshospital' 'general' %}" class="side-menu__item">
+                                            <i class="bx bx-user-voice side-menu__icon"></i>
+                                            <span class="side-menu__label">FAQs</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="http://pesuimsr.pes.edu/" class="side-menu__item" target="_blank">
+                                            <i class="bx bx-window-alt side-menu__icon"></i>
+                                            <span class="side-menu__label">Visit Website</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                </ul>
+                            </li>
+                            <!-- End::slide -->
+
+                            <!-- Start::slide -->
+                            <li class="slide has-sub">
+                                <a href="#" class="side-menu__item">
+                                    <i class="bx bx-buildings side-menu__icon"></i>
+                                    <span class="side-menu__label">PES Public School</span>
+                                    <i class="fe fe-chevron-right side-menu__angle"></i>
+                                </a>
+                                <ul class="slide-menu child1">
+                                    <li class="slide side-menu__label1">
+                                        <a href="#">PES Public School</a>
+                                    </li>
+
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'selected_category' 'pespublicschool' 'general' %}" class="side-menu__item">
+                                            <i class="bx bx-user-voice side-menu__icon"></i>
+                                            <span class="side-menu__label">FAQs</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="https://www.pespublicschool.com/" class="side-menu__item" target="_blank">
+                                            <i class="bx bx-window-alt side-menu__icon"></i>
+                                            <span class="side-menu__label">Visit Website</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                </ul>
+                            </li>
+                            <!-- End::slide -->
+
+                            <!-- Start::slide -->
+                            <li class="slide">
+                                <a href="{% url 'contact_us' %}" class="side-menu__item">
+                                    <i class="bx bx-phone side-menu__icon"></i>
+                                    <span class="side-menu__label">Contact</span>
+                                </a>
+                            </li>
+                            <!-- End::slide -->
+
+                            {% endif %}
+                            <!-- End::slide -->
+                        
+                
+                            {% if request.user.is_authenticated %}
+                            <!-- Start::slide -->
+                            <li class="slide has-sub">
+                                <a href="#" class="side-menu__item">
+                                    <i class="bx bx-file side-menu__icon"></i>
+                                    <span class="side-menu__label">Forms</span>
+                                    <i class="fe fe-chevron-right side-menu__angle"></i>
+                                </a>
+                                <ul class="slide-menu child1">
+                                    <li class="slide side-menu__label1">
+                                        <a href="#">Forms</a>
+                                    </li>
+                                    {% if request.user|check_requested_permissions:'view_amaatra' %}
+                                    <li class="slide">
+                                        <a href="{% url 'grievance-form' %}" class="side-menu__item">
+                                            <span class="side-menu__label">Grievance</span>
+                                        </a>
+                                    </li>
+                                    {% endif %}
+                                    {% if request.user|check_requested_permissions:'view_amaatra' %}
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'amaatra-form' %}" class="side-menu__item">
+                                            <span class="side-menu__label">Amaatra</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    {% endif %}
+                                    {% if request.user|check_requested_permissions:'view_ssm' %}
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'ssm-form' %}" class="side-menu__item">
+                                            <span class="side-menu__label">SSM</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                     {% endif %}
+                                    {% if request.user|check_requested_permissions:'view_rrtransportation' %}
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'rr-transportation-form' %}" class="side-menu__item">
+                                            <span class="side-menu__label">RR Transportation</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                     {% endif %}
+                                    {% if request.user|check_requested_permissions:'view_ectransportation' %}
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'ec-transportation-form' %}" class="side-menu__item">
+                                            <span class="side-menu__label">EC Transportation</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                     {% endif %}
+                                    {% if request.user|check_requested_permissions:'view_cetranking' %}
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'cet-ranking-form' %}" class="side-menu__item">
+                                            <span class="side-menu__label">CET Ranking</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                     {% endif %}
+                                    {% if request.user|check_requested_permissions:'view_jeemain1' %}
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'jee-main1-form' %}" class="side-menu__item">
+                                            <span class="side-menu__label">JEE Main 1</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                     {% endif %}
+                                    {% if request.user|check_requested_permissions:'view_jeemain2' %}
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'jee-main2-form' %}" class="side-menu__item">
+                                            <span class="side-menu__label">JEE Main 2</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                     {% endif %}
+                                    {% if request.user|check_requested_permissions:'view_comedk' %}
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'comedk-ranking-form' %}" class="side-menu__item">
+                                            <span class="side-menu__label">COMEDK</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                     {% endif %}
+                                    {% if request.user|check_requested_permissions:'view_pucupoloadmarks' %}
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'puc-marks-upload-form' %}" class="side-menu__item">
+                                            <span class="side-menu__label">Class 12 Marks</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    {% endif %}
+                                    
+                                </ul>
+                            </li>
+                            <!-- End::slide -->
+                             
+
+                            <!-- Start::slide -->
+                            <li class="slide has-sub">
+                                <a href="#" class="side-menu__item">
+                                    <i class="bx bx-bar-chart-square side-menu__icon"></i>
+                                    <span class="side-menu__label">Recived Data</span>
+                                    <i class="fe fe-chevron-right side-menu__angle"></i>
+                                </a>
+                                <ul class="slide-menu child1">
+                                    <li class="slide side-menu__label1">
+                                        <a href="#">Recived Data</a>
+                                    </li>
+                                    {% if request.user|check_requested_permissions:'view_grievance' %}
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'grievance-list' %}" class="side-menu__item">
+                                            <span class="side-menu__label">Grievance</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    {% endif %}
+                                    {% if request.user|check_requested_permissions:'view_amaatra' %}
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'amaatra-list' %}" class="side-menu__item">
+                                            <span class="side-menu__label">Amaatra</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    {% endif %}
+                                    {% if request.user|check_requested_permissions:'view_ssm' %}
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'ssm-list' %}" class="side-menu__item">
+                                            <span class="side-menu__label">SSM</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    {% endif %}
+                                    {% if request.user|check_requested_permissions:'view_rrtransportation' %}
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'rr-transportation-list' %}" class="side-menu__item">
+                                            <span class="side-menu__label">RR Transportation</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    {% endif %}
+                                    {% if request.user|check_requested_permissions:'view_ectransportation' %}
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'ec-transportation-list' %}" class="side-menu__item">
+                                            <span class="side-menu__label">EC Transportation</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    {% endif %}
+                                    {% if request.user|check_requested_permissions:'view_cetranking' %}
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'cet-ranking-list' %}" class="side-menu__item">
+                                            <span class="side-menu__label">CET Ranking</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    {% endif %}
+                                    {% if request.user|check_requested_permissions:'view_jeemain1' %}
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'jee-main1-list' %}" class="side-menu__item">
+                                            <span class="side-menu__label">JEE Main 1</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    {% endif %}
+                                    {% if request.user|check_requested_permissions:'view_jeemain2' %}
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'jee-main2-list' %}" class="side-menu__item">
+                                            <span class="side-menu__label">JEE Main 2</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    {% endif %}
+                                    {% if request.user|check_requested_permissions:'view_comedk' %}
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'comedk-ranking-list' %}" class="side-menu__item">
+                                            <span class="side-menu__label">COMEDK</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    {% endif %}
+                                    {% if request.user|check_requested_permissions:'view_pucupoloadmarks' %}
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'puc-marks-upload-list' %}" class="side-menu__item">
+                                            <span class="side-menu__label">Class 12 Marks</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    {% endif %}
+                                    
+                                </ul>
+                            </li>
+                            <!-- End::slide -->
+
+                            <!-- Start::slide -->
+                            <li class="slide has-sub">
+                                <a href="#" class="side-menu__item">
+                                    <i class="bx bx-add-to-queue side-menu__icon"></i>
+                                    <span class="side-menu__label">Add FAQs</span>
+                                    <i class="fe fe-chevron-right side-menu__angle"></i>
+                                </a>
+                                <ul class="slide-menu child1">
+                                    <li class="slide side-menu__label1">
+                                        <a href="#">Add FAQs</a>
+                                    </li>
+                                    {% if request.user.is_authenticated and request.user|check_requested_permissions:'add_faq' %}
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'add-faq' %}" class="side-menu__item">
+                                            {% comment %} <i class="bx bx-question-mark side-menu__icon"></i> {% endcomment %}
+                                            <span class="side-menu__label">PES University</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    {% endif %}
+                                    {% if request.user|check_requested_permissions:'add_amaatrafaq' %}
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'add-all-faq' 'amaatra' %}" class="side-menu__item">
+                                            <span class="side-menu__label">Amaatra</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    {% endif %}
+                                    {% if request.user|check_requested_permissions:'add_ssmfaq' %}
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'add-all-faq' 'ssm' %}" class="side-menu__item">
+                                            <span class="side-menu__label">SSM</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    {% endif %}
+                                    {% if request.user|check_requested_permissions:'add_pesimsrfaq' %}
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'add-all-faq' 'pesimsr' %}" class="side-menu__item">
+                                            <span class="side-menu__label">PESIMSR</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    {% endif %}
+                                    {% if request.user|check_requested_permissions:'add_pesuimsrfaq' %}
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'add-all-faq' 'pesuimsr' %}" class="side-menu__item">
+                                            <span class="side-menu__label">PESUIMSR</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    {% endif %}
+                                    {% if request.user|check_requested_permissions:'add_peshospitalfaq' %}
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'add-all-faq' 'peshospital' %}" class="side-menu__item">
+                                            <span class="side-menu__label">PES Hospital</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    {% endif %}
+                                    {% if request.user|check_requested_permissions:'add_pespublicschoolfaq' %}
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'add-all-faq' 'pespublicschool' %}" class="side-menu__item">
+                                            <span class="side-menu__label">PES Public School</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    {% endif %}
+                                    
+                                </ul>
+                            </li>
+                            <!-- End::slide -->
+                            <!-- Start::slide -->
+                            <li class="slide has-sub">
+                                <a href="#" class="side-menu__item">
+                                    <i class="bx bx-question-mark side-menu__icon"></i>
+                                    <span class="side-menu__label">FAQs List</span>
+                                    <i class="fe fe-chevron-right side-menu__angle"></i>
+                                </a>
+                                <ul class="slide-menu child1">
+                                    <li class="slide side-menu__label1">
+                                        <a href="#">FAQs List</a>
+                                    </li>
+                                    {% if request.user|check_requested_permissions:'view_faq' %}
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'faq-list' %}" class="side-menu__item">
+                                            <span class="side-menu__label">PES University</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    {% endif %}
+                                    {% if request.user|check_requested_permissions:'view_amaatrafaq' %}
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'selected-faq-list' 'amaatra' %}" class="side-menu__item">
+                                            <span class="side-menu__label">Amaatra</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    {% endif %}
+                                    {% if request.user|check_requested_permissions:'view_ssmfaq' %}
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'selected-faq-list' 'ssm' %}" class="side-menu__item">
+                                            <span class="side-menu__label">SSM</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    {% endif %}
+                                    {% if request.user|check_requested_permissions:'view_pesimsrfaq' %}
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'selected-faq-list' 'pesimsr' %}" class="side-menu__item">
+                                            <span class="side-menu__label">PESIMSR</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    {% endif %}
+                                    {% if request.user|check_requested_permissions:'view_pesuimsrfaq' %}
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'selected-faq-list' 'pesuimsr' %}" class="side-menu__item">
+                                            <span class="side-menu__label">PESUIMSR</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    {% endif %}
+                                    {% if request.user|check_requested_permissions:'view_peshospitalfaq' %}
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'selected-faq-list' 'peshospital' %}" class="side-menu__item">
+                                            <span class="side-menu__label">PES Hospital</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    {% endif %}
+                                    {% if request.user|check_requested_permissions:'view_pespublicschoolfaq' %}
+                                    <!-- Start::slide -->
+                                    <li class="slide">
+                                        <a href="{% url 'selected-faq-list' 'pespublicschool' %}" class="side-menu__item">
+                                            <span class="side-menu__label">PES Public School</span>
+                                        </a>
+                                    </li>
+                                    <!-- End::slide -->
+                                    {% endif %}
+                                    
+                                </ul>
+                            </li>
+                            <!-- End::slide -->
+                            {% endif %}
+                            
+                        </ul>
+                        <div class="slide-right" id="slide-right"><svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24"> <path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z"></path> </svg></div>
+                    </nav>
+                    <!-- End::nav -->
+    
+                </div>
+                <!-- End::main-sidebar -->
+    
+            </aside>

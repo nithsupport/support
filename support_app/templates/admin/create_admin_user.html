@@ -1,0 +1,281 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load form_filters %}
+
+{% block styles %}
+
+<!-- Sweetalerts CSS -->
+<link rel="stylesheet" href="{% static 'assets/libs/sweetalert2/sweetalert2.min.css'%}">
+        
+        
+{% endblock %}
+
+{% block content %}
+                    <div class="container-lg my-5">
+                        <!-- Start::row-1 -->
+                        <div class="row">
+                            <div class="col-xl-8">
+                                <!-- Start:: row-1 -->
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="card custom-card">
+                                            <div class="card-header justify-content-between">
+                                                <div class="card-title">
+                                                   {% if form.instance.pk %} Edit User {% else %} Create User {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <form method="post" action="">
+                                                    {% csrf_token %}
+                                                    <div class="col-xl-12">
+                                                        <div class="row gy-3">
+                                                            <div class="col-xl-12">
+                                                                <div class="row">
+                                                                    <div class="col-xl-12">
+                                                                        {% if form.instance.pic %}
+                                                                        <span class="avatar avatar-xxl avatar-rounded me-2">
+                                                                            <img src="{{ form.instance.pic.url }}" alt="img">
+                                                                        </span>
+                                                                        {% else %}
+                                                                        <span class="avatar avatar-xxl me-2">
+                                                                            <img src="{% static 'assets/images/pesu/img/member.jpg'%}" alt="img">
+                                                                        </span>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-6">
+                                                                        <label for="contact-address-name" class="form-label ">Profile Image</label>
+                                                                        <div class="input-group mb-3">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-image"></i></span>
+                                                                            {{ form.pic }}
+                                                                        </div>
+                                                                        {% if form.pic.errors %}
+                                                                            <div class="text-danger">{{ form.pic.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-6">
+                                                                        <label for="contact-address-phone" class="form-label ">Phone Number</label>
+                                                                        <div class="input-group mb-3">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-phone"></i></span>
+                                                                            {{ form.phone }}
+                                                                        </div>
+                                                                        {% if form.phone.errors %}
+                                                                            <div class="text-danger">{{ form.phone.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-6">
+                                                                        <label for="contact-address-name" class="form-label ">Full Name<span class="text-danger">*</span></label>
+                                                                        <div class="input-group mb-3">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-user"></i></span>
+                                                                            {{ form.name }}
+                                                                        </div>
+                                                                        {% if form.name.errors %}
+                                                                            <div class="text-danger">{{ form.name.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-6">
+                                                                        <label for="contact-address-phone" class="form-label ">Email<span class="text-danger">*</span></label>
+                                                                        <div class="input-group mb-3">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-envelope"></i></span>
+                                                                            {{ form.username }}
+                                                                        </div>
+                                                                        {% if form.username.errors %}
+                                                                            <div class="text-danger">{{ form.username.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    {% if not form.instance.pk %}
+                                                                    <div class="col-xl-6">
+                                                                        <label for="contact-address-phone" class="form-label ">Password<span class="text-danger">*</span></label>
+                                                                        <div class="input-group mb-3">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-lock-alt"></i></span>
+                                                                            {{ form.password1 }}
+                                                                        </div>
+                                                                        {% if form.password1.errors %}
+                                                                            <div class="text-danger">{{ form.password1.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-6">
+                                                                        <label for="contact-address-phone" class="form-label ">Confirm Password<span class="text-danger">*</span></label>
+                                                                        <div class="input-group mb-3">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-lock-alt"></i></span>
+                                                                            {{ form.password2 }}
+                                                                        </div>
+                                                                        {% if form.password2.errors %}
+                                                                            <div class="text-danger">{{ form.password2.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    {% endif %}
+                                                                    
+                                                                    <div class="col-xl-12">
+                                                                        <label for="contact-address-phone" class="form-label ">Details<span class="text-danger">*</span></label>
+                                                                        <div class="input-group mb-3">
+                                                                            {{ form.details }}
+                                                                        </div>
+                                                                        {% if form.details.errors %}
+                                                                            <div class="text-danger">{{ form.details.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-12">
+                                                                      <div class="row">
+                                                                        <p class="fw-semibold mb-2">User Permissions<span class="text-danger">*</span></p>
+                                                                      <div class="col-xl-4">
+                                                                      <div class="d-flex align-items-center flex-wrap mb-4">
+                                                                        <div><p class="text-muted m-0">SuperUser</p></div>
+                                                                        <div class="custom-toggle-switch ms-2">
+                                                                            {{ form.is_superuser }}
+                                                                            <label for="id_is_superuser" class="label-primary mb-1"></label>
+                                                                        </div>
+                                                                    </div>
+                                                                      {% if form.is_superuser.errors %}
+                                                                          <div class="text-danger">{{ form.is_superuser.errors|join:", " }}</div>
+                                                                      {% endif %}
+                                                                  </div>
+                                                                      <div class="col-xl-4">
+                                                                      <div class="d-flex align-items-center flex-wrap mb-4">
+                                                                        <div><p class="text-muted m-0">Staff User</p></div>
+                                                                        <div class="custom-toggle-switch ms-2">
+                                                                            {{ form.is_staff }}
+                                                                            <label for="id_is_staff" class="label-primary mb-1"></label>
+                                                                        </div>
+                                                                    </div>
+                                                                      {% if form.is_staff.errors %}
+                                                                          <div class="text-danger">{{ form.is_staff.errors|join:", " }}</div>
+                                                                      {% endif %}
+                                                                  </div>
+                                                                      <div class="col-xl-4">
+                                                                      <div class="d-flex align-items-center flex-wrap mb-4">
+                                                                        <div><p class="text-muted m-0">Active</p></div>
+                                                                        <div class="custom-toggle-switch ms-2">
+                                                                            {{ form.is_active }}
+                                                                            <label for="id_is_active" class="label-primary mb-1"></label>
+                                                                        </div>
+                                                                    </div>
+                                                                      {% if form.is_active.errors %}
+                                                                          <div class="text-danger">{{ form.is_active.errors|join:", " }}</div>
+                                                                      {% endif %}
+                                                                    </div>
+                                                                  </div>
+                                                                    <div class="col-xl-6">
+                                                                      <p class="fw-semibold mb-2">Groups<span class="text-danger">(If no group please create one)*</span></p>
+                                                                      <div class="form-group mb-3">
+                                                                        <div class="form-check form-check-md d-flex align-items-center">
+                                                                          {{form.groups}}
+                                                                        </div>
+                                                                       {% comment %} {% for choice_value, choice_label in form.groups.field.choices %}
+                                                                       <div class="form-check form-check-md d-flex align-items-center">
+                                                                           <input class="form-check-input" type="checkbox" value="{{ choice_value }}" id="checkbox-{{ forloop.counter }}"
+                                                                                  name="{{ form.groups.name }}"{% if choice_value in form.groups.value %} checked="checked"{% endif %}>
+                                                                           <label class="form-check-label" for="checkbox-{{ forloop.counter }}">
+                                                                               {{ choice_label }}
+                                                                           </label>
+                                                                       </div>
+                                                                   {% endfor %} {% endcomment %}
+                                                                   
+                                                                      </div>
+                                                                      {% if form.groups.errors %}
+                                                                          <div class="text-danger">{{ form.groups.errors|join:", " }}</div>
+                                                                      {% endif %}
+                                                                    </div>
+                                                                  </div>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="d-grid gap-2 col-4">
+                                                                <button class="btn btn-primary-light btn-wave">Submit</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>                   
+                                                </from>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End:: row-1 -->
+                            </div>
+                            {% if user_groups %}
+                            <!--users -->
+                            <div class="col-xl-4">
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="card custom-card">
+                                            <div class="card-header justify-content-between">
+                                                <div class="card-title">
+                                                    Users
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <ul class="list-unstyled daily-task-card">
+                                                    
+                                                    {% for user in user_groups %}
+                                                    <li>
+                                                        <div class="card border border-primary border-opacity-25 shadow-none custom-card mb-0">
+                                                            <div class="card-body">
+                                                                <p class="fs-14 fw-semibold mb-2 lh-1 d-flex align-items-center gap-2 justify-content-between">{{user.name|upper}}
+                                                                    <a aria-label="anchor" href="{% url 'edit-admin-user' user.username %}"><i class="bx bx-edit-alt side-menu__icon float-end text-primary fs-18"></i></a>
+                                                                </p>
+                                                                <div class="d-flex flex-wrap gap-2 mb-4">
+                                                                    <span class="badge bg-primary-transparent">
+                                                                        {{user.username}}
+                                                                    </span>
+                                                                </div>
+                                                                <div class="avatar-list-stacked">
+                                                                    {% if user.pic %}
+                                                                        <span class="avatar avatar-lg avatar-rounded me-2">
+                                                                            <a href="{% url 'user-profile' user.username %}">
+                                                                                <img src="{{user.pic.url}}" alt="img">
+                                                                            </a>
+                                                                        </span>
+                                                                        {% else %}
+                                                                        <span class="avatar avatar-lg avatar-rounded me-2">
+                                                                            <a href="{% url 'user-profile' user.username %}">
+                                                                                {% if request.user.pic %}
+                                                                                <img src="{{request.user.pic.url}}" alt="">
+                                                                                {% else %}
+                                                                                <img src="{% static 'assets/images/pesu/img/member.jpg'%}" alt="img">
+                                                                                {% endif %}
+                                                                            </a>
+                                                                        </span>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end users -->
+                            {% endif %}
+                        </div>
+                        <!--End::row-1 -->
+                    </div>    
+
+{% endblock %}
+{% block footer %}
+             {% include 'main/copyright-footer.html' %}
+{% endblock %}
+{% block scripts %}
+<!-- Sweetalerts JS -->
+<script src="{% static 'assets/libs/sweetalert2/sweetalert2.min.js'%}"></script>
+<script src="{% static 'assets/js/sweet-alerts.js'%}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        {% if messages %}
+            {% for message in messages %}
+                Swal.fire({
+                    icon: '{{ message.tags }}',
+                    title: '{{ message }}',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            {% endfor %}
+        {% endif %}
+    });
+</script>
+
+{% endblock %}
+

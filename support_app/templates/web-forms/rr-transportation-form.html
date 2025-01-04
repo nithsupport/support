@@ -1,0 +1,246 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block styles %}
+<!-- Sweetalerts CSS -->
+<link rel="stylesheet" href="{% static 'assets/libs/sweetalert2/sweetalert2.min.css'%}">
+        
+{% endblock %}
+
+{% block content %}
+                    <div class="container-lg my-5">
+                        <!-- Page Header -->
+                        <div class="d-md-flex d-block align-items-center justify-content-between my-4 page-header-breadcrumb">
+                            <h1 class="page-title fw-semibold fs-18 mb-0">RR Transportation</h1>
+                            <div class="ms-md-1 ms-0">
+                                <nav>
+                                    <ol class="breadcrumb mb-0">
+                                        <li class="breadcrumb-item"><a href="#">Form</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">RR Transportation</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                        <!-- Page Header Close -->
+                        <!-- Start::row-1 -->
+                        <div class="row">
+                           <!--category -->
+                           <div class="col-xl-4">
+                            <div class="card custom-card text-center team-card ">
+                                <div class="card-body p-5">
+                                    <span class="avatar avatar-xxl mb-3 team-avatar">
+                                        <img src="{% static 'assets/images/pesu/logo/pesu.png'%}" alt="">
+                                    </span>
+                                    <p class="fw-semibold fs-17 mb-0 text-default">PES RR Campus</p>
+                                    <span class="text-muted fs-14 text-primary fw-semibold">admissions@pes.edu</span>
+                                    <p class="text-muted mt-2 fs-13">+91 80 26721983</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end category -->
+                            <div class="col-xl-8">
+                                <!-- Start:: row-1 -->
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="card custom-card">
+                                            <div class="card-header justify-content-between">
+                                                <div class="card-title">
+                                                    Enroll For PESU - RR Campus Transportation 
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <form method="post" action="{% url 'rr-transportation-form' %}" enctype="multipart/form-data">
+                                                    {% csrf_token %}
+                                                    <div class="col-xl-12">
+                                                        <div class="row gy-3">
+                                                            <div class="col-xl-12">
+                                                                <div class="row mb-3">
+                                                                    <div class="col-xl-6 mb-3">
+                                                                        <label for="contact-address-name" class="form-label ">Student Name<span class="text-danger">*</span></label>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-user"></i></span>
+                                                                            {{ form.name }}
+                                                                        </div>
+                                                                        {% if form.name.errors %}
+                                                                            <div class="text-danger">{{ form.name.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-6 mb-3">
+                                                                        <label for="contact-address-name" class="form-label ">E-Mail Address<span class="text-danger">*</span></label>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-envelope"></i></span>
+                                                                            {{ form.email }}
+                                                                        </div>
+                                                                        {% if form.email.errors %}
+                                                                            <div class="text-danger">{{ form.email.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-6 mb-3">
+                                                                        <label for="contact-address-name" class="form-label ">Mobile Number<span class="text-danger">*</span></label>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-phone"></i></span>
+                                                                            {{ form.phone_number }}
+                                                                        </div>
+                                                                        {% if form.phone_number.errors %}
+                                                                            <div class="text-danger">{{ form.phone_number.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-6 mb-3">
+                                                                        <label for="contact-address-name" class="form-label ">Parent Mobile Number<span class="text-danger">*</span></label>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-phone"></i></span>
+                                                                            {{ form.parent_phone_number }}
+                                                                        </div>
+                                                                        {% if form.parent_phone_number.errors %}
+                                                                            <div class="text-danger">{{ form.parent_phone_number.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-6 mb-3">
+                                                                        <label for="contact-address-name" class="form-label ">Date of Birth<span class="text-danger">*</span></label>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-calendar"></i></span>
+                                                                            {{ form.dob }}
+                                                                        </div>
+                                                                        {% if form.dob.errors %}
+                                                                            <div class="text-danger">{{ form.dob.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-6 mb-3">
+                                                                        <label for="contact-address-name" class="form-label ">Blood Group<span class="text-danger">*</span></label>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-droplet"></i></span>
+                                                                            {{ form.blood_group }}
+                                                                        </div>
+                                                                        {% if form.blood_group.errors %}
+                                                                            <div class="text-danger">{{ form.blood_group.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-12 mb-3">
+                                                                        <label for="contact-address-name" class="form-label ">Address<span class="text-danger">*</span></label>
+                                                                        <div class="input-group">
+                                                                            {{ form.address }}
+                                                                        </div>
+                                                                        {% if form.address.errors %}
+                                                                            <div class="text-danger">{{ form.address.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    
+                                                                    <div class="col-xl-12 mb-3">
+                                                                        <label for="contact-address-name" class="form-label ">Photo (Max file size: 500KB)<span class="text-danger">*</span></label>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-image-add"></i></span>
+                                                                            {{ form.photo }}
+                                                                        </div>
+                                                                        {% if form.photo.errors %}
+                                                                            <div class="text-danger">{{ form.photo.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-12 mb-3">
+                                                                        <label for="contact-address-name" class="form-label ">SRN(Student Registration Number) / PRN(Permanent Registration Number)<span class="text-danger">*</span></label>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-clipboard"></i></span>
+                                                                            {{ form.registration_no }}
+                                                                        </div>
+                                                                        {% if form.registration_no.errors %}
+                                                                            <div class="text-danger">{{ form.registration_no.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-12 mb-3">
+                                                                        <p class="fw-semibold mb-2">Program<span class="text-danger">*</span></p>
+                                                                        <div class="form-group mb-3">
+                                                                            {{ form.program }}
+                                                                        </div>
+                                                                        {% if form.program.errors %}
+                                                                            <div class="text-danger">{{ form.program.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-md-6 mb-3">
+                                                                        <p class="fw-semibold mb-2">Route<span class="text-danger">*</span></p>
+                                                                        {{ form.route }}
+                                                                        {% if form.route.errors %}
+                                                                            <div class="text-danger">{{ form.route.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-md-6 mb-3">
+                                                                        <p class="fw-semibold mb-2">Pickup Point<span class="text-danger">*</span></p>
+                                                                        {{ form.pickup_point }}
+                                                                        {% if form.pickup_point.errors %}
+                                                                            <div class="text-danger">{{ form.pickup_point.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    
+                                                                </div>
+                                                                <div class="d-grid gap-2 col-4">
+                                                                    <button class="btn btn-primary-light btn-wave">Submit</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End:: row-1 -->
+                            </div>
+                            
+                        </div>
+                        <!--End::row-1 -->
+                    </div>   
+                    
+
+{% endblock %}
+{% block footer %}
+    {% include 'main/main-footer.html' %}
+{% endblock %}
+{% block scripts %}
+
+<!-- Sweetalerts JS -->
+<script src="{% static 'assets/libs/sweetalert2/sweetalert2.min.js'%}"></script>
+<script src="{% static 'assets/js/sweet-alerts.js'%}"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        {% if messages %}
+            {% for message in messages %}
+                Swal.fire({
+                    icon: '{{ message.tags }}',
+                    title: '{{ message }}',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            {% endfor %}
+        {% endif %}
+    });
+</script>
+<script>
+    const pickupPoints = {
+        "Route A":['Koramangala Water Tank','Koramangala BDA Complex','Koramangala Canara Bank','Sony World Signal','Domlur Flyover','Indiranagar 13th Main Signal','80 Feet Road (Tippasandra) BSNL Office','Jeevan Bheemanagar Bus Stop','BEML Gate','Binnamangala (Old Madras Road)','Chinmaya Mission Hospital','KFC Junction','Ulsoor Police Station','Manipal Centre','Commercial Street','Vydehi Super Speciality Hospital','Corporation Circle','Town Hall'],
+        "Route B":['Hennur Rd/Ring Rd Junction Via 80FT RD','Lingarajapuram Bus Stop/ SBI Bank','Clarence School','Coles Park','Nandi Durga Road','T V Tower','Mekhri Circle','18th Cross Malleshwaram','13th Cross Margosa Road','K.C. General Hospital','Devaiah Park','Mariyappana Pallya','Navarang Theatre','Rajajinagar Police Station','ESI Hospital','Bashyam Circle – Rajajinagar','Dhobi Ghat Signal'],
+        "Route C":['Nandini Layout','Mahalakshmi Layout','Shell Petrol Bunk (Soap Factory)','Rajajinagar 1st Block','Star Circle (Near Navrang)','Modi Hospital','Shankar Mutt','Water Tank','Hotel Pavithra Paradise','Housing Board (Magadi Road Jn.)','Vijayanagar Bus Stop','BTS Garage West of Chord Road'],
+        "Route D":['Meenakshi Temple','Hulimavu (Bus Stop/Bata Showroom)','BPL Bus Stop','Arkere Bus Stop','Bannerghatta Road (IIMB)','J P Nagar 3rd Phase (Mondovi Motors)','J P Nagar 15th Cross','R V Dental College','Raghavendra Swamy Mutt','Jayanagar BDA Complex','Jayanagar 7th Block','Banashankari BDA Complex'],
+        "Route E":['Yelahanka Police station','Canara Bank ATM Yelahanka Kogilu','GKVK /UAS Bangalore Airport road entrance','Jakkur Signal','Kodigehalli Gate','Hebbal Ring Road Junction (Below Flyover)','Nagashettyhalli, Bhadrappa Lyt Railway Gate (Sanjaynagar)','BEL Kuvempu Circle (Jalahalli, Vidyaranyapura)','Devasandra/Chikkamaranahalli Bus Stop','Ramaiah Hospital (Mathikere, Sanjaynagar)','Sadashivnagar Police Station'],
+        "Route F":['Marathahalli Bridge Bus Stop','Kadubeesanahalli Bridge Stop','Devarabisanahalli Bus Stop','Bellandur Bus Stop','Iblur Bus Stop (Previously Sarjapura Sun City Circle)','Agara Bus Stop','Mantri Sarovar Bus Stop','HSR Layout Flyover Bus Stop','Silk Board Junction','BTM Layout Signal','Jayadeva Hospital Signal'],
+    };
+
+    document.getElementById('route').addEventListener('change', function () {
+        const route = this.value;
+        const pickupPointSelect = document.getElementById('pickup_point');
+        
+        pickupPointSelect.innerHTML = '<option value="">Choose a Pickup Point</option>'; // Reset options
+        
+        if (pickupPoints[route]) {
+            pickupPoints[route].forEach(function (point) {
+                const option = document.createElement('option');
+                option.value = point;
+                option.textContent = point;
+                pickupPointSelect.appendChild(option);
+            });
+        }
+    });
+</script>
+{% endblock %}
+
+
+

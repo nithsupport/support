@@ -1,0 +1,66 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block styles %}
+
+
+        
+{% endblock %}
+
+{% block content %}
+                    <div class="container-lg my-5">
+                        <!-- Start::row-1 -->
+                        <div class="row">
+                            
+                            <!--faq category -->
+                            {% include 'base/faq-category.html' %}
+                            <!--end faq category -->
+                            
+                            <div class="col-xl-8">
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="card custom-card">
+                                            <div class="card-header">
+                                                <div class="card-title">
+                                                    {{category_name}}
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="accordion accordion-customicon1 accordion-primary" id="accordionFAQ1">
+                                                    {% for faq in faq_list %}
+                                                        <div class="accordion-item">
+                                                            <h2 class="accordion-header" id="headingcustomicon2{{ forloop.counter }}">
+                                                                <button class="accordion-button {% if not forloop.first %}collapsed{% endif %}" type="button" data-bs-toggle="collapse"
+                                                                    data-bs-target="#collapsecustomicon2{{ forloop.counter }}" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
+                                                                    aria-controls="collapsecustomicon2{{ forloop.counter }}">
+                                                                    {{ faq.question }}
+                                                                </button>
+                                                            </h2>
+                                                            <div id="collapsecustomicon2{{ forloop.counter }}" class="accordion-collapse collapse {% if forloop.first %}show{% endif %}"
+                                                                aria-labelledby="headingcustomicon2{{ forloop.counter }}" data-bs-parent="#accordionFAQ1">
+                                                                <div class="accordion-body">
+                                                                    {{ faq.answer|safe }}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <!--End::row-1 -->
+                    </div>    
+
+{% endblock %}
+{% block footer %}
+             {% include 'main/main-footer.html' %}
+{% endblock %}
+{% block scripts %}
+
+
+
+{% endblock %}

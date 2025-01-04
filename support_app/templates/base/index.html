@@ -1,0 +1,226 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block styles %}
+
+
+                
+{% endblock %}
+
+{% block content %}
+
+                    <div class="container-fluid">
+
+                        <!-- Page Header -->
+                        {% comment %} <div class="d-md-flex d-block align-items-center justify-content-between my-4 page-header-breadcrumb">
+                            <h1 class="page-title fw-semibold fs-18 mb-0">About Us</h1>
+                            <div class="ms-md-1 ms-0">
+                                <nav>
+                                    <ol class="breadcrumb mb-0">
+                                        <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">About Us</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div> {% endcomment %}
+                        <!-- Page Header Close -->
+
+                        <!-- Start::row-1 -->
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="about-container mb-4">
+                                    <div class="aboutus-banner" style="margin-block-end: 1.3rem;">
+                                        <div class="aboutus-banner-content">
+                                            <div class="row">
+                                                <div class="col-xxl-6 col-xl-6">
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-xxl-9 col-xl-9 col-lg-10 col-md-8 col-sm-10 col-12">
+                                                            <div class="p-3 text-start mb-4">
+                                                                <h6 class="fw-semibold text-fixed-white pb-4">
+                                                                    <span class="about-heading-white">PESU Support</span>
+                                                                </h6>
+                                                                <h3 class="fw-semibold mb-2 text-fixed-white">
+                                                                    Learn how to apply for <span class="text-success">PES University</span>
+                                                                </h3>
+                                                                <p class="mb-4 fw-normal op-7 fs-16">
+                                                                    Today, the programs at PES University are sought after by students from around the country. Leading industries choose PES University when they need the right talent. One of the key reasons for this is the University’s focus on admitting the best talent in India and abroad. We are proud about the tradition of crème de la crème of CET and other national level entrance exams consistently preferring a PES Institution.
+                                                                </p>
+                                                                <a href="https://pes.edu/admissions/" target="_blank">
+                                                                    <button class="btn btn-success btn-wave">Learn More</button>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xxl-6 col-xl-6 aboutus-banner-img">
+                                                    <img src="{% static 'assets/images/media/media-80.svg'%}" class="img-fluid" alt="">
+                                                </div>
+                                                {% comment %} <div class="col-xl-12 about-company-stats">
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-xxl-5 col-xl-8 col-lg-10 col-md-8 col-sm-10 col-10">
+                                                            <div class="card custom-card text-default shadow border">
+                                                                <div class="card-body p-0">
+                                                                    <div class="row">
+                                                                        <div class="col-xl-4 col-xxl-4 col-lg-4 col-md-4 col-sm-4 about-company-stats-border">
+                                                                            <div class="text-center p-4 w-100 h-100 d-flex align-items-center justify-content-center">
+                                                                                <div>
+                                                                                    <span class="fw-semibold">Projects</span>
+                                                                                    <p class="text-dark fs-2 mb-0"><span class="count-up" data-count="137">137</span>+</p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-xl-4 col-xxl-4 col-lg-4 col-md-4 col-sm-4 about-company-stats-border">
+                                                                            <div class="text-center p-4 w-100 h-100 d-flex align-items-center justify-content-center">
+                                                                                <div>
+                                                                                    <span class="fw-semibold">Happy Customers</span>
+                                                                                    <p class="text-dark fs-2 mb-0"><span class="count-up" data-count="2500">2500</span>+</p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-xl-4 col-xxl-4 col-lg-4 col-md-4 col-sm-4">
+                                                                            <div class="text-center p-4 w-100 h-100 d-flex align-items-center justify-content-center">
+                                                                                <div>
+                                                                                    <span class="fw-semibold">Clients</span>
+                                                                                    <p class="text-dark fs-2 mb-0"><span class="count-up" data-count="22">22</span></p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div> {% endcomment %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12">
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-6 col-xl-3 col-lg-4">
+                                                <a href="{% url 'category' 'general' %}">
+                                                    <div class="card custom-card card-bg-info text-fixed-white">
+                                                        <div class="card-body p-0">
+                                                            <div class="d-flex align-items-top p-4 flex-wrap">
+                                                                <div class="me-3 lh-1"> <span class="avatar avatar-md avatar-rounded bg-white text-primary shadow-sm">
+                                                                        <i class="bx bx-user-voice fs-18"></i> </span> </div>
+                                                                <div class="flex-fill">
+                                                                    <h5 class="fw-semibold mb-1 text-fixed-white">FAQs</h5>
+                                                                    <p class="op-7 mb-0 fs-12">Frequently Asked Questions</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="col-md-6 col-xl-3 col-lg-4">
+                                                <a href="{% url 'request-a-call-back' %}">
+                                                    <div class="card custom-card card-bg-success text-fixed-white">
+                                                        <div class="card-body p-0">
+                                                            <div class="d-flex align-items-top p-4 flex-wrap">
+                                                                <div class="me-3 lh-1"> <span class="avatar avatar-md avatar-rounded bg-white text-primary shadow-sm">
+                                                                        <i class="bx bx-phone fs-18"></i> </span> </div>
+                                                                <div class="flex-fill">
+                                                                    <h5 class="fw-semibold mb-1 text-fixed-white">Request a Call Back</h5>
+                                                                    <p class="op-7 mb-0 fs-12">Submit a form to get a call back</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="py-5 px-3 bg-light">
+                                        <div class="row justify-content-center">
+                                            <div class="col-12">
+                                                <div class="text-center">
+                                                    <div class="text-dark fs-26 fw-semibold mb-4">
+                                                        <span class="about-heading">More Information</span>
+                                                    </div>
+                                                </div>
+                                                <div class="container text-left">
+                                                    <div class="row">
+                                                        <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+                                                            <div class="card custom-card">
+                                                                <a href="http://admissions.pes.edu/" target='_blank'>
+                                                                    <img src="{% static 'assets/images/pesu/img/register2.jpg'%}" class="card-img-top" alt="...">
+                                                                </a>
+                                                                <div class="card-body">
+                                                                    <a href="blogdetails" class="fw-semibold fs-14 text-dark mb-1"> Register for Admissions</a>
+                                                                    <p class="card-text text-muted mb-3">All India Online Entrance Exam for Admission to PES University</p>
+                                                                    <a href="http://admissions.pes.edu/" class="btn btn-primary-light" target='_blank'>Register Here</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+                                                            <div class="card custom-card">
+                                                                <a href="https://pes.edu/students/" target='_blank'>
+                                                                    <img src="{% static 'assets/images/pesu/img/new-students.jpg'%}" class="card-img-top" alt="...">
+                                                                </a>
+                                                                <div class="card-body">
+                                                                    <a href="blogdetails" class="fw-semibold fs-14 text-dark mb-1"> New Students</a>
+                                                                    <p class="card-text text-muted mb-3">Discover tips & prepare for your first day at the PES University.</p>
+                                                                    <a href="https://pes.edu/students/" target='_blank' class="btn btn-primary-light">Learn More</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+                                                            <div class="card custom-card">
+                                                                <a href="https://clubs.pes.edu/" target='_blank'>
+                                                                    <img src="{% static 'assets/images/pesu/img/clubs-n-activities.jpg'%}" class="card-img-top" alt="...">
+                                                                </a>
+                                                                <div class="card-body">
+                                                                    <a href="blogdetails" class="fw-semibold fs-14 text-dark mb-1"> Clubs and Activities</a>
+                                                                    <p class="card-text text-muted mb-3">Today over 54 clubs are active led by office bearers and supported by active volunteers.</p>
+                                                                    <a href="https://clubs.pes.edu/" target='_blank' class="btn btn-primary-light">Learn More</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+                                                            <div class="card custom-card">
+                                                                <a href="https://events.pes.edu/" target='_blank'>
+                                                                    <img src="{% static 'assets/images/pesu/img/events.jpg'%}" class="card-img-top" alt="...">
+                                                                </a>
+                                                                <div class="card-body">
+                                                                    <a href="blogdetails" class="fw-semibold fs-14 text-dark mb-1"> See what's going on at PES</a>
+                                                                    <p class="card-text text-muted mb-3">Discover events happening across the campus.</p>
+                                                                    <a href="https://events.pes.edu/" target='_blank' class="btn btn-primary-light">Browse Events</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="py-5 px-3 bg-primary rounded-bottom">
+                                        <div class="row justify-content-center">
+                                            <div class="col-xl-4">
+                                                <div class="text-center">
+                                                    <h6 class="fw-semibold text-fixed-white pb-4 mb-0">
+                                                        <span class="about-heading-white">Alumni @ PES</span>
+                                                    </h6>
+                                                    <a href="https://pes.almaconnect.com/" target="_blank">
+                                                        <button class="btn btn-success btn-wave" type="button">Join The Community</button>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--End::row-1 -->
+                        
+                    </div>
+
+{% endblock %}
+{% block footer %}
+             {% include 'main/main-footer.html' %}
+{% endblock %}
+{% block scripts %}
+
+
+
+{% endblock %}

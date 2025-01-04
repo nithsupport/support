@@ -1,0 +1,264 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block styles %}
+
+<!-- Sweetalerts CSS -->
+<link rel="stylesheet" href="{% static 'assets/libs/sweetalert2/sweetalert2.min.css'%}">
+        
+{% endblock %}
+
+{% block content %}
+                    <div class="container-lg my-5">
+                        <!-- Page Header -->
+                        <div class="d-md-flex d-block align-items-center justify-content-between my-4 page-header-breadcrumb">
+                            <h1 class="page-title fw-semibold fs-18 mb-0">JEE Main Session 2 Score</h1>
+                            <div class="ms-md-1 ms-0">
+                                <nav>
+                                    <ol class="breadcrumb mb-0">
+                                        <li class="breadcrumb-item"><a href="#">Form</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">JEE Main Session 2 Score</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                        <!-- Page Header Close -->
+
+                        <!-- Start::row-1 -->
+                        <div class="row">
+                            <!--category -->
+                            <div class="col-xl-4">
+                                <div class="card custom-card text-center team-card ">
+                                    <div class="card-body p-5">
+                                        <span class="avatar avatar-xxl mb-3 team-avatar">
+                                            <img src="{% static 'assets/images/pesu/logo/pesu.png'%}" alt="">
+                                        </span>
+                                        <p class="fw-semibold fs-17 mb-0 text-default">PES University</p>
+                                        <span class="text-muted fs-14 text-primary fw-semibold">admissions@pes.edu</span>
+                                        <p class="text-muted mt-2 fs-13"> 080-10-297297</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end category -->
+                            <div class="col-xl-8">
+                                <!-- Start:: row-1 -->
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="card custom-card">
+                                            <div class="card-header justify-content-between">
+                                                <div class="card-title">
+                                                    JEE Main Session 2 Score
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <form method="post" action="" novalidate enctype="multipart/form-data">
+                                                    {% csrf_token %}
+                                                    <div class="col-xl-12">
+                                                        <div class="row gy-3">
+                                                            <div class="col-xl-12">
+                                                                <div class="row">
+                                                                    {{ form.non_field_errors }}
+                                                                    <div class="col-xl-6 mb-3">
+                                                                        <label for="contact-address-name" class="form-label ">Full Name<span class="text-danger">*</span></label>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-user"></i></span>
+                                                                            {{ form.name }}
+                                                                        </div>
+                                                                        {% if form.name.errors %}
+                                                                            <div class="text-danger">{{ form.name.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-6 mb-3">
+                                                                        <label for="contact-address-name" class="form-label ">Registered Email<span class="text-danger">*</span></label>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-envelope"></i></span>
+                                                                            {{ form.email }}
+                                                                        </div>
+                                                                        {% if form.email.errors %}
+                                                                            <div class="text-danger">{{ form.email.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-6 mb-3">
+                                                                        <label for="contact-address-name" class="form-label ">Registered Mobile Number<span class="text-danger">*</span></label>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-phone"></i></span>
+                                                                            {{ form.phone_number }}
+                                                                        </div>
+                                                                        {% if form.phone_number.errors %}
+                                                                            <div class="text-danger">{{ form.phone_number.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-6 mb-3">
+                                                                        <label for="contact-address-name" class="form-label ">PES Entrance Test (admissions.pes.edu) Application Number<span class="text-danger">*</span></label>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-clipboard"></i></span>
+                                                                            {{ form.registration_number }}
+                                                                        </div>
+                                                                        {% if form.registration_number.errors %}
+                                                                            <div class="text-danger">{{ form.registration_number.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <script>
+                                                                        const inputField = document.querySelector('input[name="phone_number"]');
+                                                                        inputField.addEventListener('input', () => {
+                                                                        if (inputField.value.length > 10) {
+                                                                            inputField.value = inputField.value.slice(0, 10);
+                                                                        }
+                                                                        });
+                                                                    </script>
+                                                                    <div class="col-xl-6 mb-3">
+                                                                        <p class="fw-semibold mb-2">Specialization Opted<span class="text-danger">*</span></p>
+                                                                        <div class="form-group mb-3">
+                                                                            {{ form.specialization }}
+                                                                        </div>
+                                                                        {% if form.specialization.errors %}
+                                                                            <div class="text-danger">{{ form.specialization.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-6 mb-3">
+                                                                        <p class="fw-semibold mb-2">Campus Opted<span class="text-danger">*</span></p>
+                                                                        <div class="form-group mb-3">
+                                                                            {{ form.campus }}
+                                                                        </div>
+                                                                        {% if form.campus.errors %}
+                                                                            <div class="text-danger">{{ form.campus.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+
+                                                                    <div class="col-xl-12">
+                                                                        <label for="id_taken_jee_main2" class="form-label">Have you taken the JEE Main Session 2 2025?</label>
+                                                                        <div class="mb-3">
+                                                                            {% for value, label in form.taken_jee_main2.field.choices %}
+                                                                                <input type="radio" class="btn-check" name="{{ form.taken_jee_main2.name }}" value="{{ value }}" id="success-outlined-{{ value }}"
+                                                                                       {% if form.taken_jee_main2.value == value|stringformat:"s" %}checked{% endif %}>
+                                                                                <label class="btn btn-outline-primary m-1 px-5" for="success-outlined-{{ value }}">
+                                                                                    {{ label }}
+                                                                                </label>
+                                                                            {% endfor %}
+                                                                        </div>
+                                                                        {% if form.taken_jee_main1.errors %}
+                                                                            <div class="text-danger">{{ form.taken_jee_main1.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    
+                                                                    <div class="form-group" id="jee_main2_fields" style="display: none;">
+                                                                        <div class="col-xl-12">
+                                                                            <div class="row">
+                                                                                
+                                                                                <div class="col-xl-6 mb-3">
+                                                                                    <label for="contact-address-name" class="form-label ">JEE Main Session 2 Percentile (enter all the decimals)<span class="text-danger">*</span></label>
+                                                                                    <div class="input-group">
+                                                                                        <span class="input-group-text" id="basic-addon3"><i class="bx bx-medal"></i></span>
+                                                                                        {{ form.jee_main2_rank }}
+                                                                                    </div>
+                                                                                    {% if form.jee_main2_rank.errors %}
+                                                                                        <div class="text-danger">{{ form.jee_main2_rank.errors|join:", " }}</div>
+                                                                                    {% endif %}
+                                                                                </div>
+                                                                                <div class="col-xl-6 mb-3">
+                                                                                    <label for="contact-address-name" class="form-label ">All India CRL Rank<span class="text-danger">*</span></label>
+                                                                                    <div class="input-group">
+                                                                                        <span class="input-group-text" id="basic-addon3"><i class="bx bx-medal"></i></span>
+                                                                                        {{ form.crl_rank }}
+                                                                                    </div>
+                                                                                    {% if form.crl_rank.errors %}
+                                                                                        <div class="text-danger">{{ form.crl_rank.errors|join:", " }}</div>
+                                                                                    {% endif %}
+                                                                                </div>
+                                                                                <div class="col-xl-6 mb-3">
+                                                                                    <label for="contact-address-name" class="form-label ">JEE Main Session 2 Registration Number<span class="text-danger">*</span></label>
+                                                                                    <div class="input-group">
+                                                                                        <span class="input-group-text" id="basic-addon3"><i class="bx bx-clipboard"></i></span>
+                                                                                        {{ form.jee_main2_registration_number }}
+                                                                                    </div>
+                                                                                    {% if form.jee_main2_registration_number.errors %}
+                                                                                        <div class="text-danger">{{ form.jee_main2_registration_number.errors|join:", " }}</div>
+                                                                                    {% endif %}
+                                                                                </div>
+                                                                                <div class="col-xl-12 mb-3">
+                                                                                    <label for="contact-address-name" class="form-label ">Upload JEE Session 2 score card (Internet copy downloaded from official JEE website) (Max file size: 500KB)<span class="text-danger">*</span></label>
+                                                                                    <div class="input-group">
+                                                                                        <span class="input-group-text" id="basic-addon3"><i class="bx bx-image-add"></i></span>
+                                                                                        {{ form.upload_marks }}
+                                                                                    </div>
+                                                                                    {% if form.upload_marks.errors %}
+                                                                                        <div class="text-danger">{{ form.upload_marks.errors|join:", " }}</div>
+                                                                                    {% endif %}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="d-grid gap-2 col-4">
+                                                                        <button class="btn btn-primary-light btn-wave">Submit</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                                <script>
+                                                    document.addEventListener('DOMContentLoaded', function () {
+                                                        const takenJeeMain2Fields = document.querySelectorAll('[name="taken_jee_main2"]');
+                                                        const jeeMain2Fields = document.getElementById('jee_main2_fields');
+                                                
+                                                        function toggleJeeMain2Fields() {
+                                                            let isYesSelected = false;
+                                                            takenJeeMain2Fields.forEach((field) => {
+                                                                if (field.checked && field.value === "True") {
+                                                                    isYesSelected = true;
+                                                                }
+                                                            });
+                                                
+                                                            if (isYesSelected) {
+                                                                jeeMain2Fields.style.display = 'block';
+                                                            } else {
+                                                                jeeMain2Fields.style.display = 'none';
+                                                            }
+                                                        }
+                                                
+                                                        takenJeeMain2Fields.forEach((field) => {
+                                                            field.addEventListener('change', toggleJeeMain2Fields);
+                                                        });
+                                                
+                                                        // Ensure the correct visibility on page load
+                                                        toggleJeeMain2Fields();
+                                                    });
+                                                </script>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End:: row-1 -->
+                            </div>
+                            
+                        </div>
+                        <!--End::row-1 -->
+                    </div>    
+
+{% endblock %}
+{% block footer %}
+    {% include 'main/main-footer.html' %}
+{% endblock %}
+{% block scripts %}
+
+<!-- Sweetalerts JS -->
+<script src="{% static 'assets/libs/sweetalert2/sweetalert2.min.js'%}"></script>
+<script src="{% static 'assets/js/sweet-alerts.js'%}"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        {% if messages %}
+            {% for message in messages %}
+                Swal.fire({
+                    icon: '{{ message.tags }}',
+                    title: '{{ message }}',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            {% endfor %}
+        {% endif %}
+    });
+</script>
+{% endblock %}
+

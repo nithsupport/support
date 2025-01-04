@@ -1,0 +1,267 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block styles %}
+<!-- Sweetalerts CSS -->
+<link rel="stylesheet" href="{% static 'assets/libs/sweetalert2/sweetalert2.min.css'%}">
+        
+{% endblock %}
+
+{% block content %}
+                    <div class="container-lg my-5">
+                        <!-- Page Header -->
+                        <div class="d-md-flex d-block align-items-center justify-content-between my-4 page-header-breadcrumb">
+                            <h1 class="page-title fw-semibold fs-18 mb-0">EC Transportation</h1>
+                            <div class="ms-md-1 ms-0">
+                                <nav>
+                                    <ol class="breadcrumb mb-0">
+                                        <li class="breadcrumb-item"><a href="#">Form</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">EC Transportation</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                        <!-- Page Header Close -->
+                        <!-- Start::row-1 -->
+                        <div class="row">
+                            <!--category -->
+                            <div class="col-xl-4">
+                                <div class="card custom-card text-center team-card ">
+                                    <div class="card-body p-5">
+                                        <span class="avatar avatar-xxl mb-3 team-avatar">
+                                            <img src="{% static 'assets/images/pesu/logo/pesu.png'%}" alt="">
+                                        </span>
+                                        <p class="fw-semibold fs-17 mb-0 text-default">PES EC Campus</p>
+                                        <span class="text-muted fs-14 text-primary fw-semibold">admissions@pes.edu</span>
+                                        <p class="text-muted mt-2 fs-13">+91 80 66186610</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end category -->
+                            <div class="col-xl-8">
+                                <!-- Start:: row-1 -->
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="card custom-card">
+                                            <div class="card-header justify-content-between">
+                                                <div class="card-title">
+                                                    Enroll For PESU - EC Campus Transportation
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <form method="post" action="" enctype="multipart/form-data">
+                                                    {% csrf_token %}
+                                                    <div class="col-xl-12">
+                                                        <div class="row gy-3">
+                                                            <div class="col-xl-12">
+                                                                <div class="row mb-3">
+                                                                    <div class="col-xl-6 mb-3">
+                                                                        <label for="contact-address-name" class="form-label ">Student Name<span class="text-danger"><span class="text-danger">*</span></span></label>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-user"></i></span>
+                                                                            {{ form.name }}
+                                                                        </div>
+                                                                        {% if form.name.errors %}
+                                                                            <div class="text-danger">{{ form.name.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-6 mb-3">
+                                                                        <label for="contact-address-name" class="form-label ">E-Mail Address<span class="text-danger">*</span></label>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-envelope"></i></span>
+                                                                            {{ form.email }}
+                                                                        </div>
+                                                                        {% if form.email.errors %}
+                                                                            <div class="text-danger">{{ form.email.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-6 mb-3">
+                                                                        <label for="contact-address-name" class="form-label ">Mobile Number<span class="text-danger">*</span></label>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-phone"></i></span>
+                                                                            {{ form.phone_number }}
+                                                                        </div>
+                                                                        {% if form.phone_number.errors %}
+                                                                            <div class="text-danger">{{ form.phone_number.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <script>
+                                                                        const inputField = document.querySelector('input[name="phone_number"]');
+                                                                        inputField.addEventListener('input', () => {
+                                                                        if (inputField.value.length > 10) {
+                                                                            inputField.value = inputField.value.slice(0, 10);
+                                                                        }
+                                                                        });
+                                                                    </script>
+                                                                    <div class="col-xl-6 mb-3">
+                                                                        <label for="contact-address-name" class="form-label ">Parent Mobile Number<span class="text-danger">*</span></label>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-phone"></i></span>
+                                                                            {{ form.parent_phone_number }}
+                                                                        </div>
+                                                                        {% if form.parent_phone_number.errors %}
+                                                                            <div class="text-danger">{{ form.parent_phone_number.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <script>
+                                                                        const inputField = document.querySelector('input[name="parent_phone_number"]');
+                                                                        inputField.addEventListener('input', () => {
+                                                                        if (inputField.value.length > 10) {
+                                                                            inputField.value = inputField.value.slice(0, 10);
+                                                                        }
+                                                                        });
+                                                                    </script>
+                                                                    <div class="col-xl-6 mb-3">
+                                                                        <label for="contact-address-name" class="form-label ">Date of Birth<span class="text-danger">*</span></label>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-calendar"></i></span>
+                                                                            {{ form.dob }}
+                                                                        </div>
+                                                                        {% if form.dob.errors %}
+                                                                            <div class="text-danger">{{ form.dob.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-6 mb-3">
+                                                                        <label for="contact-address-name" class="form-label ">Blood Group<span class="text-danger">*</span></label>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-droplet"></i></span>
+                                                                            {{ form.blood_group }}
+                                                                        </div>
+                                                                        {% if form.blood_group.errors %}
+                                                                            <div class="text-danger">{{ form.blood_group.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-12 mb-3">
+                                                                        <label for="contact-address-name" class="form-label ">Address<span class="text-danger">*</span></label>
+                                                                        <div class="input-group">
+                                                                            {{ form.address }}
+                                                                        </div>
+                                                                        {% if form.address.errors %}
+                                                                            <div class="text-danger">{{ form.address.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    
+                                                                    <div class="col-xl-12 mb-3">
+                                                                        <label for="contact-address-name" class="form-label ">Photo (Max file size: 500KB)<span class="text-danger">*</span></label>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-image-add"></i></span>
+                                                                            {{ form.photo }}
+                                                                        </div>
+                                                                        {% if form.photo.errors %}
+                                                                            <div class="text-danger">{{ form.photo.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-12 mb-3">
+                                                                        <label for="contact-address-name" class="form-label ">SRN(Student Registration Number) / PRN(Permanent Registration Number)<span class="text-danger">*</span></label>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-clipboard"></i></span>
+                                                                            {{ form.registration_no }}
+                                                                        </div>
+                                                                        {% if form.registration_no.errors %}
+                                                                            <div class="text-danger">{{ form.registration_no.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-12 mb-3">
+                                                                        <p class="fw-semibold mb-2">Program<span class="text-danger">*</span></p>
+                                                                        <div class="form-group mb-3">
+                                                                            {{ form.program }}
+                                                                        </div>
+                                                                        {% if form.program.errors %}
+                                                                            <div class="text-danger">{{ form.program.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-6 mb-3">
+                                                                        <p class="fw-semibold mb-2">Route<span class="text-danger">*</span></p>
+                                                                        <div class="form-group mb-3">
+                                                                            {{ form.route }}
+                                                                        </div>
+                                                                        {% if form.route.errors %}
+                                                                            <div class="text-danger">{{ form.route.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-6 mb-3">
+                                                                        <p class="fw-semibold mb-2">Pickup Point<span class="text-danger">*</span></p>
+                                                                        <div class="form-group mb-3">
+                                                                            {{ form.pickup_point }}
+                                                                        </div>
+                                                                        {% if form.pickup_point.errors %}
+                                                                            <div class="text-danger">{{ form.pickup_point.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    
+                                                                    
+                                                                </div>
+                                                                <div class="d-grid gap-2 col-4">
+                                                                    <button class="btn btn-primary-light btn-wave">Submit</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End:: row-1 -->
+                            </div>
+                            
+                        </div>
+                        <!--End::row-1 -->
+                    </div>   
+                    
+
+{% endblock %}
+{% block footer %}
+    {% include 'main/main-footer.html' %}
+{% endblock %}
+{% block scripts %}
+<!-- Sweetalerts JS -->
+<script src="{% static 'assets/libs/sweetalert2/sweetalert2.min.js'%}"></script>
+<script src="{% static 'assets/js/sweet-alerts.js'%}"></script>
+
+<script>
+    const pickupPoints = {
+        "Route 1":['Banaswadi Main Road - HP Petrol Bunk','Uttam Sagar','Horamau Signal','Ramamurthynagar Jn.','Kasturinagar Ring Road','Tin Factory','KR Puram Railway Station','B Narayanapura Ring Road Jn.','Mahadevpura Ring Road Jn.','Doddanekkundi Ring Road Jn.','Kartiknagar Ring Road Jn.','Multiplex-Marathahalli','Bellandur Ring Road Jn.','Sarjapura / Iblur Junction.','Agara','CPWD Quarters','MK Ahmed','HSR Water Tank','HSR BDA Complex','Mangammanapalya','Bomanahalli'],
+        "Route 2":['Halsoor Lake (Ganapathy Temple)','Old Madras Road','Indiranagar KFC', 'CMH Hospital','Thippasandra EntrancenBus stop','Jeevan Bima Nagar Bus stop','Beml Compound','Hal Road Signal','Rajeshwari Theater','Mnipal Bus stop','Domlur Flyover','Ejipura','Koramangala Sony World Signal','WIPRO Park','Venkatapura Bus Stop','Madivala Police Station','Roopna Agrahara Bus Stop'],
+        "Route 3":['Hebbala Flyover/Ganganagar Road','Ganganagar CBI Bustand','Mechri Circle','Sadashiv nagar Police Station','Tata institute','Yeshwantpura Police Station','Mahalaxmi Layout','Rajaji nagar Metro station','Varier Beakery','Vijayanagar Bus Stop','Maruthi Mandir','Attiguppe','Dipanjali Nagar','Mysore Road Metro Staton'],
+        "Route 4":['Kadranahalli Cross','Kumarswamy Layout','ISRO Layout','Konankunte Cross','Yelechanahalli','Sindhoor Klyan Mantapa','J.P. Nagar 15th Cross','DELMIYA','Mandovi Motors','Reliance Mart','Meenakshi Mall','Gottigere / Bannerghatta Road','NICE Road'],
+        "Route 5":['Sai Baba Hospital','Fire Station Sarjapur Road','CMRIT College','Kundanahalli Junction','Multiplex-Marathahalli','New Horizon College Of Engineering','Ecospace','Bellandur Junction','Iblur Junction','Agara Junction','CPWD Quarters','MK Ahmed Supermarket','HSR Water Tank','HSR BDA Complex','Mangammanapalya','Bommanahalli Bus Stop'],
+        "Route 6":['PESU RR Campus','Janatha Bazar','Katriguppe','Kamakya','Devegowda Petrol Bunk','Mandovi Motors','Bilekahalli','Apollo Hospital / Wockhardt Hospital','Ayappa Temple','Reliance / Hulimavu','BPL','Meenakshi Temple','Kaalena Agrhara','Gottigere','NICE Road'],
+        "Route 7":['Innovative Multiplex, Marathahalli','Kadubeesanahalli Bus Stop','New Horizon College','Eco space','Central Mall, Bellandur','HP petrol bunk','wipro gate','Kaikonanahalli Bus stop','Fire Satation','Harlur Road Bus stop','Iblur junction','Agara Junction','HSR Layout Police Station','CPWED Quarters','MK Ahamad','Kempegouda Circle','BDA Complex Mc Donalds'],
+        "Route 8":['Attibele Circle (checkpost)','Guestline Hotel Bus Stop BMTC, Attibele','Neraluru Bus Stop', 'Hale Chandapura Bus stop','Chandapura Circle','Kittanahalli Bus Stop','Narayana Hrudralaya Bus Stop (NH)','Bommasandra Bus Stop','Hebbagudi Bus Stop','Veerasandra Bus Stop','Electronic City Bus Stop'],
+    };
+
+    document.getElementById('route').addEventListener('change', function () {
+        const route = this.value;
+        const pickupPointSelect = document.getElementById('pickup_point');
+        
+        pickupPointSelect.innerHTML = '<option value="">Choose a Pickup Point</option>'; // Reset options
+        
+        if (pickupPoints[route]) {
+            pickupPoints[route].forEach(function (point) {
+                const option = document.createElement('option');
+                option.value = point;
+                option.textContent = point;
+                pickupPointSelect.appendChild(option);
+            });
+        }
+    });
+</script> 
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        {% if messages %}
+            {% for message in messages %}
+                Swal.fire({
+                    icon: '{{ message.tags }}',
+                    title: '{{ message }}',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            {% endfor %}
+        {% endif %}
+    });
+</script>
+{% endblock %}
+

@@ -1,0 +1,65 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+
+{% block styles %}
+<link href="/static/custom/css/request-call-back.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+                    <div class="container-lg my-5">
+                        <!-- Start::row-1 -->
+                        <div class="row">
+                            {% comment %} <div class="col-xl-12">
+                                <div class="row"> {% endcomment %}
+                                <!--category -->
+                                    <div class="col-xl-4">
+                                        <div class="card custom-card text-center team-card ">
+                                            <div class="card-body p-5">
+                                                <span class="avatar avatar-xxl mb-3 team-avatar">
+                                                    <img src="{% static 'assets/images/pesu/logo/pesu.png'%}" alt="">
+                                                </span>
+                                                <p class="fw-semibold fs-17 mb-0 text-default">PES University</p>
+                                                <span class="text-muted fs-14 text-primary fw-semibold">admissions@pes.edu</span>
+                                                <p class="text-muted mt-2 fs-13"> 080-10-297297</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--end category -->
+                                    <div class="col-xl-5">
+                                        <div class="card custom-card">
+                                            <div class="card-header">
+                                                <div class="card-title">
+                                                    Request a Call Back
+                                                </div>
+                                            </div>
+                                        <iframe name="leadsquared_landing_page_frame" src="https://pes.viewpage.co/pesu_bot?ignoremxtracking=mxtrue" style="padding-top:15px; background:#f9f6fb; width:100%; height:500px;" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+                                                <script type="text/javascript"> var MXLandingPageId = '21295c91-84b2-11ec-9c33-026df930cad4'; </script>
+                                        {% comment %} <div class="card custom-card">
+                                            <div class="card-header">
+                                                <div class="card-title">
+                                                    Request a Call Back
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <iframe name="leadsquared_landing_page_frame" src="https://pes.viewpage.co/pesu_bot?ignoremxtracking=mxtrue" width="100%" height="500px" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+                                                <script type="text/javascript"> var MXLandingPageId = '21295c91-84b2-11ec-9c33-026df930cad4'; </script>
+                                            </div>
+                                        </div> {% endcomment %}
+                                    </div>
+                                {% comment %} </div>
+                            </div> {% endcomment %}
+                            
+                        </div>
+                        <!--End::row-1 -->
+                    </div>    
+
+{% endblock %}
+{% block footer %}
+             {% include 'main/main-footer.html' %}
+{% endblock %}
+{% block scripts %}
+
+
+
+{% endblock %}

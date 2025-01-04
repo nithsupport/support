@@ -1,0 +1,541 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block styles %}
+
+<!-- Sweetalerts CSS -->
+<link rel="stylesheet" href="{% static 'assets/libs/sweetalert2/sweetalert2.min.css'%}">
+<!-- Prism CSS -->
+<link rel="stylesheet" href="{% static 'assets/libs/prismjs/themes/prism-coy.min.css'%}">
+{% endblock %}
+
+{% block content %}
+                    <div class="container-lg my-5">
+                        <!-- Page Header -->
+                        <div class="d-md-flex d-block align-items-center justify-content-between my-4 page-header-breadcrumb">
+                            <h1 class="page-title fw-semibold fs-18 mb-0">Submission of Class 12 Marks</h1>
+                            <div class="ms-md-1 ms-0">
+                                <nav>
+                                    <ol class="breadcrumb mb-0">
+                                        <li class="breadcrumb-item"><a href="#">Form</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Submission of Class 12 Marks</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                        <!-- Page Header Close -->
+                        <!-- Start::row-1 -->
+                        <div class="row">
+                            <!--category -->
+                            <div class="col-xl-4">
+                                <div class="card custom-card text-center team-card ">
+                                    <div class="card-body p-5">
+                                        <span class="avatar avatar-xxl mb-3 team-avatar">
+                                            <img src="{% static 'assets/images/pesu/logo/pesu.png'%}" alt="">
+                                        </span>
+                                        <p class="fw-semibold fs-17 mb-0 text-default">PES University</p>
+                                        <span class="text-muted fs-14 text-primary fw-semibold">admissions@pes.edu</span>
+                                        <p class="text-muted mt-2 fs-13"> 080-10-297297</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end category -->
+                            <div class="col-xl-8">
+                                <!-- Start:: row-1 -->
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <form method="post" novalidate enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <div class="card custom-card">
+                                                <div class="card-header justify-content-between">
+                                                    <div class="card-title">
+                                                        Submit 12th/ 2nd PU/ Equivalent Scores
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="col-xl-12">
+                                                        <div class="row gy-3">
+                                                            <div class="col-xl-12">
+                                                                <div class="row mb-3">
+                                                                    <p class="mb-1"><b>B.Tech / B.Arch Higher Fee Quota Candidates</b></p>
+                                                                    <p class="mb-1">CBSE/ ICSE/ PUC/ IGCSE/ IB boards</p>
+                                                                    <div class="text-success">
+                                                                        <hr>
+                                                                    </div>
+                                                                    <p class="mb-1">The officially announced marks by the respective examination boards for 12th std/ 2nd PU/equivalent will be deemed final and the same must be updated here. There will be no further requests or enquiries entertained in this regard</p>
+                                                                    <div class="text-success">
+                                                                        <hr>
+                                                                    </div>
+                                                                    <p class=" mb-1">If your board has not yet announced the results, please fill this form immediately after the announcement of your results. Further admissions process will not be possible without this information</p>
+                                                                    <hr class="text-danger border-2 opacity-50">
+                                                                    <p class=" mb-1">It is mandatory for all candidates to upload their 12th/ 2nd PU scorecards downloaded from the official results website (in either pdf/ jpg format only)</p>
+                                                                    <hr class="text-danger border-2 opacity-50">
+                                                                    <p class=" mb-1">Any specific point to be highlighted should be mentioned in the comments section.</p>
+
+                                                                    <hr class="text-danger border-2 opacity-50">
+                                                                    <p class="mb-3">If you have a confirmed seat in a particular specialization/ campus and also on waiting list in another specialization/ campus, then select the specialization/ campus where you have a confirmed seat.</p>
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card custom-card">
+                                                <div class="card-header justify-content-between">
+                                                    <div class="card-title">
+                                                        General Details
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="col-xl-12">
+                                                        <div class="row gy-3">
+                                                            <div class="col-xl-12">
+                                                                <div class="row mb-3">
+                                                                    <div class="col-xl-12 mb-3" id="main-board-field">
+                                                                        <p class="fw-semibold mb-2">Which Board do you belong to?<span class="text-danger">*</span>
+                                                                        </p>
+                                                                        <div class="form-group">
+                                                                            {{ form.board }}
+                                                                        </div>
+                                                                        {% if form.board.errors %}
+                                                                            <div class="text-danger">{{ form.board.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-6 mb-3" id="other_board_field" style="display: none;">
+                                                                        <label for="contact-address-name" class="form-label ">Board Name<span class="text-danger">*</span></label>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-clipboard"></i></span>
+                                                                            {{ form.other_board }}
+                                                                        </div>
+                                                                        {% if form.other_board.errors %}
+                                                                            <div class="text-danger">{{ form.other_board.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-6 mb-3">
+                                                                        <label for="contact-address-name" class="form-label ">Student Name<span class="text-danger">*</span></label>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-user"></i></span>
+                                                                            {{ form.name }}
+                                                                        </div>
+                                                                        {% if form.name.errors %}
+                                                                            <div class="text-danger">{{ form.name.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-6 mb-3">
+                                                                        <label for="contact-address-name" class="form-label ">Registered Email<span class="text-danger">*</span></label>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-envelope"></i></span>
+                                                                            {{ form.email }}
+                                                                        </div>
+                                                                        {% if form.email.errors %}
+                                                                            <div class="text-danger">{{ form.email.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-6 mb-3">
+                                                                        <label for="contact-address-name" class="form-label ">Registered Mobile Number<span class="text-danger">*</span></label>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-phone"></i></span>
+                                                                            {{ form.phone_number }}
+                                                                        </div>
+                                                                        {% if form.phone_number.errors %}
+                                                                            <div class="text-danger">{{ form.phone_number.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-6 mb-3">
+                                                                        <label for="contact-address-name" class="form-label ">PES Entrance Test (admissions.pes.edu) Application Number<span class="text-danger">*</span></label>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-clipboard"></i></span>
+                                                                            {{ form.registration_number }}
+                                                                        </div>
+                                                                        {% if form.registration_number.errors %}
+                                                                            <div class="text-danger">{{ form.registration_number.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-6 mb-3">
+                                                                        <p class="fw-semibold mb-2">Specialization opted<span class="text-danger">*</span></p>
+                                                                        <div class="form-group">
+                                                                            {{ form.specialization }}
+                                                                        </div>
+                                                                        {% if form.specialization.errors %}
+                                                                            <div class="text-danger">{{ form.specialization.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-6 mb-3">
+                                                                        <p class="fw-semibold mb-2">Campus opted<span class="text-danger">*</span></p>
+                                                                        <div class="form-group">
+                                                                            {{ form.campus }}
+                                                                        </div>
+                                                                        {% if form.campus.errors %}
+                                                                            <div class="text-danger">{{ form.campus.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card custom-card">
+                                                <div class="card-header justify-content-between">
+                                                    <div class="card-title">
+                                                        Scoring Details of 12th Std/ 2nd PUC/ Equivalent
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="col-xl-12">
+                                                        <div class="row gy-3">
+                                                            <div class="col-xl-12">
+                                                                <div class="row mb-3">
+                                                                    <div class="col-xl-12 mb-3">
+                                                                        <div class="alert alert-info d-flex align-items-center" role="alert">
+                                                                            <svg class="flex-shrink-0 me-2 svg-info" xmlns="http://www.w3.org/2000/svg" height="1.5rem" viewBox="0 0 24 24" width="1.5rem" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+                                                                            <div>
+                                                                                In case you have not taken a subject marked as mandatory below, for that subject, please enter the value as 0 and submit
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xl-12 mb-3">
+                                                                        <div class="form-group">
+                                                                            {{ form.intermediate_candidates }}
+                                                                        </div>
+                                                                        {% if form.intermediate_candidates.errors %}
+                                                                            <div class="text-danger">{{ form.intermediate_candidates.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-12" id="block_div" style="display: none;">
+                                                                        <div class="row">
+                                                                            <label id="applicable_candidates" class="form-label text-success" style="display: none;">Applicable only for Andhra Pradesh and Telangana Intermediate Candidates. Please enter only Inter 2nd year marks.</label>
+                                                                            <div class="col-xl-6 mb-3">
+                                                                                <label for="contact-address-name" class="form-label" id="label-physics">
+                                                                                    Physics Marks (out of 100)<span class="text-danger">*</span>
+                                                                                </label>
+                                                                                <div class="input-group">
+                                                                                    <span class="input-group-text" id="basic-addon3"><i class="bx bx-shape-triangle"></i></span>
+                                                                                    {{ form.physics }}
+                                                                                </div>
+                                                                                {% if form.physics.errors %}
+                                                                                    <div class="text-danger">{{ form.physics.errors|join:", " }}</div>
+                                                                                {% endif %}
+                                                                            </div>
+                                                                            
+                                                                            <div class="col-xl-6 mb-3">
+                                                                                <label for="contact-address-name" class="form-label" id="label-chemistry">
+                                                                                    Chemistry Marks (out of 100)<span class="text-danger">*</span>
+                                                                                </label>
+                                                                                <div class="input-group">
+                                                                                    <span class="input-group-text" id="basic-addon3"><i class="bx bx-test-tube"></i></span>
+                                                                                    {{ form.chemistry }}
+                                                                                </div>
+                                                                                {% if form.chemistry.errors %}
+                                                                                    <div class="text-danger">{{ form.chemistry.errors|join:", " }}</div>
+                                                                                {% endif %}
+                                                                            </div>
+                                                                            
+                                                                            <div class="col-xl-6 mb-3">
+                                                                                <label for="contact-address-name" class="form-label" id="label-mathematics-a">
+                                                                                    Mathematics Marks (out of 100)<span class="text-danger">*</span>
+                                                                                </label>
+                                                                                <div class="input-group">
+                                                                                    <span class="input-group-text" id="basic-addon3"><i class="bx bx-math"></i></span>
+                                                                                    {{ form.mathematics_a }}
+                                                                                </div>
+                                                                                {% if form.mathematics_a.errors %}
+                                                                                    <div class="text-danger">{{ form.mathematics_a.errors|join:", " }}</div>
+                                                                                {% endif %}
+                                                                            </div>
+                                                                            
+                                                                            <div class="col-xl-6 mb-3" id="ap_or_telangana" style="display: none;">
+                                                                                <label for="contact-address-name" class="form-label text-success" id="label-mathematics-b">
+                                                                                    Mathematics Marks B (out of 75)<span class="text-danger">*</span>
+                                                                                </label>
+                                                                                <div class="input-group">
+                                                                                    <span class="input-group-text" id="basic-addon3"><i class="bx bx-math"></i></span>
+                                                                                    {{ form.mathematics_b }}
+                                                                                </div>
+                                                                                {% if form.mathematics_b.errors %}
+                                                                                    <div class="text-danger">{{ form.mathematics_b.errors|join:", " }}</div>
+                                                                                {% endif %}
+                                                                            </div>
+                                                                            
+                                                                            <div class="col-xl-6 mb-3">
+                                                                                <label for="contact-address-name" class="form-label ">Electronics Marks (out of 100) (if applicable)</label>
+                                                                                <div class="input-group">
+                                                                                    <span class="input-group-text" id="basic-addon3"><i class="bx bx-selection"></i></span>
+                                                                                    {{ form.electronics }}
+                                                                                </div>
+                                                                                {% if form.electronics.errors %}
+                                                                                    <div class="text-danger">{{ form.electronics.errors|join:", " }}</div>
+                                                                                {% endif %}
+                                                                            </div>
+                                                                            <div class="col-xl-6 mb-3">
+                                                                                <label for="contact-address-name" class="form-label ">Computer Science Marks (out of 100) (if applicable)</label>
+                                                                                <div class="input-group">
+                                                                                    <span class="input-group-text" id="basic-addon3"><i class="bx bx-desktop"></i></span>
+                                                                                    {{ form.computer_science }}
+                                                                                </div>
+                                                                                {% if form.computer_science.errors %}
+                                                                                    <div class="text-danger">{{ form.computer_science.errors|join:", " }}</div>
+                                                                                {% endif %}
+                                                                            </div>
+                                                                            <div class="col-xl-6 mb-3">
+                                                                                <label for="contact-address-name" class="form-label ">Biotechnology Marks (out of 100) (if applicable)</label>
+                                                                                <div class="input-group">
+                                                                                    <span class="input-group-text" id="basic-addon3"><i class='bx bxs-flask'></i></span>
+                                                                                    {{ form.biotechnology }}
+                                                                                </div>
+                                                                                {% if form.biotechnology.errors %}
+                                                                                    <div class="text-danger">{{ form.biotechnology.errors|join:", " }}</div>
+                                                                                {% endif %}
+                                                                            </div>
+                                                                            <div class="col-xl-12 mb-3">
+                                                                                <label for="contact-address-name" class="form-label ">Overall Aggregate Percentage
+                                                                                    (All Subjects, including Languages)<span class="text-danger">*</span></label>
+                                                                                <div class="input-group">
+                                                                                    <span class="input-group-text" id="basic-addon3"><i class="bx bx-spreadsheet"></i></span>
+                                                                                    {{ form.aggregate_percentage }}
+                                                                                    <span class="input-group-text">%</span>
+                                                                                </div>
+                                                                                {% if form.aggregate_percentage.errors %}
+                                                                                    <div class="text-danger">{{ form.aggregate_percentage.errors|join:", " }}</div>
+                                                                                {% endif %}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card custom-card">
+                                                <div class="card-header justify-content-between">
+                                                    <div class="card-title">
+                                                        Upload Marks Sheet & Submit
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="col-xl-12">
+                                                        <div class="row gy-3">
+                                                            <div class="col-xl-12">
+                                                                <div class="row mb-3">
+                                                                    <div class="col-xl-12 mb-3">
+                                                                        <label for="contact-address-name" class="form-label ">Upload Marks Sheet (Max file size: 500KB)<span class="text-danger">*</span></label>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-image-add"></i></span>
+                                                                            {{ form.upload_marks }}
+                                                                        </div>
+                                                                        {% if form.upload_marks.errors %}
+                                                                            <div class="text-danger">{{ form.upload_marks.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-12 mb-3">
+                                                                        <label for="contact-address-name" class="form-label ">Comment</label>
+                                                                        <div class="input-group">
+                                                                            {{ form.comment }}
+                                                                        </div>
+                                                                        {% if form.comment.errors %}
+                                                                            <div class="text-danger">{{ form.comment.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-12 mb-3">
+                                                                        <div class="form-check form-check-md d-flex align-items-center">
+                                                                            {{ form.declaration }}
+                                                                            <label class="form-check-label" for="id_declaration">
+                                                                                I hereby declare that I have passed in all the subjects in 12th/ 2nd PU/ equivalent exam
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                    <div class="d-grid gap-2 col-4">
+                                                                        <button class="btn btn-primary-light btn-wave" id="submit-btn" disabled>Submit</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- End:: row-1 -->
+                            </div>
+                            
+                        </div>
+                        <!--End::row-1 -->
+                    </div>   
+                    
+
+{% endblock %}
+{% block footer %}
+    {% include 'main/main-footer.html' %}
+{% endblock %}
+{% block scripts %}
+
+<!-- Sweetalerts JS -->
+<script src="{% static 'assets/libs/sweetalert2/sweetalert2.min.js'%}"></script>
+<script src="{% static 'assets/js/sweet-alerts.js'%}"></script>
+
+<!-- Prism JS -->
+<script src="{% static 'assets/libs/prismjs/prism.js'%}"></script>
+<script src="{% static 'assets/js/prism-custom.js'%}"></script>
+
+<!-- Internal Choices JS -->
+<script src="{% static 'assets/js/choices.js'%}"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const intermediateDropdown = document.getElementById('id_intermediate_candidates');
+        const physicsLabel = document.getElementById('label-physics');
+        const chemistryLabel = document.getElementById('label-chemistry');
+        const mathematicsALabel = document.getElementById('label-mathematics-a');
+        const mathematicsBField = document.getElementById('ap_or_telangana');
+        const blockDiv = document.getElementById('block_div');
+        const applicableCandidates = document.getElementById('applicable_candidates');
+
+        function toggleMarksLabels() {
+            const selectedValue = intermediateDropdown.value;
+
+            if (selectedValue === 'True') {
+                // Update labels for AP and Telangana scoring
+                physicsLabel.innerHTML = 'Physics Marks (out of 90)<span class="text-danger">*</span>';
+                chemistryLabel.innerHTML = 'Chemistry Marks (out of 90)<span class="text-danger">*</span>';
+                mathematicsALabel.innerHTML = 'Mathematics Marks A (out of 75)<span class="text-danger">*</span>';
+                mathematicsBField.style.display = 'block';
+                blockDiv.style.display = 'block';
+                applicableCandidates.style.display = 'block';
+
+                // Add text-success class
+                physicsLabel.classList.add('text-success');
+                chemistryLabel.classList.add('text-success');
+                mathematicsALabel.classList.add('text-success');
+            } else if (selectedValue === 'False') {
+                // Update labels for general scoring
+                physicsLabel.innerHTML = 'Physics Marks (out of 100)<span class="text-danger">*</span>';
+                chemistryLabel.innerHTML = 'Chemistry Marks (out of 100)<span class="text-danger">*</span>';
+                mathematicsALabel.innerHTML = 'Mathematics Marks (out of 100)<span class="text-danger">*</span>';
+                blockDiv.style.display = 'block';
+                mathematicsBField.style.display = 'none';
+                applicableCandidates.style.display = 'none';
+
+                // Remove text-success class
+                physicsLabel.classList.remove('text-success');
+                chemistryLabel.classList.remove('text-success');
+                mathematicsALabel.classList.remove('text-success');
+            } else {
+                // Default state when no option is selected
+                blockDiv.style.display = 'none';
+                mathematicsBField.style.display = 'none';
+                applicableCandidates.style.display = 'none';
+            }
+        }
+
+        intermediateDropdown.addEventListener('change', toggleMarksLabels);
+
+        // Initialize on page load
+        toggleMarksLabels();
+    });
+</script>
+
+
+
+{% comment %} <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const intermediateRadioButtons = document.querySelectorAll('[name="intermediate_candidates"]');
+        const physicsLabel = document.getElementById('label-physics');
+        const chemistryLabel = document.getElementById('label-chemistry');
+        const mathematicsALabel = document.getElementById('label-mathematics-a');
+        const otherBoardField = document.getElementById('ap_or_telangana');
+    
+        function toggleMarksLabels() {
+            let isYesSelected = false;
+            intermediateRadioButtons.forEach((radio) => {
+                if (radio.checked && radio.value === 'True') {
+                    isYesSelected = true;
+                }
+            });
+    
+            if (isYesSelected) {
+                physicsLabel.innerHTML = 'Physics Marks (out of 90)<span class="text-danger">*</span>';
+                chemistryLabel.innerHTML = 'Chemistry Marks (out of 90)<span class="text-danger">*</span>';
+                mathematicsALabel.innerHTML = 'Mathematics Marks A (out of 75)<span class="text-danger">*</span>';
+                otherBoardField.style.display = 'block';
+    
+                // Add text-success class
+                physicsLabel.classList.add('text-success');
+                chemistryLabel.classList.add('text-success');
+                mathematicsALabel.classList.add('text-success');
+            } else {
+                physicsLabel.innerHTML = 'Physics Marks (out of 100)<span class="text-danger">*</span>';
+                chemistryLabel.innerHTML = 'Chemistry Marks (out of 100)<span class="text-danger">*</span>';
+                mathematicsALabel.innerHTML = 'Mathematics Marks (out of 100)<span class="text-danger">*</span>';
+                otherBoardField.style.display = 'none';
+    
+                // Remove text-success class
+                physicsLabel.classList.remove('text-success');
+                chemistryLabel.classList.remove('text-success');
+                mathematicsALabel.classList.remove('text-success');
+            }
+        }
+    
+        intermediateRadioButtons.forEach((radio) => {
+            radio.addEventListener('change', toggleMarksLabels);
+        });
+    
+        // Initialize on page load
+        toggleMarksLabels();
+    });
+    
+</script> {% endcomment %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const boardField = document.querySelector('[name="board"]');
+        const otherBoardField = document.getElementById('other_board_field');
+        const mainBoardField = document.getElementById('main-board-field');
+        const declarationCheckbox = document.querySelector('[name="declaration"]');
+        const submitButton = document.getElementById('submit-btn');
+
+        function toggleOtherBoardField() {
+            if (boardField.value === 'Others') {
+                otherBoardField.style.display = 'block';
+                mainBoardField.classList.remove('col-xl-12');
+                mainBoardField.classList.add('col-xl-6');
+            } else {
+                otherBoardField.style.display = 'none';
+                mainBoardField.classList.remove('col-xl-6');
+                mainBoardField.classList.add('col-xl-12');
+            }
+        }
+
+        function toggleSubmitButton() {
+            submitButton.disabled = !declarationCheckbox.checked;
+        }
+
+        boardField.addEventListener('change', toggleOtherBoardField);
+        declarationCheckbox.addEventListener('change', toggleSubmitButton);
+
+        // Initialize on page load
+        toggleOtherBoardField();
+        toggleSubmitButton();
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        {% if messages %}
+            {% for message in messages %}
+                Swal.fire({
+                    icon: '{{ message.tags }}',
+                    title: '{{ message }}',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            {% endfor %}
+        {% endif %}
+    });
+</script>
+{% endblock %}
+

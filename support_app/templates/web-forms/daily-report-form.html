@@ -1,0 +1,272 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block styles %}
+<!-- Sweetalerts CSS -->
+<link rel="stylesheet" href="{% static 'assets/libs/sweetalert2/sweetalert2.min.css'%}">
+        
+{% endblock %}
+
+{% block content %}
+                    <div class="container-lg my-5">
+                        <!-- Page Header -->
+                        <div class="d-md-flex d-block align-items-center justify-content-between my-4 page-header-breadcrumb">
+                            <h1 class="page-title fw-semibold fs-18 mb-0">Daily Report</h1>
+                            <div class="ms-md-1 ms-0">
+                                <nav>
+                                    <ol class="breadcrumb mb-0">
+                                        <li class="breadcrumb-item"><a href="#">Form</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Daily Report</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                        <!-- Page Header Close -->
+                        <!-- Start::row-1 -->
+                        <div class="row">
+                            <!--category -->
+                            <div class="col-xl-4">
+                                <div class="card custom-card text-center team-card ">
+                                    <div class="card-body p-5">
+                                        <span class="avatar avatar-xxl mb-3 team-avatar">
+                                            <img src="{% static 'assets/images/pesu/logo/pesu.png'%}" alt="">
+                                        </span>
+                                        <p class="fw-semibold fs-17 mb-0 text-default">PES University</p>
+                                        <span class="text-muted fs-14 text-primary fw-semibold">admissions@pes.edu</span>
+                                        <p class="text-muted mt-2 fs-13"> 080-10-297297</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end category -->
+                            <div class="col-xl-8">
+                                <!-- Start:: row-1 -->
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="card custom-card">
+                                            <div class="card-header justify-content-between">
+                                                <div class="card-title">
+                                                    Add Today's Report
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <form method="post" action="" enctype="multipart/form-data">
+                                                    {% csrf_token %}
+                                                    <div class="col-xl-12">
+                                                        <div class="row gy-3">
+                                                            <div class="col-xl-12">
+                                                                <div class="row mb-3">
+                                                                    <div class="col-xl-6">
+                                                                        <label for="contact-address-name" class="form-label ">Date<span class="text-danger">*</span></label>
+                                                                        <div class="input-group mb-3">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-calendar"></i></span>
+                                                                            {{ form.date }}
+                                                                        </div>
+                                                                        {% if form.date.errors %}
+                                                                            <div class="text-danger">{{ form.date.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-6">
+                                                                        <p class="fw-semibold mb-2">Campus<span class="text-danger">*</span></p>
+                                                                        <div class="form-group mb-3">
+                                                                            {{ form.campus }}
+                                                                        </div>
+                                                                        {% if form.campus.errors %}
+                                                                            <div class="text-danger">{{ form.campus.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    
+                                                                    <div class="col-xl-12">
+                                                                        <label for="contact-address-name" class="form-label ">Title<span class="text-danger"><span class="text-danger">*</span></span></label>
+                                                                        <div class="input-group mb-3">
+                                                                            <span class="input-group-text" id="basic-addon3"><i class="bx bx-user"></i></span>
+                                                                            {{ form.title }}
+                                                                        </div>
+                                                                        {% if form.title.errors %}
+                                                                            <div class="text-danger">{{ form.title.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-8">
+                                                                        <label for="contact-address-name" class="form-label ">Description<span class="text-danger">*</span></label>
+                                                                        <div class="input-group mb-3">
+                                                                            {{ form.description }}
+                                                                        </div>
+                                                                        {% if form.description.errors %}
+                                                                            <div class="text-danger">{{ form.description.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="col-xl-4">
+                                                                        <p class="fw-semibold mb-2">Category<span class="text-danger">*</span></p>
+                                                                        <div class="form-group mb-3">
+                                                                            {% for choice_value, choice_label in form.category.field.choices %}
+                                                                                <div class="form-check form-check-md d-flex align-items-center">
+                                                                                    <input class="form-check-input" type="checkbox" value="{{ choice_value }}" name="{{ form.category.name }}" id="checkebox-{{ forloop.counter }}"
+                                                                                        {% if choice_value in form.category.value %}checked{% endif %}>
+                                                                                    <label class="form-check-label" for="checkebox-{{ forloop.counter }}">
+                                                                                        {{ choice_label }}
+                                                                                    </label>
+                                                                                </div>
+                                                                            {% endfor %}
+                                                                        </div>
+                                                                        {% if form.category.errors %}
+                                                                            <div class="text-danger">{{ form.category.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+
+                                                                    
+                                                                    <div class="col-xl-6">
+                                                                        <p class="fw-semibold mb-2">Status<span class="text-danger">*</span></p>
+                                                                        <div class="form-group mb-3">
+                                                                            {{ form.status }}
+                                                                        </div>
+                                                                        {% if form.status.errors %}
+                                                                            <div class="text-danger">{{ form.status.errors|join:", " }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-grid gap-2 col-4">
+                                                                    <button class="btn btn-primary-light btn-wave">Submit</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End:: row-1 -->
+                            </div>
+                            
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="card custom-card">
+                                        <div class="card-header d-flex align-items-center justify-content-between flex-wrap gap-3">
+                                            <div class="card-title">
+                                                Latest Report<span class="badge bg-light text-default rounded ms-1 fs-12 align-middle"></span>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table text-nowrap">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">#</th>
+                                                            <th scope="col">Date</th>
+                                                            <th scope="col">Daily Report</th>
+                                                            <th scope="col">Description</th>
+                                                            <th scope="col">Campus</th>
+                                                            <th scope="col">Category</th>
+                                                            <th scope="col">Status</th>
+                                                            <th scope="col">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% if daily_report_list %}
+                                                        {% for daily_report in daily_report_list %}
+                                                        <tr>
+                                                            <th scope="row">{{ forloop.counter }}</th>
+                                                            <td>{{daily_report.date}}</td>
+                                                            <td>{{daily_report.title}}</td>
+                                                            <td>{{daily_report.description}}</td>
+                                                            <td>{{daily_report.campus}}</td>
+                                                            <td>{{daily_report.category}}</td>
+                                                            <td>{{daily_report.status}}</td>
+                                                            <td>
+                                                                <div class="hstack gap-2 fs-15">
+                                                                    <a href="{% url 'edit-daily-report' daily_report.pk %}"
+                                                                        class="btn btn-icon btn-sm btn-info-transparent rounded-pill"><i
+                                                                            class="ri-edit-line"></i></a>
+                                                                    <button class="btn btn-sm btn-danger-light btn-icon rounded-pill contact-delete alert-parameter" id="alert-parameter{{ daily_report.pk }}" data-delete-url="{% url 'delete-daily-report' daily_report.pk %}"><i class="ri-delete-bin-line"></i></button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                        {% else %}
+                                                            <tr>
+                                                                <td>No data available.</td>
+                                                            </tr>
+                                                        {% endif %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="card-footer border-top-0">
+                                            <div class="d-flex align-items-center">
+                                                <a href="{% url 'all-daily-report-list' %}">
+                                                    View all Report<i class="bi bi-arrow-right ms-2 fw-semibold"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--End::row-1 -->
+                    </div>   
+                    
+
+{% endblock %}
+{% block footer %}
+    {% include 'main/main-footer.html' %}
+{% endblock %}
+{% block scripts %}
+<!-- Sweetalerts JS -->
+<script src="{% static 'assets/libs/sweetalert2/sweetalert2.min.js'%}"></script>
+<script src="{% static 'assets/js/sweet-alerts.js'%}"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const buttons = document.querySelectorAll('.alert-parameter');
+        buttons.forEach(button => {
+            button.addEventListener('click', function () {
+                const deleteUrl = button.getAttribute('data-delete-url');
+    
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                        confirmButton: 'btn btn-success ms-2',
+                        cancelButton: 'btn btn-danger'
+                    },
+                    buttonsStyling: false
+                });
+    
+                swalWithBootstrapButtons.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'No, cancel!',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = deleteUrl;
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        swalWithBootstrapButtons.fire(
+                            'Cancelled',
+                            'Your data is safe',
+                            'error'
+                        );
+                    }
+                });
+            });
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        {% if messages %}
+            {% for message in messages %}
+                Swal.fire({
+                    icon: '{{ message.tags }}',
+                    title: '{{ message }}',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            {% endfor %}
+        {% endif %}
+    });
+</script>
+{% endblock %}
